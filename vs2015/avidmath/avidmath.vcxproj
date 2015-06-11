@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\inc\avidmath\Vector2.h" />
+    <ClInclude Include="..\..\inc\Vector2.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FB0682AE-9770-4E4B-BA5C-FCFE56698D2F}</ProjectGuid>
