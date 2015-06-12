@@ -16,51 +16,51 @@ namespace avidmath
 {
 
     /** A 2d cartesian vector class.
-        Template parameter gives the underlying numerical type, typically float or double.
+    Template parameter gives the underlying numerical type, typically float or double.
     */
-	template <typename T_ty>
-	class Vector2
-	{
-	public:
+    template <typename T_ty>
+    class Vector2
+    {
+    public:
         //------------------------------------------------------------------------------
         // Construction / destruction.
 
-		/// Constructor - initialises everything to 0.
-		Vector2();
+        /// Constructor - initialises everything to 0.
+        Vector2();
 
-		/// Constructor - initialises each component directly.
-		Vector2(const T_ty tX, const T_ty tY);
+        /// Constructor - initialises each component directly.
+        Vector2(const T_ty tX, const T_ty tY);
 
-		/// Copy constructor.
-		Vector2(const Vector2<T_ty> & rhs);
+        /// Copy constructor.
+        Vector2(const Vector2<T_ty> & rhs);
 
-		/// Destructor.
-		~Vector2();
+        /// Destructor.
+        ~Vector2();
 
 
         //------------------------------------------------------------------------------
         // Operators.
 
-		/// Copy assignment operator.
-		const Vector2<T_ty> & operator = (const Vector2<T_ty> & rhs);
+        /// Copy assignment operator.
+        const Vector2<T_ty> & operator = (const Vector2<T_ty> & rhs);
 
-		/// Equality test.
-		bool operator == (const Vector2<T_ty> & rhs) const;
+        /// Equality test.
+        bool operator == (const Vector2<T_ty> & rhs) const;
         /// Inequality test.
-		bool operator != (const Vector2<T_ty> & rhs) const;
+        bool operator != (const Vector2<T_ty> & rhs) const;
 
-		/// Vector addition assignment
-		const Vector2<T_ty> & operator += (const Vector2<T_ty> & rhs);
+        /// Vector addition assignment
+        const Vector2<T_ty> & operator += (const Vector2<T_ty> & rhs);
         /// Vector subtraction assignment
-		const Vector2<T_ty> & operator -= (const Vector2<T_ty> & rhs);
+        const Vector2<T_ty> & operator -= (const Vector2<T_ty> & rhs);
 
-		/// Scalar multiplication assignment.
-		const Vector2<T_ty> & operator *= (const T_ty rhs);
+        /// Scalar multiplication assignment.
+        const Vector2<T_ty> & operator *= (const T_ty rhs);
         /// Scalar division assignment.
-		const Vector2<T_ty> & operator /= (const T_ty rhs);
+        const Vector2<T_ty> & operator /= (const T_ty rhs);
 
-		/// Negation
-		const Vector2<T_ty> operator - () const;
+        /// Negation
+        const Vector2<T_ty> operator - () const;
 
 
         //------------------------------------------------------------------------------
@@ -69,39 +69,43 @@ namespace avidmath
         /// Sets both components in one call.
         void set(const T_ty tX, const T_ty tY);
 
-		/// Get the manitude (length) of this vector
-		const T_ty getMagnitude() const;
+        /// Get the manitude (length) of this vector
+        const T_ty getMagnitude() const;
 
-		/// Get the squared magnitude of this vector
-		/// This is much faster than getMagnitude() as it avoids a square root.
+        /// Get the squared magnitude of this vector
+        /// This is much faster than getMagnitude() as it avoids a square root.
         /// This can be useful for some comparisons.
-		const T_ty getSqMagnitude() const;
+        const T_ty getSqMagnitude() const;
 
-		/// Normalise this vector in place (makes it a unit vector).
-		void normalise();
-		/// Get a normalised copy of this vector.
-		const Vector2<T_ty> getNormalised() const;
+        /// Normalise this vector in place (makes it a unit vector).
+        void normalise();
+        /// Get a normalised copy of this vector.
+        const Vector2<T_ty> getNormalised() const;
 
-		/// Get the right tangent of this vector
-		const Vector2<T_ty> getRightTangent() const;
-		/// Get the left tangent of this vector
-		const Vector2<T_ty> getLeftTangent() const;
+        /// Get the right tangent of this vector
+        const Vector2<T_ty> getRightTangent() const;
+        /// Get the left tangent of this vector
+        const Vector2<T_ty> getLeftTangent() const;
 
         /// Calculate the dot product of this vector with another.
         T_ty dot(const Vector2<T_ty> &rhs);
 
-        // TODO: Get projection/parallel of one vector on another.
+        /// Get the amount by which this vector projects onto another.
+        T_ty getProjectionLength(const Vector2<T_ty> &rhs) const;
+
+        /// Get a vector describing this vector's projection on another.
+        const Vector2<T_ty> getProjectionVector(const Vector2<T_ty> &rhs) const;
 
 
         //------------------------------------------------------------------------------
         // Data.
 
-		/// X component of this vector.
-		T_ty x;
+        /// X component of this vector.
+        T_ty x;
 
         /// Y component of this vector.
         T_ty y;
-	};
+    };
 
     //------------------------------------------------------------------------------
     // Inline definitions.
@@ -225,19 +229,35 @@ namespace avidmath
     template <typename T_ty>
     const Vector2<T_ty> Vector2<T_ty>::getRightTangent() const
     {
-        return Vector2<T_ty>(x, -y);
+        return Vector2<T_ty>(y, -x);
     }
 
     template <typename T_ty>
     const Vector2<T_ty> Vector2<T_ty>::getLeftTangent() const
     {
-        return Vector2<T_ty>(-x, y);
+        return Vector2<T_ty>(-y, x);
     }
 
     template <typename T_ty>
-    T_ty Vector2<T_ty>::dot(const Vector2<T_ty> &rhs)
+    T_ty Vector2<T_ty>::dot(const Vector2<T_ty> &rhs) const
     {
         return (x * rhs.x) + (y * rhs.y);
+    }
+
+    template <typename T_ty>
+    T_ty Vector2<T_ty>::getProjectionLength(const Vector2<T_ty> &rhs) const
+    {
+        const T_ty rhsMag = rhs.getMagnitude();
+        if (rhsMag == 0) return 0;
+        return dot(rhs) / rhsMag;
+    }
+
+    template <typename T_ty>
+    const Vector2<T_ty> Vector2<T_ty>::getProjectionVector(const Vector2<T_ty> &rhs) const
+    {
+        const T_ty rhsSqMag = rhs.getSqMagnitude();
+        if (rhsSqMag == 0) return Vector2<T_ty>();
+        return (dot(rhs) / rhsSqMag) * rhs;
     }
 
     //------------------------------------------------------------------------------

@@ -53,6 +53,11 @@ TEST_CASE("Vector2 - construction and assignment", "[Vector2]")
     }
 }
 
+TEST_CASE("Equality", "[Vector2]")
+{
+    // TODO: Equality / inequality
+}
+
 TEST_CASE("Vector2 - basic arithmetic", "[Vector2]")
 {
     SECTION("Vector addition")
@@ -70,10 +75,67 @@ TEST_CASE("Vector2 - basic arithmetic", "[Vector2]")
         CHECK(v.y == Approx(10.1));
     }
 
-    // vector subtraction / assignment
-    // scalar multiplication / assignment
-    // scalar division / assignment
-    // negation
+    SECTION("Vector subtraction")
+    {
+        Vector2<double> v = Vector2<double>(4.5, 3.2) - Vector2<double>(3.1, 2.6);
+        CHECK(v.x == Approx(1.4));
+        CHECK(v.y == Approx(0.6));
+    }
+
+    SECTION("Vector subtraction assignment")
+    {
+        Vector2<double> v(6.3, 5.1);
+        v -= Vector2<double>(5.2, 1.8);
+        CHECK(v.x == Approx(1.1));
+        CHECK(v.y == Approx(3.3));
+    }
+
+    SECTION("Scalar multiplication")
+    {
+        Vector2<double> v1 = Vector2<double>(8.4, 3.3) * 4.5;
+        // Check the we got the right answer
+        CHECK(v1.x == Approx(37.8));
+        CHECK(v1.y == Approx(14.85));
+        // Check that it works the other way round too.
+        Vector2<double> v2 = 4.5 * Vector2<double>(8.4, 3.3);
+        CHECK(v1.x == Approx(v2.x));
+        CHECK(v1.y == Approx(v2.y));
+    }
+
+    SECTION("Scalar multiplication assignment")
+    {
+        Vector2<double> v = Vector2<double>(3.9, 9.6);
+        v *= 5.1;
+        CHECK(v.x == Approx(19.89));
+        CHECK(v.y == Approx(48.96));
+    }
+
+    SECTION("Scalar division")
+    {
+        Vector2<double> v1 = Vector2<double>(12.3, 6.7) / 2.2;
+        // Check the we got the right answer
+        CHECK(v1.x == Approx(5.59090909));
+        CHECK(v1.y == Approx(3.04545455));
+        // Check that the inverse works
+        Vector2<double> v2 = 2.2 / Vector2<double>(12.3, 6.7);
+        CHECK(v1.x == Approx(1.0 / v2.x));
+        CHECK(v1.y == Approx(1.0 / v2.y));
+    }
+
+    SECTION("Scalar division assignment")
+    {
+        Vector2<double> v = Vector2<double>(8.6, 10.7);
+        v *= 3.8;
+        CHECK(v.x == Approx(2.26315789));
+        CHECK(v.y == Approx(2.81578947));
+    }
+
+    SECTION("Negation")
+    {
+        Vector2<double> v = -Vector2<double>(14.6, -8.2);
+        CHECK(v.x == -14.6);
+        CHECK(v.y == 8.2);
+    }
 }
 
 TEST_CASE("Vector2 - operations", "[Vector2]")
@@ -106,7 +168,27 @@ TEST_CASE("Vector2 - operations", "[Vector2]")
         CHECK(v2.y == Approx(-0.44229248));
     }
 
-    // dot product
-    // right tangent
-    // left tangent
+    SECTION("Dot product")
+    {
+        Vector2<double> v1(3.4, 9.2);
+        Vector2<double> v2(8.6, 1.9);
+        CHECK(v1.dot(v2) == 46.72);
+    }
+
+    SECTION("Right tangent")
+    {
+        Vector2<double> v1(8.8, 1.9);
+        Vector2<double> v2 = v1.getRightTangent();
+        CHECK(v1.dot(v2) == Approx(0.0));
+    }
+
+    SECTION("Left tangent")
+    {
+        Vector2<double> v1(3.7, 2.4);
+        Vector2<double> v2 = v1.getLeftTangent();
+        CHECK(v1.dot(v2) == Approx(0.0));
+    }
+
+    // TODO: Projection length/vector
 }
+

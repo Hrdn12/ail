@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\inc\BoundingBox2.h" />
     <ClInclude Include="..\..\inc\Vector2.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
