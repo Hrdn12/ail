@@ -22,8 +22,8 @@ namespace avidmath
     class Vector2
     {
     public:
-        //------------------------------------------------------------------------------
-        // Construction / destruction.
+    //------------------------------------------------------------------------------
+    // Construction / destruction.
 
         /// Constructor - initialises everything to 0.
         Vector2();
@@ -38,8 +38,8 @@ namespace avidmath
         ~Vector2();
 
 
-        //------------------------------------------------------------------------------
-        // Operators.
+    //------------------------------------------------------------------------------
+    // Operators.
 
         /// Copy assignment operator.
         const Vector2<T_ty> & operator = (const Vector2<T_ty> & rhs);
@@ -63,13 +63,13 @@ namespace avidmath
         const Vector2<T_ty> operator - () const;
 
 
-        //------------------------------------------------------------------------------
-        // Accessors / operations.
+    //------------------------------------------------------------------------------
+    // Accessors / operations.
 
         /// Sets both components in one call.
         void set(const T_ty tX, const T_ty tY);
 
-        /// Get the manitude (length) of this vector
+        /// Get the magnitude (length) of this vector
         const T_ty getMagnitude() const;
 
         /// Get the squared magnitude of this vector
@@ -88,17 +88,17 @@ namespace avidmath
         const Vector2<T_ty> getLeftTangent() const;
 
         /// Calculate the dot product of this vector with another.
-        T_ty dot(const Vector2<T_ty> &rhs);
+        T_ty dot(const Vector2<T_ty> &rhs) const;
 
         /// Get the amount by which this vector projects onto another.
-        T_ty getProjectionLength(const Vector2<T_ty> &rhs) const;
+        T_ty getScalarProjection(const Vector2<T_ty> &rhs) const;
 
         /// Get a vector describing this vector's projection on another.
-        const Vector2<T_ty> getProjectionVector(const Vector2<T_ty> &rhs) const;
+        const Vector2<T_ty> getVectorProjection(const Vector2<T_ty> &rhs) const;
 
 
-        //------------------------------------------------------------------------------
-        // Data.
+    //------------------------------------------------------------------------------
+    // Data.
 
         /// X component of this vector.
         T_ty x;
@@ -107,8 +107,8 @@ namespace avidmath
         T_ty y;
     };
 
-    //------------------------------------------------------------------------------
-    // Inline definitions.
+//------------------------------------------------------------------------------
+// Inline definitions.
 
     template <typename T_ty>
     Vector2<T_ty>::Vector2() : x(0), y(0)
@@ -178,8 +178,8 @@ namespace avidmath
     const Vector2<T_ty> & Vector2<T_ty>::operator /= (const T_ty rhs)
     {
         assert(rhs != 0);
-        x /= rhs.x;
-        y /= rhs.y;
+        x /= rhs;
+        y /= rhs;
         return *this;
     }
 
@@ -245,7 +245,7 @@ namespace avidmath
     }
 
     template <typename T_ty>
-    T_ty Vector2<T_ty>::getProjectionLength(const Vector2<T_ty> &rhs) const
+    T_ty Vector2<T_ty>::getScalarProjection(const Vector2<T_ty> &rhs) const
     {
         const T_ty rhsMag = rhs.getMagnitude();
         if (rhsMag == 0) return 0;
@@ -253,15 +253,15 @@ namespace avidmath
     }
 
     template <typename T_ty>
-    const Vector2<T_ty> Vector2<T_ty>::getProjectionVector(const Vector2<T_ty> &rhs) const
+    const Vector2<T_ty> Vector2<T_ty>::getVectorProjection(const Vector2<T_ty> &rhs) const
     {
         const T_ty rhsSqMag = rhs.getSqMagnitude();
         if (rhsSqMag == 0) return Vector2<T_ty>();
         return (dot(rhs) / rhsSqMag) * rhs;
     }
 
-    //------------------------------------------------------------------------------
-    // Global operators.
+//------------------------------------------------------------------------------
+// Global operators.
 
     /// Vector addition.	
 	template <typename T_ty>
@@ -313,6 +313,6 @@ namespace avidmath
         return ans;
     }
 
-}
+}//namespace avidmath
 
 #endif //avidmath_Vector2_h
