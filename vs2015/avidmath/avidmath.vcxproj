@@ -11,11 +11,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\inc\BoundingBox2.h" />
+    <ClInclude Include="..\..\inc\avidmath.h" />
+    <ClInclude Include="..\..\inc\avidmathconfig.h" />
+    <ClInclude Include="..\..\inc\BoundingBox2d.h" />
     <ClInclude Include="..\..\inc\Constants.h" />
     <ClInclude Include="..\..\inc\Polar.h" />
     <ClInclude Include="..\..\inc\Utils.h" />
-    <ClInclude Include="..\..\inc\Vector2.h" />
+    <ClInclude Include="..\..\inc\Vector2d.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\inc\BoundingBox2d.inl" />
+    <None Include="..\..\inc\Polar.inl" />
+    <None Include="..\..\inc\Vector2d.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FB0682AE-9770-4E4B-BA5C-FCFE56698D2F}</ProjectGuid>

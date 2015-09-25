@@ -17,6 +17,9 @@
     <ClCompile Include="..\..\test\test_Utils.cpp" />
     <ClCompile Include="..\..\test\test_Vector2.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\test\common.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FACC14BF-21E3-409A-87AA-B37710646E0F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>

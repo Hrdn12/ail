@@ -1,6 +1,4 @@
-#include "catch.hpp"
-
-#include "../inc/Polar.h"
+#include "common.h"
 
 using namespace avidmath;
 
