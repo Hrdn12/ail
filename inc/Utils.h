@@ -27,9 +27,9 @@ namespace avidmath {
     template <typename T_ty>
     inline constexpr T_ty degToGrad(const T_ty angle) { return angle / T_ty(0.9); }
     
-    /// Convert an angle from degrees to full circles.
+    /// Convert an angle from degrees to full turns.
     template <typename T_ty>
-    inline constexpr T_ty degToCir(const T_ty angle) { return angle / T_ty(360); }
+    inline constexpr T_ty degToTurn(const T_ty angle) { return angle / T_ty(360); }
     
     
     /// Convert an angle from radians to degrees.
@@ -40,9 +40,9 @@ namespace avidmath {
     template <typename T_ty>
     inline constexpr T_ty radToGrad(const T_ty angle) { return angle * (T_ty(200) / constants::pi<T_ty>()); }
     
-    /// Convert an angle from radians to full circles.
+    /// Convert an angle from radians to full turns.
     template <typename T_ty>
-    inline constexpr T_ty radToCir(const T_ty angle) { return angle / (T_ty(2) * constants:pi<T_ty>()); }
+    inline constexpr T_ty radToTurn(const T_ty angle) { return angle / (T_ty(2) * constants::pi<T_ty>()); }
     
     
     /// Convert an angle from gradians to degrees.
@@ -53,22 +53,22 @@ namespace avidmath {
     template <typename T_ty>
     inline constexpr T_ty gradToRad(const T_ty angle) { return angle * (constants::pi<T_ty>() / T_ty(200)); }
     
-    /// Convert an angle from gradians to full circles.
+    /// Convert an angle from gradians to full turns.
     template <typename T_ty>
-    inline constexpr T_ty gradToCir(const T_ty angle) { return angle / T_ty(400); }
+    inline constexpr T_ty gradToTurn(const T_ty angle) { return angle / T_ty(400); }
     
     
-    /// Convert an angle from full circles to degrees.
+    /// Convert an angle from full turns to degrees.
     template <typename T_ty>
-    inline constexpr T_ty cirToDeg(const T_ty angle) { return angle * T_ty(360); }
+    inline constexpr T_ty turnToDeg(const T_ty angle) { return angle * T_ty(360); }
     
-    /// Convert an angle from full circles to radians
+    /// Convert an angle from full turns to radians
     template <typename T_ty>
-    inline constexpr T_ty cirToRad(const T_ty angle) { return angle * T_ty(2.0) * constants::pi<T_ty>(); }
+    inline constexpr T_ty turnToRad(const T_ty angle) { return angle * T_ty(2.0) * constants::pi<T_ty>(); }
     
-    /// Convert an angle from full circles to gradians.
+    /// Convert an angle from full turns to gradians.
     template <typename T_ty>
-    inline constexpr T_ty cirToGrad(const T_ty angle) { return angle * T_ty(400); }
+    inline constexpr T_ty turnToGrad(const T_ty angle) { return angle * T_ty(400); }
     
     
     //-------------------------------------------------------------------------
@@ -106,8 +106,9 @@ namespace avidmath {
     template <typename T_ty>
     inline constexpr T_ty diff(const T_ty lhs, const T_ty rhs)
     {
-        if (lhs >= rhs) return lhs - rhs;
-        return rhs - lhs;
+        return (lhs >= rhs) ?
+            lhs - rhs :
+            rhs - lhs;
     }
 
     /// Clamp a value to the range defined by rangeMin and rangeMax.
@@ -115,9 +116,9 @@ namespace avidmath {
     template <typename T_ty>
     inline constexpr T_ty clamp(const T_ty val, const T_ty rangeMin, const T_ty rangeMax)
     {
-        if (val < rangeMin) return rangeMin;
-        if (val > rangeMax) return rangeMax;
-        return val;
+        return
+            (val < rangeMin) ? rangeMin :
+            ((val > rangeMax) ? rangeMax : val);
     }
 
     // TODO: wrap to range
@@ -137,7 +138,6 @@ namespace avidmath {
     {
         return clamp(lerp(amount, rangeMin, rangeMax), rangeMin, rangeMax);
     }
-    
 
 }//namespace avidmath
 
