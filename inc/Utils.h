@@ -13,6 +13,8 @@
 #define avidmath_Utils_h
 
 #include <cmath>
+#include <cassert>
+#include <type_traits>
 #include "Constants.h"
 
 namespace avidmath {
@@ -21,41 +23,78 @@ namespace avidmath {
 
     /// Convert an angle from degrees to radians.
     template <typename T_ty>
-    inline constexpr T_ty degToRad(const T_ty angle) { return angle * (constants::pi<T_ty>() / T_ty(180)); }
+    inline constexpr T_ty degToRad(const T_ty angle)
+    {
+        static_assert(!std::is_integral<T_ty>::value, "This function won't do anything useful with an integer. Use floating point instead.");
+        return (angle * constants::pi<T_ty>()) / T_ty(180);
+    }
     
     /// Convert an angle from degrees to gradians.
+    /// This involves division by 
     template <typename T_ty>
-    inline constexpr T_ty degToGrad(const T_ty angle) { return angle / T_ty(0.9); }
+    inline constexpr T_ty degToGrad(const T_ty angle)
+    {
+        static_assert(!std::is_integral<T_ty>::value, "This function won't do anything useful with an integer. Use floating point instead.");
+        return (angle / T_ty(0.9));
+    }
     
     /// Convert an angle from degrees to full turns.
     template <typename T_ty>
-    inline constexpr T_ty degToTurn(const T_ty angle) { return angle / T_ty(360); }
+    inline constexpr T_ty degToTurn(const T_ty angle)
+    {
+        static_assert(!std::is_integral<T_ty>::value, "This function won't do anything useful with an integer. Use floating point instead.");
+        return angle / T_ty(360);
+    }
     
     
     /// Convert an angle from radians to degrees.
     template <typename T_ty>
-    inline constexpr T_ty radToDeg(const T_ty angle) { return angle * (T_ty(180) / constants::pi<T_ty>()); }
+    inline constexpr T_ty radToDeg(const T_ty angle)
+    {
+        static_assert(!std::is_integral<T_ty>::value, "This function won't do anything useful with an integer. Use floating point instead.");
+        return (angle * T_ty(180)) / constants::pi<T_ty>();
+    }
     
     /// Convert an angle from radians to gradians.
     template <typename T_ty>
-    inline constexpr T_ty radToGrad(const T_ty angle) { return angle * (T_ty(200) / constants::pi<T_ty>()); }
+    inline constexpr T_ty radToGrad(const T_ty angle)
+    {
+        static_assert(!std::is_integral<T_ty>::value, "This function won't do anything useful with an integer. Use floating point instead.");
+        return (angle * T_ty(200)) / constants::pi<T_ty>();
+    }
     
     /// Convert an angle from radians to full turns.
     template <typename T_ty>
-    inline constexpr T_ty radToTurn(const T_ty angle) { return angle / (T_ty(2) * constants::pi<T_ty>()); }
+    inline constexpr T_ty radToTurn(const T_ty angle)
+    {
+        static_assert(!std::is_integral<T_ty>::value, "This function won't do anything useful with an integer. Use floating point instead.");
+        return angle / (T_ty(2) * constants::pi<T_ty>());
+    }
     
     
     /// Convert an angle from gradians to degrees.
     template <typename T_ty>
-    inline constexpr T_ty gradToDeg(const T_ty angle) { return angle * T_ty(0.9); }
+    inline constexpr T_ty gradToDeg(const T_ty angle)
+    {
+        static_assert(!std::is_integral<T_ty>::value, "This function won't do anything useful with an integer. Use floating point instead.");
+        return angle * T_ty(0.9);
+    }
     
     /// Convert an angle from gradians to radians.
     template <typename T_ty>
-    inline constexpr T_ty gradToRad(const T_ty angle) { return angle * (constants::pi<T_ty>() / T_ty(200)); }
+    inline constexpr T_ty gradToRad(const T_ty angle)
+    {
+        static_assert(!std::is_integral<T_ty>::value, "This function won't do anything useful with an integer. Use floating point instead.");
+        return (angle * constants::pi<T_ty>()) / T_ty(200);
+    }
     
     /// Convert an angle from gradians to full turns.
     template <typename T_ty>
-    inline constexpr T_ty gradToTurn(const T_ty angle) { return angle / T_ty(400); }
+    inline constexpr T_ty gradToTurn(const T_ty angle)
+    {
+        static_assert(!std::is_integral<T_ty>::value, "This function won't do anything useful with an integer. Use floating point instead.");
+        return angle / T_ty(400);
+    }
     
     
     /// Convert an angle from full turns to degrees.
@@ -64,7 +103,11 @@ namespace avidmath {
     
     /// Convert an angle from full turns to radians
     template <typename T_ty>
-    inline constexpr T_ty turnToRad(const T_ty angle) { return angle * T_ty(2.0) * constants::pi<T_ty>(); }
+    inline constexpr T_ty turnToRad(const T_ty angle)
+    {
+        static_assert(!std::is_integral<T_ty>::value, "This function won't do anything useful with an integer. Use floating point instead.");
+        return angle * T_ty(2.0) * constants::pi<T_ty>();
+    }
     
     /// Convert an angle from full turns to gradians.
     template <typename T_ty>
@@ -79,6 +122,7 @@ namespace avidmath {
     template <typename T_ty>
     inline constexpr bool isApproxEqual(const T_ty lhs, const T_ty rhs, const T_ty margin)
     {
+        assert(margin >= 0);
         return diff(lhs, rhs) <= margin;
     }
 
@@ -87,7 +131,8 @@ namespace avidmath {
     template <typename T_ty>
     inline constexpr bool isApproxZero(const T_ty val, const T_ty margin)
     {
-        return std::abs(val) <= margin;
+        assert(margin >= 0);
+        return (val >= 0 ? val : -val) <= margin;
     }
     
     /// Check if a value is within the range defined by rangeMin and rangeMax.
@@ -95,13 +140,14 @@ namespace avidmath {
     template <typename T_ty>
     inline constexpr bool isInRange(const T_ty val, const T_ty rangeMin, const T_ty rangeMax)
     {
+        assert(rangeMin <= rangeMax);
         return (rangeMin <= val) && (val <= rangeMax);
     }
     
     
     //-------------------------------------------------------------------------
     // Numerical utilities.
-    
+
     /// Get the difference between two values. Result is always positive or zero. Handles unsigned types safely.
     template <typename T_ty>
     inline constexpr T_ty diff(const T_ty lhs, const T_ty rhs)
@@ -116,6 +162,7 @@ namespace avidmath {
     template <typename T_ty>
     inline constexpr T_ty clamp(const T_ty val, const T_ty rangeMin, const T_ty rangeMax)
     {
+        assert(rangeMin <= rangeMax);
         return
             (val < rangeMin) ? rangeMin :
             ((val > rangeMax) ? rangeMax : val);
@@ -129,6 +176,7 @@ namespace avidmath {
     template <typename T_ty>
     inline constexpr T_ty lerp(const T_ty amount, const T_ty rangeMin, const T_ty rangeMax)
     {
+        static_assert(!std::is_integral<T_ty>::value, "This function won't do anything useful with an integer. Use floating point instead.");
         return rangeMin + (amount * (rangeMax - rangeMin));
     }
 
@@ -136,6 +184,7 @@ namespace avidmath {
     template <typename T_ty>
     inline constexpr T_ty lerpClamp(const T_ty amount, const T_ty rangeMin, const T_ty rangeMax)
     {
+        static_assert(!std::is_integral<T_ty>::value, "This function won't do anything useful with an integer. Use floating point instead.");
         return clamp(lerp(amount, rangeMin, rangeMax), rangeMin, rangeMax);
     }
 
