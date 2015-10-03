@@ -136,12 +136,13 @@ namespace avidmath {
     }
     
     /// Check if a value is within the range defined by rangeMin and rangeMax.
-    /// Assumes rangeMin <= rangeMax.
+    /// It doesn't matter which range value is bigger.
     template <typename T_ty>
-    inline constexpr bool isInRange(const T_ty val, const T_ty rangeMin, const T_ty rangeMax)
+    inline constexpr bool isInRange(const T_ty val, const T_ty range1, const T_ty range2)
     {
-        assert(rangeMin <= rangeMax);
-        return (rangeMin <= val) && (val <= rangeMax);
+        return
+            ((range1 <= val) && (val <= range2)) ||
+            ((range2 <= val) && (val <= range1));
     }
     
     
@@ -158,34 +159,33 @@ namespace avidmath {
     }
 
     /// Clamp a value to the range defined by rangeMin and rangeMax.
-    /// Assumes rangeMin <= rangeMax.
+    /// It doesn't matter which range value is bigger.
     template <typename T_ty>
-    inline constexpr T_ty clamp(const T_ty val, const T_ty rangeMin, const T_ty rangeMax)
+    inline constexpr T_ty clamp(const T_ty val, const T_ty range1, const T_ty range2)
     {
-        assert(rangeMin <= rangeMax);
-        return
-            (val < rangeMin) ? rangeMin :
-            ((val > rangeMax) ? rangeMax : val);
+        return (range1 < range2) ?
+            ((val < range1) ? range1 : ((val > range2) ? range2 : val)) :
+            ((val > range1) ? range1 : ((val < range2) ? range2 : val));
     }
 
     // TODO: wrap to range
     
     // TODO: clamp to power
 
-    /// Linearly interpolate between two values by the given amount. This will extrapolate beyond the original range if necessary.
+    /// Linearly interpolate between start and end by the given amount. This will extrapolate beyond the original range if necessary.
     template <typename T_ty>
-    inline constexpr T_ty lerp(const T_ty amount, const T_ty rangeMin, const T_ty rangeMax)
+    inline constexpr T_ty lerp(const T_ty amount, const T_ty start, const T_ty end)
     {
         static_assert(!std::is_integral<T_ty>::value, "This function won't do anything useful with an integer. Use floating point instead.");
-        return rangeMin + (amount * (rangeMax - rangeMin));
+        return start + (amount * (end - start));
     }
 
-    /// Linearly interpolate between two values by the given amount, clamping the result to the original range.
+    /// Linearly interpolate between start and end by the given amount, clamping the result to the original range.
     template <typename T_ty>
-    inline constexpr T_ty lerpClamp(const T_ty amount, const T_ty rangeMin, const T_ty rangeMax)
+    inline constexpr T_ty lerpClamp(const T_ty amount, const T_ty start, const T_ty end)
     {
         static_assert(!std::is_integral<T_ty>::value, "This function won't do anything useful with an integer. Use floating point instead.");
-        return clamp(lerp(amount, rangeMin, rangeMax), rangeMin, rangeMax);
+        return clamp(lerp(amount, start, end), start, end);
     }
 
 }//namespace avidmath

@@ -152,7 +152,7 @@ TEST_CASE("Utils - Angle conversion", "[Utils]")
 
 TEST_CASE("Utils - Comparisons", "[Utils]")
 {
-    SECTION("Approximate equality - integers")
+    SECTION("isApproxEqual - integers")
     {
         // Exact matches
         REQUIRE(isApproxEqual(0, 0, 0));
@@ -205,7 +205,7 @@ TEST_CASE("Utils - Comparisons", "[Utils]")
         REQUIRE_FALSE(isApproxEqual(-85, -63, 21));
     }
 
-    SECTION("Approximate equality - floating point")
+    SECTION("isApproxEqual - floating point")
     {
         // Exact matches
         REQUIRE(isApproxEqual(0.0, 0.0, 0.0));
@@ -214,6 +214,8 @@ TEST_CASE("Utils - Comparisons", "[Utils]")
         REQUIRE(isApproxEqual(871.02, 871.02, 4.901));
 
         // Approximate matches
+        REQUIRE(isApproxEqual(1.5, 1.4, 0.2));
+        REQUIRE(isApproxEqual(-3.8, -4.1, 0.4));
         REQUIRE(isApproxEqual(-13.6, -14.9, 2.76));
         REQUIRE(isApproxEqual(24.54, 27.0, 3.0));
         REQUIRE(isApproxEqual(-6594.34, -6402.939, 353.4));
@@ -260,7 +262,7 @@ TEST_CASE("Utils - Comparisons", "[Utils]")
         REQUIRE_FALSE(isApproxEqual(-52.4198, -58.67, 6.2501));
     }
 
-    SECTION("Approximate equality to zero - integers")
+    SECTION("isApproxZero - integers")
     {
         // Exact matches
         REQUIRE(isApproxZero(0, 0));
@@ -289,13 +291,15 @@ TEST_CASE("Utils - Comparisons", "[Utils]")
         REQUIRE_FALSE(isApproxZero(93, 38));
     }
 
-    SECTION("Approximate equality to zero - floating point")
+    SECTION("isApproxZero - floating point")
     {
         // Exact matches
         REQUIRE(isApproxZero(0.0, 0.0));
         REQUIRE(isApproxZero(0.0, 1.0));
 
         // Approximate matches
+        REQUIRE(isApproxZero(0.4, 0.9));
+        REQUIRE(isApproxZero(-0.3, 0.7));
         REQUIRE(isApproxZero(-2.2, 3.1));
         REQUIRE(isApproxZero(2.2, 3.1));
         REQUIRE(isApproxZero(-5.6, 6.3));
@@ -318,7 +322,248 @@ TEST_CASE("Utils - Comparisons", "[Utils]")
         REQUIRE_FALSE(isApproxZero(947.682, 37.869));
     }
 
-    // TODO: isInRange
+    SECTION("Range checking - integer")
+    {
+        // Zero range.
+        REQUIRE(isInRange(0, 0, 0));
+        REQUIRE(isInRange(382, 382, 382));
+        REQUIRE(isInRange(-48, -48, -48));
+
+        // Comfortably in range.
+        REQUIRE(isInRange(23, 0, 40));
+        REQUIRE(isInRange(23, 40, 0));
+        REQUIRE(isInRange(502, 389, 1930));
+        REQUIRE(isInRange(502, 1930, 389));
+        REQUIRE(isInRange(-38, 0, -50));
+        REQUIRE(isInRange(-38, -50, 0));
+        REQUIRE(isInRange(-283, -102, -819));
+        REQUIRE(isInRange(-283, -819, -102));
+
+        // Comfortably in range - boundaries straddling zero.
+        REQUIRE(isInRange(0, -299, 391));
+        REQUIRE(isInRange(0, 391, -299));
+        REQUIRE(isInRange(13, -58, 962));
+        REQUIRE(isInRange(13, 962, -58));
+        REQUIRE(isInRange(-28, -98, 442));
+        REQUIRE(isInRange(-28, 442, -98));
+
+        // In range - exactly on boundary.
+        REQUIRE(isInRange(40, 40, 91));
+        REQUIRE(isInRange(40, 91, 40));
+        REQUIRE(isInRange(91, 40, 91));
+        REQUIRE(isInRange(91, 91, 40));
+        REQUIRE(isInRange(-211, -38, -211));
+        REQUIRE(isInRange(-211, -211, -38));
+        REQUIRE(isInRange(-38, -38, -211));
+        REQUIRE(isInRange(-38, -211, -38));
+
+        // Out of range - just outside boundary.
+        REQUIRE_FALSE(isInRange(42, 43, 56));
+        REQUIRE_FALSE(isInRange(42, 56, 43));
+        REQUIRE_FALSE(isInRange(57, 43, 56));
+        REQUIRE_FALSE(isInRange(57, 56, 43));
+        REQUIRE_FALSE(isInRange(-66, -67, -78));
+        REQUIRE_FALSE(isInRange(-66, -78, -67));
+        REQUIRE_FALSE(isInRange(-79, -67, -78));
+        REQUIRE_FALSE(isInRange(-79, -78, -67));
+
+        // Comfortably out of range.
+        REQUIRE_FALSE(isInRange(45, 50, 60));
+        REQUIRE_FALSE(isInRange(45, 60, 50));
+        REQUIRE_FALSE(isInRange(36, 2, 11));
+        REQUIRE_FALSE(isInRange(36, 11, 2));
+        REQUIRE_FALSE(isInRange(-9, -28, -14));
+        REQUIRE_FALSE(isInRange(-9, -14, -28));
+        REQUIRE_FALSE(isInRange(-102, -47, -15));
+        REQUIRE_FALSE(isInRange(-102, -15, -47));
+    }
+
+    SECTION("Range checking - floating point")
+    {
+        // Zero range.
+        REQUIRE(isInRange(0.0, 0.0, 0.0));
+        REQUIRE(isInRange(14.6, 14.6, 14.6));
+        REQUIRE(isInRange(-38.1, -38.1, -38.1));
+
+        // Comfortably in range.
+        REQUIRE(isInRange(52.4, 0.0, 82.06));
+        REQUIRE(isInRange(52.4, 82.06, 0.0));
+        REQUIRE(isInRange(12.6, 12.4, 12.9));
+        REQUIRE(isInRange(12.6, 12.9, 12.4));
+        REQUIRE(isInRange(294.51, 119.93, 479.22));
+        REQUIRE(isInRange(294.51, 479.22, 119.93));
+        REQUIRE(isInRange(-99.4, 0.0, -140.5));
+        REQUIRE(isInRange(-99.4, -140.5, 0.0));
+        REQUIRE(isInRange(-47.0, -46.8, -47.3));
+        REQUIRE(isInRange(-47.0, -47.3, -46.8));
+        REQUIRE(isInRange(-497.94, -226.3, -855.1));
+        REQUIRE(isInRange(-497.94, -855.1, -226.3));
+
+        // Comfortably in range - boundaries straddling zero.
+        REQUIRE(isInRange(0.0, -53.5, 193.6));
+        REQUIRE(isInRange(0.0, 193.6, -53.5));
+        REQUIRE(isInRange(48.92, -951.8, 364.2));
+        REQUIRE(isInRange(48.92, 364.2, -951.8));
+        REQUIRE(isInRange(-66.8, -354.9, 1001.2));
+        REQUIRE(isInRange(-66.8, 1001.2, -354.9));
+
+        // In range - exactly on boundary.
+        REQUIRE(isInRange(28.5, 28.5, 37.7));
+        REQUIRE(isInRange(28.5, 37.7, 28.5));
+        REQUIRE(isInRange(37.7, 28.5, 37.7));
+        REQUIRE(isInRange(37.7, 37.7, 28.5));
+        REQUIRE(isInRange(-48.3, -9.9, -62.7));
+        REQUIRE(isInRange(-48.3, -62.7, -9.9));
+        REQUIRE(isInRange(-62.7, -9.9, -62.7));
+        REQUIRE(isInRange(-62.7, -62.7, -9.9));
+
+        // Out of range - just outside boundary.
+        REQUIRE_FALSE(isInRange(58.2, 58.3, 58.9));
+        REQUIRE_FALSE(isInRange(58.2, 58.9, 58.3));
+        REQUIRE_FALSE(isInRange(59.0, 58.3, 58.9));
+        REQUIRE_FALSE(isInRange(59.0, 58.9, 58.3));
+        REQUIRE_FALSE(isInRange(-13.5, -13.6, -20.8));
+        REQUIRE_FALSE(isInRange(-13.5, -20.8, -13.6));
+        REQUIRE_FALSE(isInRange(-20.9, -13.6, -20.8));
+        REQUIRE_FALSE(isInRange(-20.9, -20.8, -13.6));
+
+        // Comfortably out of range.
+        REQUIRE_FALSE(isInRange(38.2, 14.63, 24.222));
+        REQUIRE_FALSE(isInRange(38.2, 24.222, 14.63));
+        REQUIRE_FALSE(isInRange(59.9, 1035.48, 2094.99));
+        REQUIRE_FALSE(isInRange(59.9, 2094.99, 1035.48));
+        REQUIRE_FALSE(isInRange(-16.2, -37.1, -19.65));
+        REQUIRE_FALSE(isInRange(-16.2, -19.65, -37.1));
+        REQUIRE_FALSE(isInRange(-49.02, -3.01, -12.8));
+        REQUIRE_FALSE(isInRange(-49.02, -12.8, -3.01));
+    }
+}
+
+TEST_CASE("Utils - General numerical", "[Utils]")
+{
+    SECTION("diff")
+    {
+        // Signed integer
+        REQUIRE(diff(0, 0) == 0);
+        REQUIRE(diff(0, 139) == 139);
+        REQUIRE(diff(0, -40) == 40);
+        REQUIRE(diff(57, 0) == 57);
+        REQUIRE(diff(-98, 0) == 98);
+        REQUIRE(diff(141, 296) == 155);
+        REQUIRE(diff(301, 112) == 189);
+        REQUIRE(diff(-53, -95) == 42);
+        REQUIRE(diff(-77, -12) == 65);
+        REQUIRE(diff(-23, 492) == 515);
+        REQUIRE(diff(101, -344) == 445);
+
+        // Unsigned integer
+        REQUIRE(diff<unsigned int>(108, 215) == 107);
+        REQUIRE(diff<unsigned int>(76, 2) == 74);
+
+        // Floating point
+        REQUIRE(diff(0.2, 0.54) == Approx(0.34));
+        REQUIRE(diff(24.412, 21.194) == Approx(3.218));
+        REQUIRE(diff(-1.91, -2.501) == Approx(0.591));
+        REQUIRE(diff(-44.5, -13.74) == Approx(30.76));
+    }
+
+    SECTION("clamp - integer")
+    {
+        // Zero range.
+        REQUIRE(clamp(0, 0, 0) == 0);
+        REQUIRE(clamp(95, 56, 56) == 56);
+        REQUIRE(clamp(56, 56, 56) == 56);
+        REQUIRE(clamp(41, 56, 56) == 56);
+        REQUIRE(clamp(-14, -32, -32) == -32);
+        REQUIRE(clamp(-32, -32, -32) == -32);
+        REQUIRE(clamp(-63, -32, -32) == -32);
+
+        // In range (no clamp).
+        REQUIRE(clamp(25, 2, 51) == 25);
+        REQUIRE(clamp(25, 51, 2) == 25);
+        REQUIRE(clamp(-13, -4, -99) == -13);
+        REQUIRE(clamp(-13, -99, -4) == -13);
+
+        // In range (no clamp) - mixing positive/negative.
+        REQUIRE(clamp(12, -34, 30) == 12);
+        REQUIRE(clamp(12, 30, -34) == 12);
+        REQUIRE(clamp(-5, -20, 19) == -5);
+        REQUIRE(clamp(-5, 19, -20) == -5);
+
+        // Clamp to lower boundary.
+        REQUIRE(clamp(10, 23, 56) == 23);
+        REQUIRE(clamp(10, 56, 23) == 23);
+        REQUIRE(clamp(22, 23, 56) == 23);
+        REQUIRE(clamp(22, 56, 23) == 23);
+        REQUIRE(clamp(-103, -44, -95) == -95);
+        REQUIRE(clamp(-103, -95, -44) == -95);
+        REQUIRE(clamp(-96, -44, -95) == -95);
+        REQUIRE(clamp(-96, -95, -44) == -95);
+
+        // Clamp to upper boundary.
+        REQUIRE(clamp(92, 5, 21) == 21);
+        REQUIRE(clamp(92, 21, 5) == 21);
+        REQUIRE(clamp(22, 5, 21) == 21);
+        REQUIRE(clamp(22, 21, 5) == 21);
+        REQUIRE(clamp(-1, -16, -44) == -16);
+        REQUIRE(clamp(-1, -44, -16) == -16);
+        REQUIRE(clamp(-15, -16, -44) == -16);
+        REQUIRE(clamp(-15, -44, -16) == -16);
+    }
+
+    SECTION("clamp - floating point")
+    {
+        // Zero range.
+        REQUIRE(clamp(0.0, 0.0, 0.0) == 0.0);
+        REQUIRE(clamp(84.2, 62.99, 62.99) == 62.99);
+        REQUIRE(clamp(62.99, 62.99, 62.99) == 62.99);
+        REQUIRE(clamp(31.05, 62.99, 62.99) == 62.99);
+        REQUIRE(clamp(-2.78, -17.84, -17.84) == -17.84);
+        REQUIRE(clamp(-17.84, -17.84, -17.84) == -17.84);
+        REQUIRE(clamp(-29.941, -17.84, -17.84) == -17.84);
+
+        // In range (no clamp).
+        REQUIRE(clamp(1.43, 1.38, 1.55) == 1.43);
+        REQUIRE(clamp(1.43, 1.55, 1.38) == 1.43);
+        REQUIRE(clamp(-3.926, -3.85, -4.22) == -3.926);
+        REQUIRE(clamp(-3.926, -4.22, -3.85) == -3.926);
+
+        // In range (no clamp) - mixing positive/negative.
+        REQUIRE(clamp(54.049, -11.06, 61.9) == 54.049);
+        REQUIRE(clamp(54.049, 61.9, -11.06) == 54.049);
+        REQUIRE(clamp(-0.727, -1.2, 0.88) == -0.727);
+        REQUIRE(clamp(-0.727, 0.88, -1.2) == -0.727);
+
+        // Clamp to lower boundary.
+        REQUIRE(clamp(1.1, 2.9, 4.6) == 2.9);
+        REQUIRE(clamp(1.1, 4.6, 2.9) == 2.9);
+        REQUIRE(clamp(2.88, 2.9, 4.6) == 2.9);
+        REQUIRE(clamp(2.88, 4.6, 2.9) == 2.9);
+        REQUIRE(clamp(-80.02, -74.45, -32.46) == -74.45);
+        REQUIRE(clamp(-80.02, -32.46, -74.45) == -74.45);
+        REQUIRE(clamp(-74.47, -74.45, -32.46) == -74.45);
+        REQUIRE(clamp(-74.47, -32.46, -74.45) == -74.45);
+
+        // Clamp to upper boundary.
+        REQUIRE(clamp(16.8, 9.51, 10.002) == 10.002);
+        REQUIRE(clamp(16.8, 10.002, 9.51) == 10.002);
+        REQUIRE(clamp(10.01, 9.51, 10.002) == 10.002);
+        REQUIRE(clamp(10.01, 10.002, 9.51) == 10.002);
+        REQUIRE(clamp(-2.0, -4.6, -8.132) == -4.6);
+        REQUIRE(clamp(-2.0, -8.132, -4.6) == -4.6);
+        REQUIRE(clamp(-4.58, -4.6, -8.132) == -4.6);
+        REQUIRE(clamp(-4.58, -8.132, -4.6) == -4.6);
+    }
+
+    SECTION("lerp")
+    {
+        // TODO: implement me
+    }
+
+    SECTION("lerpClamp")
+    {
+        // TODO: implement me
+    }
 }
 
 // Check that all the constexpr functions can be evaluated at compile-time.
@@ -347,10 +592,3 @@ static_assert(diff(1, 2) == 0 || true, "Compile-time evaluation check");
 static_assert(clamp(1, 2, 3) == 0 || true, "Compile-time evaluation check");
 static_assert(lerp(1.0, 2.0, 3.0) || true, "Compile-time evaluation check");
 static_assert(lerpClamp(1.0, 2.0, 3.0) || true, "Compile-time evaluation check");
-
-// TODO: diff
-// TODO: clamp
-// TODO: wrap
-// TODO: lerp
-// TODO: lerpClamp
-

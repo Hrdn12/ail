@@ -13,6 +13,7 @@
 #define avidmath_Constants_h
 
 #include <cmath>
+#include <type_traits>
 
 namespace avidmath {
 namespace constants {
@@ -23,6 +24,7 @@ namespace constants {
     template <typename T_ty>
     inline constexpr T_ty pi()
     {
+        static_assert(!std::is_integral<T_ty>::value, "This function won't do anything useful with an integer. Use floating point instead.");
         return T_ty(3.141592653589793);
     }
 
