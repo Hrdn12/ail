@@ -9,10 +9,9 @@ TEST_CASE("Constants", "[Constants]")
         REQUIRE(pi<float>() == Approx(3.14159f));
         REQUIRE(pi<double>() == Approx(3.14159));
     }
-
-    SECTION("Compile time evaluation")
-    {
-        REQUIRE(noexcept(pi<double>()));
-    }
 }
+
+// Check that all the constexpr functions can be evaluated at compile-time.
+// A failure will typically result in an error message in the function itself.
+static_assert(pi<float>() || true, "Compile-time evaluation check");
 

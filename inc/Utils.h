@@ -168,10 +168,6 @@ namespace avidmath {
             ((val > range1) ? range1 : ((val < range2) ? range2 : val));
     }
 
-    // TODO: wrap to range
-    
-    // TODO: clamp to power
-
     /// Linearly interpolate between start and end by the given amount. This will extrapolate beyond the original range if necessary.
     template <typename T_ty>
     inline constexpr T_ty lerp(const T_ty amount, const T_ty start, const T_ty end)
@@ -187,6 +183,8 @@ namespace avidmath {
         static_assert(!std::is_integral<T_ty>::value, "This function won't do anything useful with an integer. Use floating point instead.");
         return clamp(lerp(amount, start, end), start, end);
     }
+
+    // TODO: wrap to range (will need separate implementation for integer vs floating point?)
 
 }//namespace avidmath
 

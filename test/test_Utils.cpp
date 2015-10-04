@@ -557,13 +557,108 @@ TEST_CASE("Utils - General numerical", "[Utils]")
 
     SECTION("lerp")
     {
-        // TODO: implement me
+        // Boundaries.
+        REQUIRE(lerp(0.0, 19.1, 28.22) == Approx(19.1));
+        REQUIRE(lerp(1.0, 19.1, 28.22) == Approx(28.22));
+        REQUIRE(lerp(0.0, 28.22, 19.1) == Approx(28.22));
+        REQUIRE(lerp(1.0, 28.22, 19.1) == Approx(19.1));
+        REQUIRE(lerp(0.0, -11.88, -2.41) == Approx(-11.88));
+        REQUIRE(lerp(1.0, -11.88, -2.41) == Approx(-2.41));
+        REQUIRE(lerp(0.0, -2.41, -11.88) == Approx(-2.41));
+        REQUIRE(lerp(1.0, -2.41, -11.88) == Approx(-11.88));
+        REQUIRE(lerp(0.0, -90.4, 33.21) == Approx(-90.4));
+        REQUIRE(lerp(1.0, -90.4, 33.21) == Approx(33.21));
+        REQUIRE(lerp(0.0, 33.21, -90.4) == Approx(33.21));
+        REQUIRE(lerp(1.0, 33.21, -90.4) == Approx(-90.4));
+
+        // Interpolation (in range).
+        REQUIRE(lerp(0.2, 35.7, 42.9) == Approx(37.14));
+        REQUIRE(lerp(0.2, 42.9, 35.7) == Approx(41.46));
+        REQUIRE(lerp(0.65, 24.99, 106.012) == Approx(77.6543));
+        REQUIRE(lerp(0.65, 106.012, 24.99) == Approx(53.3477));
+        REQUIRE(lerp(0.18, -51.15, -10.38) == Approx(-43.8114));
+        REQUIRE(lerp(0.18, -10.38, -51.15) == Approx(-17.7186));
+        REQUIRE(lerp(0.76, -109.9, -84.443) == Approx(-90.55268));
+        REQUIRE(lerp(0.76, -84.443, -109.9) == Approx(-103.79032));
+        REQUIRE(lerp(0.47, -61.3, 152.61) == Approx(39.2377));
+        REQUIRE(lerp(0.47, 152.61, -61.3) == Approx(52.0723));
+
+        // Extrapolation (out of range).
+        REQUIRE(lerp(1.51, 15.6, 48.91) == Approx(65.8981));
+        REQUIRE(lerp(1.51, 48.91, 15.6) == Approx(-1.3881));
+        REQUIRE(lerp(-2.93, 142.07, 203.4) == Approx(-37.6269));
+        REQUIRE(lerp(-2.93, 203.4, 142.07) == Approx(383.0969));
+        REQUIRE(lerp(3.8, -85.22, -11.39) == Approx(195.334));
+        REQUIRE(lerp(3.8, -11.39, -85.22) == Approx(-291.944));
+        REQUIRE(lerp(-1.6, -173.2, -92.5) == Approx(-302.32));
+        REQUIRE(lerp(-1.6, -92.5, -173.2) == Approx(36.62));
+        REQUIRE(lerp(2.33, -38.5, 10.77) == Approx(76.2991));
+        REQUIRE(lerp(2.33, 10.77, -38.5) == Approx(-104.0291));
+        REQUIRE(lerp(-4.83, -2.6, 14.9) == Approx(-87.125));
+        REQUIRE(lerp(-4.83, 14.9, -2.6) == Approx(99.425));
+
+        // Zero range.
+        REQUIRE(lerp(0.0, 0.0, 0.0) == Approx(0.0));
+        REQUIRE(lerp(47.2, 0.0, 0.0) == Approx(0.0));
+        REQUIRE(lerp(5.4, 57.24, 57.24) == Approx(57.24));
+        REQUIRE(lerp(-24.35, 3581.38, 3581.38) == Approx(3581.38));
+        REQUIRE(lerp(2.9, -994.1, -994.1) == Approx(-994.1));
     }
 
     SECTION("lerpClamp")
     {
-        // TODO: implement me
+        // These tests are copied from lerp.
+        // The results are simply modified to account for the clamp where appropriate.
+
+        // Boundaries.
+        REQUIRE(lerpClamp(0.0, 19.1, 28.22) == Approx(19.1));
+        REQUIRE(lerpClamp(1.0, 19.1, 28.22) == Approx(28.22));
+        REQUIRE(lerpClamp(0.0, 28.22, 19.1) == Approx(28.22));
+        REQUIRE(lerpClamp(1.0, 28.22, 19.1) == Approx(19.1));
+        REQUIRE(lerpClamp(0.0, -11.88, -2.41) == Approx(-11.88));
+        REQUIRE(lerpClamp(1.0, -11.88, -2.41) == Approx(-2.41));
+        REQUIRE(lerpClamp(0.0, -2.41, -11.88) == Approx(-2.41));
+        REQUIRE(lerpClamp(1.0, -2.41, -11.88) == Approx(-11.88));
+        REQUIRE(lerpClamp(0.0, -90.4, 33.21) == Approx(-90.4));
+        REQUIRE(lerpClamp(1.0, -90.4, 33.21) == Approx(33.21));
+        REQUIRE(lerpClamp(0.0, 33.21, -90.4) == Approx(33.21));
+        REQUIRE(lerpClamp(1.0, 33.21, -90.4) == Approx(-90.4));
+
+        // Interpolation (in range).
+        REQUIRE(lerpClamp(0.2, 35.7, 42.9) == Approx(37.14));
+        REQUIRE(lerpClamp(0.2, 42.9, 35.7) == Approx(41.46));
+        REQUIRE(lerpClamp(0.65, 24.99, 106.012) == Approx(77.6543));
+        REQUIRE(lerpClamp(0.65, 106.012, 24.99) == Approx(53.3477));
+        REQUIRE(lerpClamp(0.18, -51.15, -10.38) == Approx(-43.8114));
+        REQUIRE(lerpClamp(0.18, -10.38, -51.15) == Approx(-17.7186));
+        REQUIRE(lerpClamp(0.76, -109.9, -84.443) == Approx(-90.55268));
+        REQUIRE(lerpClamp(0.76, -84.443, -109.9) == Approx(-103.79032));
+        REQUIRE(lerpClamp(0.47, -61.3, 152.61) == Approx(39.2377));
+        REQUIRE(lerpClamp(0.47, 152.61, -61.3) == Approx(52.0723));
+
+        // Extrapolation (out of range).
+        REQUIRE(lerpClamp(1.51, 15.6, 48.91) == Approx(48.91));
+        REQUIRE(lerpClamp(1.51, 48.91, 15.6) == Approx(15.6));
+        REQUIRE(lerpClamp(-2.93, 142.07, 203.4) == Approx(142.07));
+        REQUIRE(lerpClamp(-2.93, 203.4, 142.07) == Approx(203.4));
+        REQUIRE(lerpClamp(3.8, -85.22, -11.39) == Approx(-11.39));
+        REQUIRE(lerpClamp(3.8, -11.39, -85.22) == Approx(-85.22));
+        REQUIRE(lerpClamp(-1.6, -173.2, -92.5) == Approx(-173.2));
+        REQUIRE(lerpClamp(-1.6, -92.5, -173.2) == Approx(-92.5));
+        REQUIRE(lerpClamp(2.33, -38.5, 10.77) == Approx(10.77));
+        REQUIRE(lerpClamp(2.33, 10.77, -38.5) == Approx(-38.5));
+        REQUIRE(lerpClamp(-4.83, -2.6, 14.9) == Approx(-2.6));
+        REQUIRE(lerpClamp(-4.83, 14.9, -2.6) == Approx(14.9));
+
+        // Zero range.
+        REQUIRE(lerpClamp(0.0, 0.0, 0.0) == Approx(0.0));
+        REQUIRE(lerpClamp(47.2, 0.0, 0.0) == Approx(0.0));
+        REQUIRE(lerpClamp(5.4, 57.24, 57.24) == Approx(57.24));
+        REQUIRE(lerpClamp(-24.35, 3581.38, 3581.38) == Approx(3581.38));
+        REQUIRE(lerpClamp(2.9, -994.1, -994.1) == Approx(-994.1));
     }
+
+    // TODO: wrap to range
 }
 
 // Check that all the constexpr functions can be evaluated at compile-time.
