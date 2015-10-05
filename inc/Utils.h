@@ -21,97 +21,104 @@ namespace avidmath {
     //-------------------------------------------------------------------------
     // Angle conversions.
 
-    /// Convert an angle from degrees to radians.
+    /// Convert an angle from degrees to radians. Only valid for floating point types.
     template <typename T_ty>
-    inline constexpr T_ty degToRad(const T_ty angle)
+    inline constexpr typename std::enable_if_t<std::is_floating_point<T_ty>::value, T_ty>
+        degToRad(const T_ty angle)
     {
-        static_assert(!std::is_integral<T_ty>::value, "This function won't do anything useful with an integer. Use floating point instead.");
         return (angle * constants::pi<T_ty>()) / T_ty(180);
     }
     
-    /// Convert an angle from degrees to gradians.
-    /// This involves division by 
+    /// Convert an angle from degrees to gradians. Only valid for floating point types.
     template <typename T_ty>
-    inline constexpr T_ty degToGrad(const T_ty angle)
+    inline constexpr typename std::enable_if_t<std::is_floating_point<T_ty>::value, T_ty>
+        degToGrad(const T_ty angle)
     {
-        static_assert(!std::is_integral<T_ty>::value, "This function won't do anything useful with an integer. Use floating point instead.");
         return (angle / T_ty(0.9));
     }
     
-    /// Convert an angle from degrees to full turns.
+    /// Convert an angle from degrees to full turns. Only valid for floating point types.
     template <typename T_ty>
-    inline constexpr T_ty degToTurn(const T_ty angle)
+    inline constexpr typename std::enable_if_t<std::is_floating_point<T_ty>::value, T_ty>
+        degToTurn(const T_ty angle)
     {
-        static_assert(!std::is_integral<T_ty>::value, "This function won't do anything useful with an integer. Use floating point instead.");
         return angle / T_ty(360);
     }
     
     
-    /// Convert an angle from radians to degrees.
+    /// Convert an angle from radians to degrees. Only valid for floating point types.
     template <typename T_ty>
-    inline constexpr T_ty radToDeg(const T_ty angle)
+    inline constexpr typename std::enable_if_t<std::is_floating_point<T_ty>::value, T_ty>
+        radToDeg(const T_ty angle)
     {
-        static_assert(!std::is_integral<T_ty>::value, "This function won't do anything useful with an integer. Use floating point instead.");
         return (angle * T_ty(180)) / constants::pi<T_ty>();
     }
     
-    /// Convert an angle from radians to gradians.
+    /// Convert an angle from radians to gradians. Only valid for floating point types.
     template <typename T_ty>
-    inline constexpr T_ty radToGrad(const T_ty angle)
+    inline constexpr typename std::enable_if_t<std::is_floating_point<T_ty>::value, T_ty>
+        radToGrad(const T_ty angle)
     {
-        static_assert(!std::is_integral<T_ty>::value, "This function won't do anything useful with an integer. Use floating point instead.");
         return (angle * T_ty(200)) / constants::pi<T_ty>();
     }
     
-    /// Convert an angle from radians to full turns.
+    /// Convert an angle from radians to full turns. Only valid for floating point types.
     template <typename T_ty>
-    inline constexpr T_ty radToTurn(const T_ty angle)
+    inline constexpr typename std::enable_if_t<std::is_floating_point<T_ty>::value, T_ty>
+        radToTurn(const T_ty angle)
     {
-        static_assert(!std::is_integral<T_ty>::value, "This function won't do anything useful with an integer. Use floating point instead.");
         return angle / (T_ty(2) * constants::pi<T_ty>());
     }
     
     
-    /// Convert an angle from gradians to degrees.
+    /// Convert an angle from gradians to degrees. Only valid for floating point types.
     template <typename T_ty>
-    inline constexpr T_ty gradToDeg(const T_ty angle)
+    inline constexpr typename std::enable_if_t<std::is_floating_point<T_ty>::value, T_ty>
+        gradToDeg(const T_ty angle)
     {
-        static_assert(!std::is_integral<T_ty>::value, "This function won't do anything useful with an integer. Use floating point instead.");
         return angle * T_ty(0.9);
     }
     
-    /// Convert an angle from gradians to radians.
+    /// Convert an angle from gradians to radians. Only valid for floating point types.
     template <typename T_ty>
-    inline constexpr T_ty gradToRad(const T_ty angle)
+    inline constexpr typename std::enable_if_t<std::is_floating_point<T_ty>::value, T_ty>
+        gradToRad(const T_ty angle)
     {
-        static_assert(!std::is_integral<T_ty>::value, "This function won't do anything useful with an integer. Use floating point instead.");
         return (angle * constants::pi<T_ty>()) / T_ty(200);
     }
     
-    /// Convert an angle from gradians to full turns.
+    /// Convert an angle from gradians to full turns. Only valid for floating point types.
     template <typename T_ty>
-    inline constexpr T_ty gradToTurn(const T_ty angle)
+    inline constexpr typename std::enable_if_t<std::is_floating_point<T_ty>::value, T_ty>
+        gradToTurn(const T_ty angle)
     {
-        static_assert(!std::is_integral<T_ty>::value, "This function won't do anything useful with an integer. Use floating point instead.");
         return angle / T_ty(400);
     }
     
     
     /// Convert an angle from full turns to degrees.
     template <typename T_ty>
-    inline constexpr T_ty turnToDeg(const T_ty angle) { return angle * T_ty(360); }
-    
-    /// Convert an angle from full turns to radians
-    template <typename T_ty>
-    inline constexpr T_ty turnToRad(const T_ty angle)
+    inline constexpr T_ty
+        turnToDeg(const T_ty angle)
     {
-        static_assert(!std::is_integral<T_ty>::value, "This function won't do anything useful with an integer. Use floating point instead.");
+        return angle * T_ty(360);
+    }
+    
+    /// Convert an angle from full turns to radians. Only valid for floating point types.
+    template <typename T_ty>
+    inline constexpr typename std::enable_if_t<std::is_floating_point<T_ty>::value, T_ty>
+        turnToRad(const T_ty angle)
+    {
         return angle * T_ty(2.0) * constants::pi<T_ty>();
     }
     
     /// Convert an angle from full turns to gradians.
     template <typename T_ty>
-    inline constexpr T_ty turnToGrad(const T_ty angle) { return angle * T_ty(400); }
+    inline constexpr T_ty
+        turnToGrad(const T_ty angle)
+    {
+        return angle * T_ty(400);
+    }
     
     
     //-------------------------------------------------------------------------
@@ -169,18 +176,20 @@ namespace avidmath {
     }
 
     /// Linearly interpolate between start and end by the given amount. This will extrapolate beyond the original range if necessary.
+    /// Only valid for floating point types.
     template <typename T_ty>
-    inline constexpr T_ty lerp(const T_ty amount, const T_ty start, const T_ty end)
+    inline constexpr typename std::enable_if_t<std::is_floating_point<T_ty>::value, T_ty>
+        lerp(const T_ty amount, const T_ty start, const T_ty end)
     {
-        static_assert(!std::is_integral<T_ty>::value, "This function won't do anything useful with an integer. Use floating point instead.");
         return start + (amount * (end - start));
     }
 
     /// Linearly interpolate between start and end by the given amount, clamping the result to the original range.
+    /// Only valid for floating point types.
     template <typename T_ty>
-    inline constexpr T_ty lerpClamp(const T_ty amount, const T_ty start, const T_ty end)
+    inline constexpr typename std::enable_if_t<std::is_floating_point<T_ty>::value, T_ty>
+        lerpClamp(const T_ty amount, const T_ty start, const T_ty end)
     {
-        static_assert(!std::is_integral<T_ty>::value, "This function won't do anything useful with an integer. Use floating point instead.");
         return clamp(lerp(amount, start, end), start, end);
     }
 

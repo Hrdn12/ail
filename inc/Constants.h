@@ -21,10 +21,10 @@ namespace constants {
     /// Get the value of pi.
     /// Template parameter is required to specify the return type.
     /// Example:  float val = pi<float>();
+    /// Only allows floating point types (e.g. float and double). Compilation will fail for any other type.
     template <typename T_ty>
-    inline constexpr T_ty pi()
+    inline constexpr typename std::enable_if_t<std::is_floating_point<T_ty>::value, T_ty> pi()
     {
-        static_assert(!std::is_integral<T_ty>::value, "This function won't do anything useful with an integer. Use floating point instead.");
         return T_ty(3.141592653589793);
     }
 
