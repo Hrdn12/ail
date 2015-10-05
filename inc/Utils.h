@@ -4,7 +4,7 @@
     NOTE: This requires support for C++11 constexpr.
     If you are using Visual Studio, it won't work prior to VS2015.
     
-    Part of the avidmath library (avid-insight.co.uk).
+    Part of the avidmath library (avidinsight.uk).
     Copyright (C) 2015 Peter R. Bloomfield.
     Released open source under the MIT licence.
 */
@@ -193,7 +193,21 @@ namespace avidmath {
         return clamp(lerp(amount, start, end), start, end);
     }
 
-    // TODO: wrap to range (will need separate implementation for integer vs floating point?)
+    /// Wrap a value round to fit within the given range.
+    /// The wrapping range will be inclusive of the lower value, and exclusive of the higher one.
+    /// It doesn't matter whether range1 is greater or less than range2. They will be swapped if needed.
+    /// This is useful e.g. for wrapping an angle to the range 0 <= angle < 360 degrees.
+    template <typename T_ty>
+    inline T_ty wrap(const T_ty val, T_ty range1, T_ty range2)
+    {
+        if (range1 == range2)
+            return range1;
+        if (range1 > range2)
+            std::swap(range1, range2);
+        const auto rem = tmod<T_ty>::mod(val - range1, range2 - range1);
+        if (rem >= 0) return rem + range1;
+        return rem + range2;
+    }
 
 }//namespace avidmath
 

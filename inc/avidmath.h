@@ -1,7 +1,7 @@
 /** \file avidmath.h
     \brief Includes all avidmath functionality.
     
-    Part of the avidmath library (avid-insight.co.uk).
+    Part of the avidmath library (avidinsight.uk).
     Copyright (C) 2015 Peter R. Bloomfield.
     Released open source under the MIT licence.
 */
@@ -24,6 +24,8 @@
 
     #include "Polar.h"
     #include "Polar.inl"
+
+    #include "tmod.h"
 
     #include "Vector2d.h"
     #include "Vector2d.inl"

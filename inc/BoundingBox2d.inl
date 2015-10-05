@@ -4,7 +4,7 @@
 /** \file BoundingBox2d.h
     \brief Implements a 2d axis aligned bounding box class.
 
-    Part of the avidmath library (avid-insight.co.uk).
+    Part of the avidmath library (avidinsight.uk).
     Copyright (C) 2015 Peter R. Bloomfield.
     Released open source under the MIT licence.
 */

@@ -4,7 +4,7 @@
 /** \file Vector2d.h
     \brief Declares a 2d cartesian vector. See Vector2d.inl for implementation.
 
-    Part of the avidmath library (avid-insight.co.uk).
+    Part of the avidmath library (avidinsight.uk).
     Copyright (C) 2015 Peter R. Bloomfield.
     Released open source under the MIT licence.
 */

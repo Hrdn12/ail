@@ -4,7 +4,7 @@
     NOTE: This requires support for C++11 constexpr.
     If you are using Visual Studio, it won't work prior to VS2015.
     
-    Part of the avidmath library (avid-insight.co.uk).
+    Part of the avidmath library (avidinsight.uk).
     Copyright (C) 2015 Peter R. Bloomfield.
     Released open source under the MIT licence.
 */

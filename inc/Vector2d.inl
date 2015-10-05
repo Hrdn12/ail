@@ -4,7 +4,7 @@
 /** \file Vector2d.inl
     \brief Implementation for a 2d cartesian vector (see Vector2d.h).
 
-    Part of the avidmath library (avid-insight.co.uk).
+    Part of the avidmath library (avidinsight.uk).
     Copyright (C) 2015 Peter R. Bloomfield.
     Released open source under the MIT licence.
 */

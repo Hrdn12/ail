@@ -14,6 +14,7 @@
     <ClCompile Include="..\..\test\main.cpp" />
     <ClCompile Include="..\..\test\test_Constants.cpp" />
     <ClCompile Include="..\..\test\test_Polar.cpp" />
+    <ClCompile Include="..\..\test\test_tmod.cpp" />
     <ClCompile Include="..\..\test\test_Utils.cpp" />
     <ClCompile Include="..\..\test\test_Vector2.cpp" />
   </ItemGroup>

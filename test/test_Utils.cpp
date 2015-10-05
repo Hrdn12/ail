@@ -658,7 +658,35 @@ TEST_CASE("Utils - General numerical", "[Utils]")
         REQUIRE(lerpClamp(2.9, -994.1, -994.1) == Approx(-994.1));
     }
 
-    // TODO: wrap to range
+    SECTION("wrap - integer")
+    {
+        // TODO: Implement
+
+        // Zero range.
+
+        // In range.
+
+        // Boundary.
+        
+        // Off top of range.
+
+        // Off bottom of range.
+    }
+
+    SECTION("wrap - floating point")
+    {
+        // TODO: Implement
+
+        // Zero range.
+
+        // In range.
+
+        // Boundary.
+
+        // Off top of range.
+
+        // Off bottom of range.
+    }
 }
 
 // Check that all the constexpr functions can be evaluated at compile-time.

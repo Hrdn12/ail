@@ -16,6 +16,7 @@
     <ClInclude Include="..\..\inc\BoundingBox2d.h" />
     <ClInclude Include="..\..\inc\Constants.h" />
     <ClInclude Include="..\..\inc\Polar.h" />
+    <ClInclude Include="..\..\inc\tmod.h" />
     <ClInclude Include="..\..\inc\Utils.h" />
     <ClInclude Include="..\..\inc\Vector2d.h" />
   </ItemGroup>
