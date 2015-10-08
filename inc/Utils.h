@@ -194,19 +194,21 @@ namespace avidmath {
     }
 
     /// Wrap a value round to fit within the given range.
-    /// The wrapping range will be inclusive of the lower value, and exclusive of the higher one.
-    /// It doesn't matter whether range1 is greater or less than range2. They will be swapped if needed.
+    /// The wrapping range will be inclusive of rangeMin and exclusive of rangeMax.
+    /// If rangeMin > rangeMax, they will be swapped.
     /// This is useful e.g. for wrapping an angle to the range 0 <= angle < 360 degrees.
+    /// If rangeMin == rangeMax then rangeMin will be returned.
     template <typename T_ty>
-    inline T_ty wrap(const T_ty val, T_ty range1, T_ty range2)
+    inline T_ty wrap(const T_ty val, T_ty rangeMin, T_ty rangeMax)
     {
-        if (range1 == range2)
-            return range1;
-        if (range1 > range2)
-            std::swap(range1, range2);
-        const auto rem = tmod<T_ty>::mod(val - range1, range2 - range1);
-        if (rem >= 0) return rem + range1;
-        return rem + range2;
+        if (rangeMin == rangeMax) return rangeMin;
+        if (rangeMin > rangeMax) std::swap(rangeMin, rangeMax);
+        // Avoid calculations if they aren't necessary:
+        if (val >= rangeMin && val < rangeMax) return val;
+
+        const auto rem = tmod<T_ty>::mod(val - rangeMin, rangeMax - rangeMin);
+        if (rem >= 0) return rem + rangeMin;
+        return rem + rangeMax;
     }
 
 }//namespace avidmath

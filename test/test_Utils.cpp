@@ -660,32 +660,197 @@ TEST_CASE("Utils - General numerical", "[Utils]")
 
     SECTION("wrap - integer")
     {
-        // TODO: Implement
+        // Parameters: value, rangeMin, rangeMax.
+        // Requirements:
+        //  - Wrap will always be inclusive of rangeMin and exclusive of rangeMax.
+        //  - rangeMin and rangeMax will be automatically swapped if rangeMin > rangeMax (i.e. order of range values doesn't affect result).
+        //  - Works for any built-in integer and floating point type.
+        //  - Works for any combination of negative and positive values.
 
         // Zero range.
+        REQUIRE(wrap(0, 0, 0) == 0);
+        REQUIRE(wrap(18, 0, 0) == 0);
+        REQUIRE(wrap(-51, 0, 0) == 0);
+        REQUIRE(wrap(0, 14, 14) == 14);
+        REQUIRE(wrap(22, 14, 14) == 14);
+        REQUIRE(wrap(-46, 14, 14) == 14);
+        REQUIRE(wrap(0, -99, -99) == -99);
+        REQUIRE(wrap(22, -99, -99) == -99);
+        REQUIRE(wrap(-46, -99, -99) == -99);
 
         // In range.
+        REQUIRE(wrap(2, 0, 10) == 2);
+        REQUIRE(wrap(2, 10, 0) == 2);
+        REQUIRE(wrap(-7, -25, 0) == -7);
+        REQUIRE(wrap(-7, 0, -25) == -7);
+        REQUIRE(wrap(148, 98, 259) == 148);
+        REQUIRE(wrap(148, 259, 98) == 148);
+        REQUIRE(wrap(-88, -101, -50) == -88);
+        REQUIRE(wrap(-88, -50, -101) == -88);
+        REQUIRE(wrap(42, -85, 52) == 42);
+        REQUIRE(wrap(42, 52, -85) == 42);
+        REQUIRE(wrap(-31, -85, 52) == -31);
+        REQUIRE(wrap(-31, 52, -85) == -31);
 
         // Boundary.
+        REQUIRE(wrap(0, 0, 11) == 0);
+        REQUIRE(wrap(0, 11, 0) == 0);
+        REQUIRE(wrap(10, 0, 11) == 10);
+        REQUIRE(wrap(10, 11, 0) == 10);
+        REQUIRE(wrap(-18, -18, 0) == -18);
+        REQUIRE(wrap(-18, 0, -18) == -18);
+        REQUIRE(wrap(-1, -18, 0) == -1);
+        REQUIRE(wrap(-1, 0, -18) == -1);
+        REQUIRE(wrap(43, 43, 77) == 43);
+        REQUIRE(wrap(43, 77, 43) == 43);
+        REQUIRE(wrap(76, 43, 77) == 76);
+        REQUIRE(wrap(76, 77, 43) == 76);
+        REQUIRE(wrap(-328, -328, -162) == -328);
+        REQUIRE(wrap(-328, -162, -328) == -328);
+        REQUIRE(wrap(-163, -328, -162) == -163);
+        REQUIRE(wrap(-163, -162, -328) == -163);
+        REQUIRE(wrap(-101, -101, 94) == -101);
+        REQUIRE(wrap(-101, 94, -101) == -101);
+        REQUIRE(wrap(93, -101, 94) == 93);
+        REQUIRE(wrap(93, 94, -101) == 93);
         
         // Off top of range.
+        REQUIRE(wrap(7, 0, 7) == 0);
+        REQUIRE(wrap(7, 7, 0) == 0);
+        REQUIRE(wrap(53, 0, 7) == 4);
+        REQUIRE(wrap(53, 7, 0) == 4);
+        REQUIRE(wrap(0, -13, 0) == -13);
+        REQUIRE(wrap(0, 0, -13) == -13);
+        REQUIRE(wrap(21, -13, 0) == -5);
+        REQUIRE(wrap(21, 0, -13) == -5);
+        REQUIRE(wrap(41, 29, 41) == 29);
+        REQUIRE(wrap(41, 41, 29) == 29);
+        REQUIRE(wrap(68, 29, 41) == 32);
+        REQUIRE(wrap(68, 41, 29) == 32);
+        REQUIRE(wrap(-87, -94, -87) == -94);
+        REQUIRE(wrap(-87, -87, -94) == -94);
+        REQUIRE(wrap(-44, -94, -87) == -93);
+        REQUIRE(wrap(-44, -87, -94) == -93);
+        REQUIRE(wrap(50, -75, 50) == -75);
+        REQUIRE(wrap(50, 50, -75) == -75);
+        REQUIRE(wrap(99, -75, 50) == -26);
+        REQUIRE(wrap(99, 50, -75) == -26);
 
         // Off bottom of range.
+        REQUIRE(wrap(-1, 0, 7) == 6);
+        REQUIRE(wrap(-1, 7, 0) == 6);
+        REQUIRE(wrap(-12, 0, 7) == 2);
+        REQUIRE(wrap(-12, 7, 0) == 2);
+        REQUIRE(wrap(-14, -13, 0) == -1);
+        REQUIRE(wrap(-14, 0, -13) == -1);
+        REQUIRE(wrap(-48, -13, 0) == -9);
+        REQUIRE(wrap(-48, 0, -13) == -9);
+        REQUIRE(wrap(28, 29, 41) == 40);
+        REQUIRE(wrap(28, 41, 29) == 40);
+        REQUIRE(wrap(2, 29, 41) == 38);
+        REQUIRE(wrap(2, 41, 29) == 38);
+        REQUIRE(wrap(-95, -94, -87) == -88);
+        REQUIRE(wrap(-95, -87, -94) == -88);
+        REQUIRE(wrap(-115, -94, -87) == -94);
+        REQUIRE(wrap(-115, -87, -94) == -94);
+        REQUIRE(wrap(-76, -75, 50) == 49);
+        REQUIRE(wrap(-76, 50, -75) == 49);
+        REQUIRE(wrap(-231, -75, 50) == 19);
+        REQUIRE(wrap(-231, 50, -75) == 19);
     }
 
     SECTION("wrap - floating point")
     {
-        // TODO: Implement
-
         // Zero range.
+        REQUIRE(wrap(0.0, 0.0, 0.0) == 0.0);
+        REQUIRE(wrap(24.6, 0.0, 0.0) == 0.0);
+        REQUIRE(wrap(-19.41, 0.0, 0.0) == 0.0);
+        REQUIRE(wrap(0.0, 27.72, 27.72) == 27.72);
+        REQUIRE(wrap(56.94, 27.72, 27.72) == 27.72);
+        REQUIRE(wrap(-89.44, 27.72, 27.72) == 27.72);
+        REQUIRE(wrap(0.0, -33.802, -33.802) == -33.802);
+        REQUIRE(wrap(16.88, -33.802, -33.802) == -33.802);
+        REQUIRE(wrap(-101.4, -33.802, -33.802) == -33.802);
 
         // In range.
+        REQUIRE(wrap(0.64, 0.0, 0.9) == 0.64);
+        REQUIRE(wrap(0.64, 0.9, 0.0) == 0.64);
+        REQUIRE(wrap(-4.1, -12.44, 0.0) == -4.1);
+        REQUIRE(wrap(-4.1, 0.0, -12.44) == -4.1);
+        REQUIRE(wrap(64.35, 57.81, 91.1) == 64.35);
+        REQUIRE(wrap(64.35, 91.1, 57.81) == 64.35);
+        REQUIRE(wrap(-99.33, -162.3, -87.4) == -99.33);
+        REQUIRE(wrap(-99.33, -87.4, -162.3) == -99.33);
+        REQUIRE(wrap(19.6, -3.4, 27.8) == 19.6);
+        REQUIRE(wrap(19.6, 27.8, -3.4) == 19.6);
+        REQUIRE(wrap(-11.46, -29.92, 48.7) == -11.46);
+        REQUIRE(wrap(-11.46, 48.7, -29.92) == -11.46);
 
         // Boundary.
+        REQUIRE(wrap(0.0, 0.0, 2.4) == 0);
+        REQUIRE(wrap(0.0, 2.4, 0.0) == 0);
+        REQUIRE(wrap(2.35, 0.0, 2.4) == 2.35);
+        REQUIRE(wrap(2.35, 2.4, 0.0) == 2.35);
+        REQUIRE(wrap(-69.3, -69.3, 0.0) == -69.3);
+        REQUIRE(wrap(-69.3, 0.0, -69.3) == -69.3);
+        REQUIRE(wrap(-0.1, -3.4, 0.0) == -0.1);
+        REQUIRE(wrap(-0.1, 0.0, -3.4) == -0.1);
+        REQUIRE(wrap(19.65, 19.65, 106.2) == 19.65);
+        REQUIRE(wrap(19.65, 106.2, 19.65) == 19.65);
+        REQUIRE(wrap(106.1, 19.65, 106.2) == 106.1);
+        REQUIRE(wrap(106.1, 106.2, 19.65) == 106.1);
+        REQUIRE(wrap(-88.7, -88.7, -88.3) == -88.7);
+        REQUIRE(wrap(-88.7, -88.3, -88.7) == -88.7);
+        REQUIRE(wrap(-88.31, -88.7, -88.3) == -88.31);
+        REQUIRE(wrap(-88.31, -88.3, -88.7) == -88.31);
+        REQUIRE(wrap(-5.17, -5.17, 2.65) == -5.17);
+        REQUIRE(wrap(-5.17, 2.65, -5.17) == -5.17);
+        REQUIRE(wrap(2.64, -5.17, 2.65) == 2.64);
+        REQUIRE(wrap(2.64, 2.65, -5.17) == 2.64);
 
         // Off top of range.
+        REQUIRE(wrap(12.6, 0.0, 12.6) == Approx(0.0));
+        REQUIRE(wrap(12.6, 12.6, 0.0) == Approx(0.0));
+        REQUIRE(wrap(27.1, 0.0, 12.6) == Approx(1.9));
+        REQUIRE(wrap(27.1, 12.6, 0.0) == Approx(1.9));
+        REQUIRE(wrap(0.0, -8.9, 0.0) == Approx(-8.9));
+        REQUIRE(wrap(0.0, 0.0, -8.9) == Approx(-8.9));
+        REQUIRE(wrap(11.3, -8.9, 0.0) == Approx(-6.5));
+        REQUIRE(wrap(11.3, 0.0, -8.9) == Approx(-6.5));
+        REQUIRE(wrap(33.4, 10.6, 33.4) == Approx(10.6));
+        REQUIRE(wrap(33.4, 33.4, 10.6) == Approx(10.6));
+        REQUIRE(wrap(62.33, 10.6, 33.4) == Approx(16.73));
+        REQUIRE(wrap(62.33, 33.4, 10.6) == Approx(16.73));
+        REQUIRE(wrap(-46.5, -73.7, -46.5) == Approx(-73.7));
+        REQUIRE(wrap(-46.5, -46.5, -73.7) == Approx(-73.7));
+        REQUIRE(wrap(-21.1, -73.7, -46.5) == Approx(-48.3));
+        REQUIRE(wrap(-21.1, -46.5, -73.7) == Approx(-48.3));
+        REQUIRE(wrap(13.9, -15.4, 13.9) == Approx(-15.4));
+        REQUIRE(wrap(13.9, 13.9, -15.4) == Approx(-15.4));
+        REQUIRE(wrap(156.3, -15.4, 13.9) == Approx(9.8));
+        REQUIRE(wrap(156.3, 13.9, -15.4) == Approx(9.8));
 
         // Off bottom of range.
+        REQUIRE(wrap(-0.1, 0.0, 12.6) == Approx(12.5));
+        REQUIRE(wrap(-0.1, 12.6, 0.0) == Approx(12.5));
+        REQUIRE(wrap(-36.61, 0.0, 12.6) == Approx(1.19));
+        REQUIRE(wrap(-36.61, 12.6, 0.0) == Approx(1.19));
+        REQUIRE(wrap(-8.95, -8.9, 0.0) == Approx(-0.05));
+        REQUIRE(wrap(-8.95, 0.0, -8.9) == Approx(-0.05));
+        REQUIRE(wrap(-11.55, -8.9, 0.0) == Approx(-2.65));
+        REQUIRE(wrap(-11.55, 0.0, -8.9) == Approx(-2.65));
+        REQUIRE(wrap(10.5, 10.6, 33.4) == Approx(33.3));
+        REQUIRE(wrap(10.5, 33.4, 10.6) == Approx(33.3));
+        REQUIRE(wrap(-1.3, 10.6, 33.4) == Approx(21.5));
+        REQUIRE(wrap(-1.3, 33.4, 10.6) == Approx(21.5));
+        REQUIRE(wrap(-73.8, -73.7, -46.5) == Approx(-46.6));
+        REQUIRE(wrap(-73.8, -46.5, -73.7) == Approx(-46.6));
+        REQUIRE(wrap(-259.22, -73.7, -46.5) == Approx(-68.82));
+        REQUIRE(wrap(-259.22, -46.5, -73.7) == Approx(-68.82));
+        REQUIRE(wrap(-15.5, -15.4, 13.9) == Approx(13.8));
+        REQUIRE(wrap(-15.5, 13.9, -15.4) == Approx(13.8));
+        REQUIRE(wrap(-41.63, -15.4, 13.9) == Approx(-12.33));
+        REQUIRE(wrap(-41.63, 13.9, -15.4) == Approx(-12.33));
     }
 }
 
