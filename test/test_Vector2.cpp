@@ -1,21 +1,29 @@
 #include "common.h"
 
-using avidmath::Vector2d;
+using namespace avidmath;
 
 TEST_CASE("Vector2d - construction and assignment", "[Vector2d]")
 {
     SECTION("Default construction to 0")
     {
-        Vector2d<double> v;
-        REQUIRE(v.x == 0.0);
-        REQUIRE(v.y == 0.0);
+        Vector2d<int> vi;
+        REQUIRE(vi.x == 0);
+        REQUIRE(vi.y == 0);
+
+        Vector2d<double> vd;
+        REQUIRE(vd.x == 0.0);
+        REQUIRE(vd.y == 0.0);
     }
 
     SECTION("Construction with whole numbers")
     {
-        Vector2d<double> v(12.0, 34.0);
-        REQUIRE(v.x == 12.0);
-        REQUIRE(v.y == 34.0);
+        Vector2d<int> vi(81, -4);
+        REQUIRE(vi.x == 81);
+        REQUIRE(vi.y == -4);
+
+        Vector2d<double> vd(12.0, 34.0);
+        REQUIRE(vd.x == 12.0);
+        REQUIRE(vd.y == 34.0);
     }
 
     SECTION("Construction with decimal fractions")
@@ -27,27 +35,44 @@ TEST_CASE("Vector2d - construction and assignment", "[Vector2d]")
 
     SECTION("Copy construction")
     {
-        Vector2d<double> v1(34.21, 78.56);
-        Vector2d<double> v2(v1);
-        REQUIRE(v2.x == Approx(34.21));
-        REQUIRE(v2.y == Approx(78.56));
+        Vector2d<int> vi1(27, -1);
+        Vector2d<int> vi2(vi1);
+        REQUIRE(vi2.x == 27);
+        REQUIRE(vi2.y == -1);
+
+        Vector2d<double> vd1(34.21, 78.56);
+        Vector2d<double> vd2(vd1);
+        REQUIRE(vd2.x == 34.21);
+        REQUIRE(vd2.y == 78.56);
     }
 
     SECTION("Copy assignment")
     {
-        Vector2d<double> v1(43.21, 87.65);
-        Vector2d<double> v2;
-        v2 = v1;
-        REQUIRE(v2.x == Approx(43.21));
-        REQUIRE(v2.y == Approx(87.65));
+        Vector2d<int> vi1(-44, 2);
+        Vector2d<int> vi2;
+        vi2 = vi1;
+        REQUIRE(vi2.x == -44);
+        REQUIRE(vi2.y == 2);
+
+        Vector2d<double> vd1(43.21, 87.65);
+        Vector2d<double> vd2;
+        vd2 = vd1;
+        REQUIRE(vd2.x == 43.21);
+        REQUIRE(vd2.y == 87.65);
     }
 
     SECTION("Accessor")
     {
-        Vector2d<double> v;
-        v.set(1.23, 7.89);
-        REQUIRE(v.x == Approx(1.23));
-        REQUIRE(v.y == Approx(7.89));
+        Vector2d<int> vi;
+        Vector2d<double> vd;
+
+        vi.set(132, 53);
+        REQUIRE(vi.x == 132);
+        REQUIRE(vi.y == 53);
+
+        vd.set(5.13, -4.98);
+        REQUIRE(vd.x == 5.13);
+        REQUIRE(vd.y == -4.98);
     }
 }
 
@@ -55,22 +80,40 @@ TEST_CASE("Vector2d - comparison operators", "[Vector2d]")
 {
     SECTION("Equality")
     {
-        Vector2d<double> v1(34.5f, 23.4f);
-        Vector2d<double> v2(34.5f, 23.4f);
-        Vector2d<double> v3(12.3f, 45.6f);
+        Vector2d<int> vi1(22, -87);
+        Vector2d<int> vi2(22, -87);
+        Vector2d<int> vi3(66, 15);
+
+        REQUIRE(vi1 == vi1);
+        REQUIRE(vi1 == vi2);
+        REQUIRE_FALSE(vi1 == vi3);
+
+        Vector2d<double> vd1(34.5, 23.4);
+        Vector2d<double> vd2(34.5, 23.4);
+        Vector2d<double> vd3(-12.3, 45.6);
         
-        REQUIRE(v1 == v2);
-        REQUIRE_FALSE(v1 == v3);
+        REQUIRE(vd1 == vd1);
+        REQUIRE(vd1 == vd2);
+        REQUIRE_FALSE(vd1 == vd3);
     }
 
     SECTION("Inequality")
     {
-        Vector2d<double> v1(34.5f, 23.4f);
-        Vector2d<double> v2(34.5f, 23.4f);
-        Vector2d<double> v3(12.3f, 45.6f);
+        Vector2d<int> vi1(22, -87);
+        Vector2d<int> vi2(22, -87);
+        Vector2d<int> vi3(66, 15);
 
-        REQUIRE_FALSE(v1 != v2);
-        REQUIRE(v1 != v3);
+        REQUIRE_FALSE(vi1 != vi1);
+        REQUIRE_FALSE(vi1 != vi2);
+        REQUIRE(vi1 != vi3);
+
+        Vector2d<double> vd1(34.5f, 23.4f);
+        Vector2d<double> vd2(34.5f, 23.4f);
+        Vector2d<double> vd3(12.3f, 45.6f);
+
+        REQUIRE_FALSE(vd1 != vd1);
+        REQUIRE_FALSE(vd1 != vd2);
+        REQUIRE(vd1 != vd3);
     }
 }
 
@@ -78,110 +121,165 @@ TEST_CASE("Vector2d - basic arithmetic", "[Vector2d]")
 {
     SECTION("Vector addition")
     {
-        Vector2d<double> v = Vector2d<double>(1.2, 3.4) + Vector2d<double>(2.3, 4.5);
-        REQUIRE(v.x == Approx(3.5));
-        REQUIRE(v.y == Approx(7.9));
+        Vector2d<int> vi = Vector2d<int>(-4, 9) + Vector2d<int>(16, 13);
+        REQUIRE(vi.x == 12);
+        REQUIRE(vi.y == 22);
+
+        Vector2d<double> vd = Vector2d<double>(1.2, 3.4) + Vector2d<double>(2.3, 4.5);
+        REQUIRE(vd.x == Approx(3.5));
+        REQUIRE(vd.y == Approx(7.9));
     }
 
     SECTION("Vector addition assignment")
     {
-        Vector2d<double> v(2.3, 4.5);
-        v += Vector2d<double>(3.4, 5.6);
-        REQUIRE(v.x == Approx(5.7));
-        REQUIRE(v.y == Approx(10.1));
+        Vector2d<int> vi(22, 1);
+        vi += Vector2d<int>(1, -3);
+        REQUIRE(vi.x == 23);
+        REQUIRE(vi.y == -2);
+
+        Vector2d<double> vd(2.3, 4.5);
+        vd += Vector2d<double>(3.4, 5.6);
+        REQUIRE(vd.x == Approx(5.7));
+        REQUIRE(vd.y == Approx(10.1));
     }
 
     SECTION("Vector subtraction")
     {
-        Vector2d<double> v = Vector2d<double>(4.5, 3.2) - Vector2d<double>(3.1, 2.6);
-        REQUIRE(v.x == Approx(1.4));
-        REQUIRE(v.y == Approx(0.6));
+        Vector2d<int> vi = Vector2d<int>(19, -8) - Vector2d<int>(20, -2);
+        REQUIRE(vi.x == -1);
+        REQUIRE(vi.y == -6);
+
+        Vector2d<double> vd = Vector2d<double>(4.5, 3.2) - Vector2d<double>(3.1, 2.6);
+        REQUIRE(vd.x == Approx(1.4));
+        REQUIRE(vd.y == Approx(0.6));
     }
 
     SECTION("Vector subtraction assignment")
     {
-        Vector2d<double> v(6.3, 5.1);
-        v -= Vector2d<double>(5.2, 1.8);
-        REQUIRE(v.x == Approx(1.1));
-        REQUIRE(v.y == Approx(3.3));
+        Vector2d<int> vi(44, 26);
+        vi -= Vector2d<int>(37, 28);
+        REQUIRE(vi.x == 7);
+        REQUIRE(vi.y == -2);
+
+        Vector2d<double> vd(6.3, 5.1);
+        vd -= Vector2d<double>(5.2, 1.8);
+        REQUIRE(vd.x == Approx(1.1));
+        REQUIRE(vd.y == Approx(3.3));
     }
 
     SECTION("Scalar multiplication")
     {
-        Vector2d<double> v1 = Vector2d<double>(8.4, 3.3) * 4.5;
-        // Check the we got the right answer
-        REQUIRE(v1.x == Approx(37.8));
-        REQUIRE(v1.y == Approx(14.85));
-        // Check that it works the other way round too.
-        Vector2d<double> v2 = 4.5 * Vector2d<double>(8.4, 3.3);
-        REQUIRE(v1.x == Approx(v2.x));
-        REQUIRE(v1.y == Approx(v2.y));
+        Vector2d<int> vi;
+        Vector2d<double> vd;
+
+        // Vector x scalar
+        vi = Vector2d<int>(4, -1) * 5;
+        REQUIRE(vi.x == 20);
+        REQUIRE(vi.y == -5);
+
+        vd = Vector2d<double>(8.4, 3.3) * 4.5;
+        REQUIRE(vd.x == Approx(37.8));
+        REQUIRE(vd.y == Approx(14.85));
+
+
+        // Scalar x vector
+        vi = 5 * Vector2d<int>(4, -1);
+        REQUIRE(vi.x == 20);
+        REQUIRE(vi.y == -5);
+
+        vd = 4.5 * Vector2d<double>(8.4, 3.3);
+        REQUIRE(vd.x == Approx(37.8));
+        REQUIRE(vd.y == Approx(14.85));
     }
 
     SECTION("Scalar multiplication assignment")
     {
-        Vector2d<double> v = Vector2d<double>(3.9, 9.6);
-        v *= 5.1;
-        REQUIRE(v.x == Approx(19.89));
-        REQUIRE(v.y == Approx(48.96));
+        Vector2d<int> vi(-6, 14);
+        vi *= 7;
+        REQUIRE(vi.x == -42);
+        REQUIRE(vi.y == 98);
+
+        Vector2d<double> vd(3.9, 9.6);
+        vd *= 5.1;
+        REQUIRE(vd.x == Approx(19.89));
+        REQUIRE(vd.y == Approx(48.96));
     }
 
     SECTION("Scalar division")
     {
-        Vector2d<double> v1 = Vector2d<double>(12.3, 6.7) / 2.2;
-        // Check the we got the right answer
-        REQUIRE(v1.x == Approx(5.59090909));
-        REQUIRE(v1.y == Approx(3.04545455));
-        // Check that the inverse works
-        Vector2d<double> v2 = 2.2 / Vector2d<double>(12.3, 6.7);
-        REQUIRE(v1.x == Approx(1.0 / v2.x));
-        REQUIRE(v1.y == Approx(1.0 / v2.y));
+        Vector2d<int> vi;
+        Vector2d<double> vd;
+        
+        // Vector divided by scalar
+        vi = Vector2d<int>(12, 6) / 3;
+        REQUIRE(vi.x == 4);
+        REQUIRE(vi.y == 2);
+
+        vd = Vector2d<double>(12.3, 6.7) / 2.2;
+        REQUIRE(vd.x == Approx(5.59090909));
+        REQUIRE(vd.y == Approx(3.04545455));
+
+        // Scalar divided by vector
+        vi = 50 / Vector2d<int>(10, 25);
+        REQUIRE(vi.x == Approx(5));
+        REQUIRE(vi.y == Approx(2));
+
+        vd = 7.2 / Vector2d<double>(8.11, -16.4);
+        REQUIRE(vd.x == Approx(0.887792));
+        REQUIRE(vd.y == Approx(-0.439024));
     }
 
     SECTION("Scalar division assignment")
     {
-        Vector2d<double> v = Vector2d<double>(8.6, 10.7);
-        v /= 3.8;
-        REQUIRE(v.x == Approx(2.26315789));
-        REQUIRE(v.y == Approx(2.81578947));
+        Vector2d<int> vi(10, 28);
+        vi /= 2;
+        REQUIRE(vi.x == 5);
+        REQUIRE(vi.y == 14);
+
+        Vector2d<double> vd(8.6, 10.7);
+        vd /= 3.8;
+        REQUIRE(vd.x == Approx(2.26315789));
+        REQUIRE(vd.y == Approx(2.81578947));
     }
 
     SECTION("Negation")
     {
-        Vector2d<double> v = -Vector2d<double>(14.6, -8.2);
-        REQUIRE(v.x == -14.6);
-        REQUIRE(v.y == 8.2);
+        Vector2d<int> vi = -Vector2d<int>(-99, 47);
+        REQUIRE(vi.x == 99);
+        REQUIRE(vi.y == -47);
+
+        Vector2d<double> vd = -Vector2d<double>(14.6, -8.2);
+        REQUIRE(vd.x == -14.6);
+        REQUIRE(vd.y == 8.2);
     }
+
+    // TODO: Test 3 or more arithmetic operations in a single expression.
 }
 
-TEST_CASE("Vector2d - operations", "[Vector2d]")
+TEST_CASE("Vector2d - general operations", "[Vector2d]")
 {
     SECTION("Magnitude")
     {
+        // TODO: more thorough tests, including negative input
         Vector2d<double> v(5.0, 10.0);
         REQUIRE(v.getMagnitude() == Approx(11.180339887));
-    }
 
-    SECTION("Squared magnitude")
-    {
-        Vector2d<double> v(4.0, 3.0);
+        v.set(4.0, 3.0);
         REQUIRE(v.getSqMagnitude() == Approx(25.0));
     }
 
-    SECTION("Normalise in place")
+    SECTION("Normalisation")
     {
-        Vector2d<double> v(-43.2, 87.6);
-        v.normalise();
-        REQUIRE(v.x == Approx(-0.44229248));
-        REQUIRE(v.y == Approx(0.89687087));
-    }
-
-    SECTION("Normalised copy")
-    {
-        Vector2d<double> v1(87.6, -43.2);
-        Vector2d<double> v2 = v1.getNormalised();
-        REQUIRE(v2.x == Approx(0.89687087));
-        REQUIRE(v2.y == Approx(-0.44229248));
+        // Normalise in place
+        Vector2d<double> v1(-43.2, 87.6);
+        v1.normalise();
+        REQUIRE(v1.x == Approx(-0.44229248));
+        REQUIRE(v1.y == Approx(0.89687087));
+        // Normalised copy
+        Vector2d<double> v2(87.6, -43.2);
+        Vector2d<double> v3 = v2.getNormalised();
+        REQUIRE(v3.x == Approx(0.89687087));
+        REQUIRE(v3.y == Approx(-0.44229248));
     }
 
     SECTION("Dot product")
@@ -206,20 +304,23 @@ TEST_CASE("Vector2d - operations", "[Vector2d]")
         REQUIRE(v1aUnit.dot(v1cUnit) == Approx(0.0));
         // Reverse vector
         REQUIRE(v1aUnit.dot(-v1aUnit) == Approx(-1.0));
+
+        // TODO: test obtuse angle
     }
 
-    SECTION("Right tangent")
+    SECTION("Tangent")
     {
+        // Right tangent
         Vector2d<double> v1(8.8, 1.9);
         Vector2d<double> v2 = v1.getRightTangent();
-        REQUIRE(v1.dot(v2) == Approx(0.0));
-    }
+        REQUIRE(v2.x == 1.9);
+        REQUIRE(v2.y == -8.8);
 
-    SECTION("Left tangent")
-    {
-        Vector2d<double> v1(3.7, 2.4);
-        Vector2d<double> v2 = v1.getLeftTangent();
-        REQUIRE(v1.dot(v2) == Approx(0.0));
+        // Left tangent
+        v1.set(-3.7, 2.4);
+        v2 = v1.getLeftTangent();
+        REQUIRE(v2.x == -2.4);
+        REQUIRE(v2.y == -3.7);
     }
 
     SECTION("Projection")
@@ -235,8 +336,152 @@ TEST_CASE("Vector2d - operations", "[Vector2d]")
     }
 }
 
-TEST_CASE("Vector2d - conversions", "[Vector2d]")
+TEST_CASE("Vector2d - polar conversions", "[Vector2d]")
 {
-    // TODO: construct from Polar
-    // TODO: convert to polar (reference and value)
+    SECTION("Construction from Polar<>")
+    {
+        Vector2d<double> v;
+
+        // Zero magnitude
+        v = Vector2d<double>(Polar<double>(0.0, 0.0));
+        REQUIRE(v.x == Approx(0.0));
+        REQUIRE(v.y == Approx(0.0));
+
+        v = Vector2d<double>(Polar<double>(5.9, 0.0));
+        REQUIRE(v.x == Approx(0.0));
+        REQUIRE(v.y == Approx(0.0));
+
+        v = Vector2d<double>(Polar<double>(-19.3, 0.0));
+        REQUIRE(v.x == Approx(0.0));
+        REQUIRE(v.y == Approx(0.0));
+
+        // X axis
+        v = Vector2d<double>(Polar<double>(0.0, 7.6));
+        REQUIRE(v.x == Approx(7.6));
+        REQUIRE(v.y == Approx(0.0));
+
+        v = Vector2d<double>(Polar<double>(0.0, -19.2));
+        REQUIRE(v.x == Approx(-19.2));
+        REQUIRE(v.y == Approx(0.0));
+
+        v = Vector2d<double>(Polar<double>(3.14159265, 12.6));
+        REQUIRE(v.x == Approx(-12.6));
+        REQUIRE(v.y == Approx(0.0));
+
+        v = Vector2d<double>(Polar<double>(-3.14159265, -18.9));
+        REQUIRE(v.x == Approx(18.9));
+        REQUIRE(v.y == Approx(0.0));
+
+        // Y axis
+        v = Vector2d<double>(Polar<double>(1.57079633, 5.1));
+        REQUIRE(v.x == Approx(0.0));
+        REQUIRE(v.y == Approx(5.1));
+
+        v = Vector2d<double>(Polar<double>(1.57079633, -3.7));
+        REQUIRE(v.x == Approx(0.0));
+        REQUIRE(v.y == Approx(-3.7));
+
+        v = Vector2d<double>(Polar<double>(4.71238898, 42.8));
+        REQUIRE(v.x == Approx(0.0));
+        REQUIRE(v.y == Approx(-42.8));
+
+        v = Vector2d<double>(Polar<double>(-1.57079633, -55.01));
+        REQUIRE(v.x == Approx(0.0));
+        REQUIRE(v.y == Approx(55.01));
+
+        // Arbitrary directions
+        v = Vector2d<double>(Polar<double>(-0.78539816, 9.8));
+        REQUIRE(v.x == Approx(6.929646));
+        REQUIRE(v.y == Approx(-6.929646));
+
+        v = Vector2d<double>(Polar<double>(5.3361, 4.3));
+        REQUIRE(v.x == Approx(2.51142133));
+        REQUIRE(v.y == Approx(-3.49038149));
+
+        v = Vector2d<double>(Polar<double>(9.894328, -151.664));
+        REQUIRE(v.x == Approx(135.24970542));
+        REQUIRE(v.y == Approx(68.62569547));
+    }
+
+    SECTION("Conversion to Polar<> (return by reference)")
+    {
+        Polar<double> p;
+
+        // Zero magnitude
+        Vector2d<double>(0.0, 0.0).toPolar(p);
+        REQUIRE(p.angle == Approx(0.0));
+        REQUIRE(p.mag == Approx(0.0));
+
+        // X axis
+        Vector2d<double>(146.0, 0.0).toPolar(p);
+        REQUIRE(p.angle == Approx(0.0));
+        REQUIRE(p.mag == Approx(146.0));
+
+        Vector2d<double>(-1.39, 0.0).toPolar(p);
+        REQUIRE(p.angle == Approx(3.14159265));
+        REQUIRE(p.mag == Approx(1.39));
+
+        // Y axis
+        Vector2d<double>(0.0, 24.31).toPolar(p);
+        REQUIRE(p.angle == Approx(1.57079633));
+        REQUIRE(p.mag == Approx(24.31));
+
+        Vector2d<double>(0.0, -55.7).toPolar(p);
+        REQUIRE(p.angle == Approx(4.71238898));
+        REQUIRE(p.mag == Approx(55.7));
+
+        // Arbitrary directions
+        Vector2d<double>(5.36, -5.36).toPolar(p);
+        REQUIRE(p.angle == Approx(5.49778714));
+        REQUIRE(p.mag == Approx(7.58018469));
+
+        Vector2d<double>(-12.77, 18.32).toPolar(p);
+        REQUIRE(p.angle == Approx(2.17954130));
+        REQUIRE(p.mag == Approx(22.33148674));
+
+        Vector2d<double>(-71.87, -2.4).toPolar(p);
+        REQUIRE(p.angle == Approx(3.17497388));
+        REQUIRE(p.mag == Approx(71.91006119));
+    }
+
+    SECTION("Conversion to Polar<> (return by value)")
+    {
+        Polar<double> p;
+
+        // Zero magnitude
+        p = Vector2d<double>(0.0, 0.0).toPolar();
+        REQUIRE(p.angle == Approx(0.0));
+        REQUIRE(p.mag == Approx(0.0));
+
+        // X axis
+        p = Vector2d<double>(146.0, 0.0).toPolar();
+        REQUIRE(p.angle == Approx(0.0));
+        REQUIRE(p.mag == Approx(146.0));
+
+        p = Vector2d<double>(-1.39, 0.0).toPolar();
+        REQUIRE(p.angle == Approx(3.14159265));
+        REQUIRE(p.mag == Approx(1.39));
+
+        // Y axis
+        p = Vector2d<double>(0.0, 24.31).toPolar();
+        REQUIRE(p.angle == Approx(1.57079633));
+        REQUIRE(p.mag == Approx(24.31));
+
+        p = Vector2d<double>(0.0, -55.7).toPolar();
+        REQUIRE(p.angle == Approx(4.71238898));
+        REQUIRE(p.mag == Approx(55.7));
+
+        // Arbitrary directions
+        p = Vector2d<double>(5.36, -5.36).toPolar();
+        REQUIRE(p.angle == Approx(5.49778714));
+        REQUIRE(p.mag == Approx(7.58018469));
+
+        p = Vector2d<double>(-12.77, 18.32).toPolar();
+        REQUIRE(p.angle == Approx(2.17954130));
+        REQUIRE(p.mag == Approx(22.33148674));
+
+        p = Vector2d<double>(-71.87, -2.4).toPolar();
+        REQUIRE(p.angle == Approx(3.17497388));
+        REQUIRE(p.mag == Approx(71.91006119));
+    }
 }

@@ -16,6 +16,7 @@
 
 #include "Polar.h"
 #include "Vector2d.h"
+#include "Utils.h"
 
 namespace avidmath
 {
@@ -94,7 +95,14 @@ namespace avidmath
     template <typename T_ty>
     void Polar<T_ty>::simplify()
     {
-        assert(0); // not implemented yet!
+        // Make sure the magnitude is positive.
+        if (mag < T_ty(0)) {
+            angle += constants::pi<T_ty>();
+            mag *= T_ty(-1);
+        }
+
+        // Make sure the angle is positive and is less than a full circle.
+        angle = wrap(angle, T_ty(0), constants::pi<T_ty>() * T_ty(2));
     }
     
     template <typename T_ty>

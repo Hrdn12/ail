@@ -15,7 +15,10 @@ namespace avidmath
     template <typename T_ty> class Vector2d;
 
     /// Declares a 2d polar vector (angle / magnitude).
-    /// In an XY cartesian plane, 0 radians/degrees points +X, half pi radians (90 degrees) points +Y.
+    /// In an XY cartesian plane, 0 radians points +X, half pi radians (90 degrees) points +Y.
+    /// Negative angle and/or magnitude are valid.
+    /// Template parameter gives the data type for the angle and magnitude.
+    /// Note that this class uses radians so integer types should be avoided.
     template <typename T_ty>
     class Polar
     {
@@ -34,6 +37,9 @@ namespace avidmath
         Polar(const Polar<T_ty> & rhs);
         
         /// Convert a cartesian coordinate into polar.
+        /// This will use the simplest possible representation of a polar angle,
+        ///  i.e. the magnitude will be positive, and the angle will be positive and
+        ///  less than 2 pi radians (a full circle).
         explicit Polar(const Vector2d<T_ty> &rhs);
 
         /// Destructor.
@@ -46,10 +52,16 @@ namespace avidmath
         /// Assignment operator.
         Polar<T_ty> & operator = (const Polar<T_ty> & rhs);
         
-        /// Equality operator.
+        /// Test if this coordinate is exactly equal to another.
+        /// Note that this does a simple equality check on the underlying numbers.
+        /// It does not check for equivalence, e.g. it will treats 0 radians as being
+        ///  not equal to 2 pi radians, even though they are equivalent.
         bool operator == (const Polar<T_ty> & rhs) const;
         
-        /// Inequality operator.
+        /// Test if this coordinate is NOT exactly equal to another.
+        /// Note that this does a simple inequality check on the underlying numbers.
+        /// It does not check for equivalence, e.g. it will treats 0 radians as being
+        ///  not equal to 2 pi radians, even though they are equivalent.
         bool operator != (const Polar<T_ty> & rhs) const;
 
         /// Negation operator. (Returns a negated copy.)
@@ -74,7 +86,9 @@ namespace avidmath
         ///  as this object, but the angle will be between 0 and two pi, and the
         ///  magnitude will be positive.
         Polar<T_ty> getSimplified() const;
-    
+
+        // TODO: method to test for approximate equivalence. It will effectivcely
+        //  simply the coordinates before comparison.
 
     //------------------------------------------------------------------------------
     // Conversions.

@@ -9,6 +9,8 @@
     Released open source under the MIT licence.
 */
 
+#include <string>
+
 namespace avidmath
 {
     // Forward declaration to the Polar coordinate class.
@@ -103,9 +105,15 @@ namespace avidmath
     // Conversions.
 
         /// Convert this cartesian coordinate to a polar coordinate.
+        /// This will use the simplest possible representation of a polar angle,
+        ///  i.e. the magnitude will be positive, and the angle will be positive and
+        ///  less than 2 pi radians (a full circle).
         void toPolar(Polar<T_ty> & output) const;
 
         /// Convert this cartesian coordinate to a polar coordinate.
+        /// This will use the simplest possible representation of a polar angle,
+        ///  i.e. the magnitude will be positive, and the angle will be positive and
+        ///  less than 2 pi radians (a full circle).
         Polar<T_ty> toPolar() const;
 
 

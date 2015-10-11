@@ -194,6 +194,7 @@ namespace avidmath
     {
         output.mag = getMagnitude();
         output.angle = static_cast<T_ty>(std::atan2(y, x));
+        output.simplify();
     }
 
     template <typename T_ty>
