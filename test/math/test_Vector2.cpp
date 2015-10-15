@@ -1,6 +1,6 @@
-#include "common.h"
+#include "../common.h"
 
-using namespace avidmath;
+using namespace ail::math;
 
 TEST_CASE("Vector2d - construction and assignment", "[Vector2d]")
 {

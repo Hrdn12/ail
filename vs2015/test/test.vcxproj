@@ -12,11 +12,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\test\main.cpp" />
-    <ClCompile Include="..\..\test\test_Constants.cpp" />
-    <ClCompile Include="..\..\test\test_Polar.cpp" />
-    <ClCompile Include="..\..\test\test_tmod.cpp" />
-    <ClCompile Include="..\..\test\test_Utils.cpp" />
-    <ClCompile Include="..\..\test\test_Vector2.cpp" />
+    <ClCompile Include="..\..\test\math\test_Constants.cpp" />
+    <ClCompile Include="..\..\test\math\test_Polar.cpp" />
+    <ClCompile Include="..\..\test\math\test_tmod.cpp" />
+    <ClCompile Include="..\..\test\math\test_Utils.cpp" />
+    <ClCompile Include="..\..\test\math\test_Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\test\common.h" />
@@ -66,6 +66,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)..\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ShowIncludes>false</ShowIncludes>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -82,6 +83,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)..\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ShowIncludes>false</ShowIncludes>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

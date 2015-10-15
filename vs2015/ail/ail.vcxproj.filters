@@ -15,39 +15,36 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\inc\Constants.h">
+    <ClInclude Include="..\..\inc\ail\math\Constants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\inc\Utils.h">
+    <ClInclude Include="..\..\inc\ail\math\Utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\inc\Polar.h">
+    <ClInclude Include="..\..\inc\ail\math\Polar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\inc\avidmath.h">
+    <ClInclude Include="..\..\inc\ail\math\ailmath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\inc\avidmathconfig.h">
+    <ClInclude Include="..\..\inc\ail\math\Vector2d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\inc\Vector2d.h">
+    <ClInclude Include="..\..\inc\ail\math\BoundingBox2d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\inc\BoundingBox2d.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\inc\tmod.h">
+    <ClInclude Include="..\..\inc\ail\math\tmod.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\inc\Vector2d.inl">
+    <None Include="..\..\inc\ail\math\Vector2d.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="..\..\inc\Polar.inl">
+    <None Include="..\..\inc\ail\math\Polar.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="..\..\inc\BoundingBox2d.inl">
+    <None Include="..\..\inc\ail\math\BoundingBox2d.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>

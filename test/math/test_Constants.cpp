@@ -1,6 +1,6 @@
-#include "common.h"
+#include "../common.h"
 
-using namespace avidmath::constants;
+using namespace ail::math;
 
 TEST_CASE("Constants", "[Constants]")
 {

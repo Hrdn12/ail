@@ -1,18 +1,17 @@
-/** \file avidmath.h
-    \brief Includes all avidmath functionality.
+/** \file ailmath.h
+    \brief Includes all math functionality of ail.
     
-    Part of the avidmath library (avidinsight.uk).
+    Part of ail, the Avid Insight Library (avidinsight.uk).
     Copyright (C) 2015 Peter R. Bloomfield.
     Released open source under the MIT licence.
 */
 
-#ifndef avidmath_avidmath_h
-#define avidmath_avidmath_h
+#ifndef ail_math_ailmath_h
+#define ail_math_ailmath_h
 
 
     // Various core/utility headers:
 
-    #include "avidmathconfig.h"
     #include "Constants.h"
     #include "Utils.h"
 
@@ -31,4 +30,4 @@
     #include "Vector2d.inl"
 
 
-#endif //avidmath_avidmath_h
+#endif //ail_math_ailmath_h

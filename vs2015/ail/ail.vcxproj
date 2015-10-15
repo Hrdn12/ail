@@ -11,23 +11,22 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\inc\avidmath.h" />
-    <ClInclude Include="..\..\inc\avidmathconfig.h" />
-    <ClInclude Include="..\..\inc\BoundingBox2d.h" />
-    <ClInclude Include="..\..\inc\Constants.h" />
-    <ClInclude Include="..\..\inc\Polar.h" />
-    <ClInclude Include="..\..\inc\tmod.h" />
-    <ClInclude Include="..\..\inc\Utils.h" />
-    <ClInclude Include="..\..\inc\Vector2d.h" />
+    <ClInclude Include="..\..\inc\ail\math\ailmath.h" />
+    <ClInclude Include="..\..\inc\ail\math\BoundingBox2d.h" />
+    <ClInclude Include="..\..\inc\ail\math\Constants.h" />
+    <ClInclude Include="..\..\inc\ail\math\Polar.h" />
+    <ClInclude Include="..\..\inc\ail\math\tmod.h" />
+    <ClInclude Include="..\..\inc\ail\math\Utils.h" />
+    <ClInclude Include="..\..\inc\ail\math\Vector2d.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\inc\BoundingBox2d.inl" />
-    <None Include="..\..\inc\Polar.inl" />
-    <None Include="..\..\inc\Vector2d.inl" />
+    <None Include="..\..\inc\ail\math\BoundingBox2d.inl" />
+    <None Include="..\..\inc\ail\math\Polar.inl" />
+    <None Include="..\..\inc\ail\math\Vector2d.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FB0682AE-9770-4E4B-BA5C-FCFE56698D2F}</ProjectGuid>
-    <RootNamespace>avidmath</RootNamespace>
+    <RootNamespace>ail</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

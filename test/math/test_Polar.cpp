@@ -1,6 +1,6 @@
-#include "common.h"
+#include "../common.h"
 
-using namespace avidmath;
+using namespace ail::math;
 
 TEST_CASE("Polar coordinates - ???", "[Polar]")
 {

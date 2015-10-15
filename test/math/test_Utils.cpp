@@ -1,7 +1,6 @@
-#include "common.h"
+#include "../common.h"
 
-using namespace avidmath;
-using namespace avidmath::constants;
+using namespace ail::math;
 
 TEST_CASE("Utils - Angle conversion", "[Utils]")
 {

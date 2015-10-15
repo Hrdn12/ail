@@ -1,3 +1,3 @@
 #include "catch/catch.hpp"
 
-#include "../inc/avidmath.h"
+#include "ail/math/ailmath.h"

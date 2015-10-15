@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.22823.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "avidmath", "avidmath\avidmath.vcxproj", "{FB0682AE-9770-4E4B-BA5C-FCFE56698D2F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ail", "ail\ail.vcxproj", "{FB0682AE-9770-4E4B-BA5C-FCFE56698D2F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "test\test.vcxproj", "{FACC14BF-21E3-409A-87AA-B37710646E0F}"
 EndProject

@@ -13,25 +13,28 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\math">
+      <UniqueIdentifier>{8b9d32de-fc5a-4f9f-b98b-c0d2a7389a32}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\test\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\test\test_Vector2.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\..\test\math\test_Constants.cpp">
+      <Filter>Source Files\math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\test\test_Constants.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\..\test\math\test_Polar.cpp">
+      <Filter>Source Files\math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\test\test_Utils.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\..\test\math\test_tmod.cpp">
+      <Filter>Source Files\math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\test\test_Polar.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\..\test\math\test_Utils.cpp">
+      <Filter>Source Files\math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\test\test_tmod.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\..\test\math\test_Vector2.cpp">
+      <Filter>Source Files\math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
