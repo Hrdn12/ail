@@ -1,9 +1,8 @@
-# ail
-Avid Insight Library for C++
+# Avid Insight Library (ail) for C++
 
-Author:  Peter R. Bloomfield
-Web:     avidinsight.uk
-License: MIT
+ * Author:  Peter R. Bloomfield
+ * Web:     avidinsight.uk
+ * License: MIT
 
 ## WARNING
 
