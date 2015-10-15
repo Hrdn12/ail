@@ -260,7 +260,8 @@ TEST_CASE("Vector2d - general operations", "[Vector2d]")
 {
     SECTION("Magnitude")
     {
-        // TODO: more thorough tests, including negative input
+        // TODO: add more tests here
+
         Vector2d<double> v(5.0, 10.0);
         REQUIRE(v.getMagnitude() == Approx(11.180339887));
 
@@ -270,16 +271,21 @@ TEST_CASE("Vector2d - general operations", "[Vector2d]")
 
     SECTION("Normalisation")
     {
+        // TODO: add more tests here
+
         // Normalise in place
         Vector2d<double> v1(-43.2, 87.6);
         v1.normalise();
         REQUIRE(v1.x == Approx(-0.44229248));
         REQUIRE(v1.y == Approx(0.89687087));
+        REQUIRE(v1.getMagnitude() == Approx(1.0));
+
         // Normalised copy
         Vector2d<double> v2(87.6, -43.2);
         Vector2d<double> v3 = v2.getNormalised();
         REQUIRE(v3.x == Approx(0.89687087));
         REQUIRE(v3.y == Approx(-0.44229248));
+        REQUIRE(v3.getMagnitude() == Approx(1.0));
     }
 
     SECTION("Dot product")
@@ -288,28 +294,33 @@ TEST_CASE("Vector2d - general operations", "[Vector2d]")
         Vector2d<double> v1b(9.2, -3.4); // right angles to v1
         Vector2d<double> v1c(-9.2, 3.4); // right angles to v1
         Vector2d<double> v2(8.6, 1.9);
+        Vector2d<double> v3(-2.7, 0.1);
 
         Vector2d<double> v1aUnit = v1a.getNormalised();
         Vector2d<double> v1bUnit = v1b.getNormalised();
         Vector2d<double> v1cUnit = v1c.getNormalised();
         Vector2d<double> v2Unit = v2.getNormalised();
-
-        // Arbitrary vectors.
-        REQUIRE(v1a.dot(v2) == Approx(46.72)); // not normalised
-        REQUIRE(v1aUnit.dot(v2Unit) == Approx(0.54084)); // normalised
+        Vector2d<double> v3Unit = v3.getNormalised();
+        
         // Same vector
         REQUIRE(v1aUnit.dot(v1aUnit) == Approx(1.0));
-        // Right angles
+        // Acute angle
+        REQUIRE(v1a.dot(v2) == Approx(46.72));              // not normalised
+        REQUIRE(v1aUnit.dot(v2Unit) == Approx(0.54083950)); // normalised
+        // Right angle
         REQUIRE(v1aUnit.dot(v1bUnit) == Approx(0.0));
         REQUIRE(v1aUnit.dot(v1cUnit) == Approx(0.0));
+        // Obtuse angle
+        REQUIRE(v1a.dot(v3) == Approx(-8.26));               // not normalised
+        REQUIRE(v1aUnit.dot(v3Unit) == Approx(-0.31169589)); // normalised
         // Reverse vector
         REQUIRE(v1aUnit.dot(-v1aUnit) == Approx(-1.0));
-
-        // TODO: test obtuse angle
     }
 
     SECTION("Tangent")
     {
+        // TODO: add more tests here
+
         // Right tangent
         Vector2d<double> v1(8.8, 1.9);
         Vector2d<double> v2 = v1.getRightTangent();
@@ -325,6 +336,8 @@ TEST_CASE("Vector2d - general operations", "[Vector2d]")
 
     SECTION("Projection")
     {
+        // TODO: add more tests here
+
         Vector2d<double> v1(4.0, 3.0);
         Vector2d<double> v2(2.0, 4.0);
 
@@ -333,6 +346,34 @@ TEST_CASE("Vector2d - general operations", "[Vector2d]")
         Vector2d<double> v3 = v2.getVectorProjection(v1);
         REQUIRE(v3.x == Approx(3.2));
         REQUIRE(v3.y == Approx(2.4));
+    }
+
+    SECTION("Distance")
+    {
+        // Actual distance
+        // Axis-aligned
+        REQUIRE(Vector2d<double>(10.0, 0.0).getDistance(Vector2d<double>(24.94, 0.0)) == Approx(14.94));
+        REQUIRE(Vector2d<double>(6.0, 0.0).getDistance(Vector2d<double>(-4.22, 0.0)) == Approx(10.22));
+        REQUIRE(Vector2d<double>(0.0, 1.5).getDistance(Vector2d<double>(0.0, 13.8)) == Approx(12.3));
+        REQUIRE(Vector2d<double>(0.0, -22.8).getDistance(Vector2d<double>(0.0, -17.391)) == Approx(5.409));
+        // Arbitrary
+        REQUIRE(Vector2d<double>(5.136, 19.64).getDistance(Vector2d<double>(-14.1, 27.3)) == Approx(20.705055));
+        REQUIRE(Vector2d<double>(-57.301, 2.88).getDistance(Vector2d<double>(9.648, -101.9)) == Approx(124.342338));
+
+
+        // Squared distance
+        // Axis-aligned
+        REQUIRE(Vector2d<double>(10.0, 0.0).getSqDistance(Vector2d<double>(24.94, 0.0)) == Approx(223.2036));
+        REQUIRE(Vector2d<double>(6.0, 0.0).getSqDistance(Vector2d<double>(-4.22, 0.0)) == Approx(104.4484));
+        REQUIRE(Vector2d<double>(0.0, 1.5).getSqDistance(Vector2d<double>(0.0, 13.8)) == Approx(151.29));
+        REQUIRE(Vector2d<double>(0.0, -22.8).getSqDistance(Vector2d<double>(0.0, -17.391)) == Approx(29.257281));
+        // Arbitrary
+        REQUIRE(Vector2d<double>(5.136, 19.64).getSqDistance(Vector2d<double>(-14.1, 27.3)) == Approx(428.69930255));
+        REQUIRE(Vector2d<double>(-57.301, 2.88).getSqDistance(Vector2d<double>(9.648, -101.9)) == Approx(15461.01701931));
+    }
+
+    SECTION("Equivalence and equality")
+    {
     }
 }
 

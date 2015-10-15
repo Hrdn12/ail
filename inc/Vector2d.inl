@@ -14,6 +14,7 @@
 
 #include "Vector2d.h"
 #include "Polar.h"
+#include "Utils.h"
 
 namespace avidmath
 {
@@ -184,6 +185,32 @@ namespace avidmath
         const T_ty rhsSqMag = rhs.getSqMagnitude();
         if (rhsSqMag == 0) return Vector2d<T_ty>();
         return (dot(rhs) / rhsSqMag) * rhs;
+    }
+
+    template <typename T_ty>
+    T_ty Vector2d<T_ty>::getDistance(const Vector2d<T_ty> & other) const
+    {
+        return (*this - other).getMagnitude();
+    }
+
+    template <typename T_ty>
+    T_ty Vector2d<T_ty>::getSqDistance(const Vector2d<T_ty> & other) const
+    {
+        return (*this - other).getSqMagnitude();
+    }
+
+    template <typename T_ty>
+    bool Vector2d<T_ty>::isNear(const Vector2d<T_ty> & other, const T_ty dist) const
+    {
+        return getSqDistance(other) <= (dist * dist);
+    }
+
+    template <typename T_ty>
+    bool Vector2d<T_ty>::isApproxEqual(const Vector2d<T_ty> & other, const T_ty margin) const
+    {
+        return
+            isApproxEqual(x, other.x, margin) &&
+            isApproxEqual(y, other.y, margin);
     }
 
     //------------------------------------------------------------------------------

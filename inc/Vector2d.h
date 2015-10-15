@@ -92,13 +92,31 @@ namespace avidmath
         Vector2d<T_ty> getLeftTangent() const;
 
         /// Calculate the dot product of this vector with another.
-        T_ty dot(const Vector2d<T_ty> &rhs) const;
+        T_ty dot(const Vector2d<T_ty> & rhs) const;
 
         /// Get the amount by which this vector projects onto another.
-        T_ty getScalarProjection(const Vector2d<T_ty> &rhs) const;
+        T_ty getScalarProjection(const Vector2d<T_ty> & rhs) const;
 
         /// Get a vector describing this vector's projection on another.
-        Vector2d<T_ty> getVectorProjection(const Vector2d<T_ty> &rhs) const;
+        Vector2d<T_ty> getVectorProjection(const Vector2d<T_ty> & rhs) const;
+
+        /// Treating both vectors as positions, get the distance between this vector and another.
+        /// Note that this relies on a square root. getSqDistance() is faster and may
+        ///  be adequate for many purposes.
+        T_ty getDistance(const Vector2d<T_ty> & other) const;
+
+        /// Treating both vectors as positions, get the square of the distance between this vector and another.
+        T_ty getSqDistance(const Vector2d<T_ty> & other) const;
+
+        /// Check if this vector represents a position within a certain distance of another.
+        /// The comparison uses Euclidean distance, making it more practical for most
+        ///  purposes than isApproxEqual().
+        bool isNear(const Vector2d<T_ty> & other, const T_ty dist) const;
+
+        /// Check if this vector is approximately equal to another, within a given margin.
+        /// This checks each component independently for approximate equality.
+        /// The isNear() function may be more useful for most purposes.
+        bool isApproxEqual(const Vector2d<T_ty> & other, const T_ty margin) const;
 
 
     //------------------------------------------------------------------------------
