@@ -149,303 +149,6 @@ TEST_CASE("Utils - Angle conversion", "[Utils]")
     }
 }
 
-TEST_CASE("Utils - Comparisons", "[Utils]")
-{
-    SECTION("isApproxEqual - integers")
-    {
-        // Exact matches
-        REQUIRE(isApproxEqual(0, 0, 0));
-        REQUIRE(isApproxEqual(0, 0, 2));
-        REQUIRE(isApproxEqual(-303, -303, 5));
-        REQUIRE(isApproxEqual(774, 774, 1));
-
-        // Approximate matches
-        REQUIRE(isApproxEqual(-6, 0, 10));
-        REQUIRE(isApproxEqual(4, 0, 6));
-        REQUIRE(isApproxEqual(-138, -136, 3));
-        REQUIRE(isApproxEqual(214, 215, 2));
-
-        // Approximate matches crossing zero
-        REQUIRE(isApproxEqual(-2, 3, 5));
-        REQUIRE(isApproxEqual(2, -5, 7));
-        
-        // Small mismatches crossing zero
-        REQUIRE_FALSE(isApproxEqual(-3, 3, 5));
-        REQUIRE_FALSE(isApproxEqual(3, -5, 7));
-
-        // No confusion between positive/negative
-        REQUIRE_FALSE(isApproxEqual(-198, 198, 4));
-        REQUIRE_FALSE(isApproxEqual(122, -122, 35));
-
-        // Big mismatches
-        REQUIRE_FALSE(isApproxEqual(-325, -280, 23));
-        REQUIRE_FALSE(isApproxEqual(830, 716, 47));
-        REQUIRE_FALSE(isApproxEqual(-2765, 2108, 247));
-        REQUIRE_FALSE(isApproxEqual(5862, -9735, 2008));
-
-        // Boundary matches
-        REQUIRE(isApproxEqual(9, 10, 1));
-        REQUIRE(isApproxEqual(11, 10, 1));
-        REQUIRE(isApproxEqual(-9, -10, 1));
-        REQUIRE(isApproxEqual(-11, -10, 1));
-        REQUIRE(isApproxEqual(42, 63, 21));
-        REQUIRE(isApproxEqual(84, 63, 21));
-        REQUIRE(isApproxEqual(-42, -63, 21));
-        REQUIRE(isApproxEqual(-84, -63, 21));
-
-        // Boundary mismatches
-        REQUIRE_FALSE(isApproxEqual(8, 10, 1));
-        REQUIRE_FALSE(isApproxEqual(12, 10, 1));
-        REQUIRE_FALSE(isApproxEqual(-8, -10, 1));
-        REQUIRE_FALSE(isApproxEqual(-12, -10, 1));
-        REQUIRE_FALSE(isApproxEqual(41, 63, 21));
-        REQUIRE_FALSE(isApproxEqual(85, 63, 21));
-        REQUIRE_FALSE(isApproxEqual(-41, -63, 21));
-        REQUIRE_FALSE(isApproxEqual(-85, -63, 21));
-        
-        // TODO: Test negative margin
-    }
-
-    SECTION("isApproxEqual - floating point")
-    {
-        // Exact matches
-        REQUIRE(isApproxEqual(0.0, 0.0, 0.0));
-        REQUIRE(isApproxEqual(0.0, 0.0, 1.23));
-        REQUIRE(isApproxEqual(-194.56, -194.56, 3.6));
-        REQUIRE(isApproxEqual(871.02, 871.02, 4.901));
-
-        // Approximate matches
-        REQUIRE(isApproxEqual(1.5, 1.4, 0.2));
-        REQUIRE(isApproxEqual(-3.8, -4.1, 0.4));
-        REQUIRE(isApproxEqual(-13.6, -14.9, 2.76));
-        REQUIRE(isApproxEqual(24.54, 27.0, 3.0));
-        REQUIRE(isApproxEqual(-6594.34, -6402.939, 353.4));
-        REQUIRE(isApproxEqual(1390.114, 1253.332, 250.0));
-
-        // Approximate matches crossing zero
-        REQUIRE(isApproxEqual(-5.49, 2.48, 11.88));
-        REQUIRE(isApproxEqual(6.97, -3.74, 15.6));
-
-        // Small mismatches crossing zero
-        REQUIRE_FALSE(isApproxEqual(-8.112, 2.48, 6.91));
-        REQUIRE_FALSE(isApproxEqual(5.901, -4.446, 7.27));
-
-        // No confusion between positive/negative
-        REQUIRE_FALSE(isApproxEqual(-314.23, 314.23, 3.19));
-        REQUIRE_FALSE(isApproxEqual(461.39, -461.39, 41.36));
-
-        // Big mismatches
-        REQUIRE_FALSE(isApproxEqual(-386.13, -963.41, 27.041));
-        REQUIRE_FALSE(isApproxEqual(136.36, 549.36, 27.041));
-        REQUIRE_FALSE(isApproxEqual(37896.27, -2902.847, 1326.94));
-        REQUIRE_FALSE(isApproxEqual(-29653.165, 9572.187, 3618.2));
-
-        // Boundary matches
-        // (be careful of floating point accuracy with these tests)
-        REQUIRE(isApproxEqual(74.31, 74.32, 0.0101));
-        REQUIRE(isApproxEqual(74.33, 74.32, 0.0101));
-        REQUIRE(isApproxEqual(-74.31, -74.32, 0.0101));
-        REQUIRE(isApproxEqual(-74.33, -74.32, 0.0101));
-        REQUIRE(isApproxEqual(64.92, 58.67, 6.2501));
-        REQUIRE(isApproxEqual(52.42, 58.67, 6.2501));
-        REQUIRE(isApproxEqual(-64.92, -58.67, 6.2501));
-        REQUIRE(isApproxEqual(-52.42, -58.67, 6.2501));
-
-        // Boundary mismatches
-        // (be careful of floating point accuracy with these tests)
-        REQUIRE_FALSE(isApproxEqual(74.3098, 74.32, 0.0101));
-        REQUIRE_FALSE(isApproxEqual(74.3302, 74.32, 0.0101));
-        REQUIRE_FALSE(isApproxEqual(-74.3098, -74.32, 0.0101));
-        REQUIRE_FALSE(isApproxEqual(-74.3302, -74.32, 0.0101));
-        REQUIRE_FALSE(isApproxEqual(64.9202, 58.67, 6.2501));
-        REQUIRE_FALSE(isApproxEqual(52.4199, 58.67, 6.2501));
-        REQUIRE_FALSE(isApproxEqual(-64.9202, -58.67, 6.2501));
-        REQUIRE_FALSE(isApproxEqual(-52.4198, -58.67, 6.2501));
-
-        // TODO: Test negative margin
-    }
-
-    SECTION("isApproxZero - integers")
-    {
-        // Exact matches
-        REQUIRE(isApproxZero(0, 0));
-        REQUIRE(isApproxZero(0, 1));
-
-        // Approximate matches
-        REQUIRE(isApproxZero(-2, 3));
-        REQUIRE(isApproxZero(2, 3));
-        REQUIRE(isApproxZero(-5, 10));
-        REQUIRE(isApproxZero(5, 10));
-
-        // Boundary matches
-        REQUIRE(isApproxZero(-1, 1));
-        REQUIRE(isApproxZero(1, 1));
-        REQUIRE(isApproxZero(-28, 28));
-        REQUIRE(isApproxZero(28, 28));
-
-        // Boundary mismatches
-        REQUIRE_FALSE(isApproxZero(-2, 1));
-        REQUIRE_FALSE(isApproxZero(2, 1));
-        REQUIRE_FALSE(isApproxZero(-41, 40));
-        REQUIRE_FALSE(isApproxZero(41, 40));
-
-        // Big mismatches
-        REQUIRE_FALSE(isApproxZero(-47, 23));
-        REQUIRE_FALSE(isApproxZero(93, 38));
-
-        // TODO: Test negative margin
-    }
-
-    SECTION("isApproxZero - floating point")
-    {
-        // Exact matches
-        REQUIRE(isApproxZero(0.0, 0.0));
-        REQUIRE(isApproxZero(0.0, 1.0));
-
-        // Approximate matches
-        REQUIRE(isApproxZero(0.4, 0.9));
-        REQUIRE(isApproxZero(-0.3, 0.7));
-        REQUIRE(isApproxZero(-2.2, 3.1));
-        REQUIRE(isApproxZero(2.2, 3.1));
-        REQUIRE(isApproxZero(-5.6, 6.3));
-        REQUIRE(isApproxZero(5.6, 6.2));
-
-        // Boundary matches
-        REQUIRE(isApproxZero(-1.4, 1.4));
-        REQUIRE(isApproxZero(1.4, 1.4));
-        REQUIRE(isApproxZero(-37.16, 37.16));
-        REQUIRE(isApproxZero(37.16, 37.16));
-
-        // Boundary mismatches
-        REQUIRE_FALSE(isApproxZero(-2.6, 2.58));
-        REQUIRE_FALSE(isApproxZero(2.6, 2.58));
-        REQUIRE_FALSE(isApproxZero(-52.85, 52.83));
-        REQUIRE_FALSE(isApproxZero(52.85, 52.83));
-
-        // Big mismatches
-        REQUIRE_FALSE(isApproxZero(-63.281, 14.107));
-        REQUIRE_FALSE(isApproxZero(947.682, 37.869));
-
-        // TODO: Test negative margin
-    }
-
-    SECTION("Range checking - integer")
-    {
-        // Zero range.
-        REQUIRE(isInRange(0, 0, 0));
-        REQUIRE(isInRange(382, 382, 382));
-        REQUIRE(isInRange(-48, -48, -48));
-
-        // Comfortably in range.
-        REQUIRE(isInRange(23, 0, 40));
-        REQUIRE(isInRange(23, 40, 0));
-        REQUIRE(isInRange(502, 389, 1930));
-        REQUIRE(isInRange(502, 1930, 389));
-        REQUIRE(isInRange(-38, 0, -50));
-        REQUIRE(isInRange(-38, -50, 0));
-        REQUIRE(isInRange(-283, -102, -819));
-        REQUIRE(isInRange(-283, -819, -102));
-
-        // Comfortably in range - boundaries straddling zero.
-        REQUIRE(isInRange(0, -299, 391));
-        REQUIRE(isInRange(0, 391, -299));
-        REQUIRE(isInRange(13, -58, 962));
-        REQUIRE(isInRange(13, 962, -58));
-        REQUIRE(isInRange(-28, -98, 442));
-        REQUIRE(isInRange(-28, 442, -98));
-
-        // In range - exactly on boundary.
-        REQUIRE(isInRange(40, 40, 91));
-        REQUIRE(isInRange(40, 91, 40));
-        REQUIRE(isInRange(91, 40, 91));
-        REQUIRE(isInRange(91, 91, 40));
-        REQUIRE(isInRange(-211, -38, -211));
-        REQUIRE(isInRange(-211, -211, -38));
-        REQUIRE(isInRange(-38, -38, -211));
-        REQUIRE(isInRange(-38, -211, -38));
-
-        // Out of range - just outside boundary.
-        REQUIRE_FALSE(isInRange(42, 43, 56));
-        REQUIRE_FALSE(isInRange(42, 56, 43));
-        REQUIRE_FALSE(isInRange(57, 43, 56));
-        REQUIRE_FALSE(isInRange(57, 56, 43));
-        REQUIRE_FALSE(isInRange(-66, -67, -78));
-        REQUIRE_FALSE(isInRange(-66, -78, -67));
-        REQUIRE_FALSE(isInRange(-79, -67, -78));
-        REQUIRE_FALSE(isInRange(-79, -78, -67));
-
-        // Comfortably out of range.
-        REQUIRE_FALSE(isInRange(45, 50, 60));
-        REQUIRE_FALSE(isInRange(45, 60, 50));
-        REQUIRE_FALSE(isInRange(36, 2, 11));
-        REQUIRE_FALSE(isInRange(36, 11, 2));
-        REQUIRE_FALSE(isInRange(-9, -28, -14));
-        REQUIRE_FALSE(isInRange(-9, -14, -28));
-        REQUIRE_FALSE(isInRange(-102, -47, -15));
-        REQUIRE_FALSE(isInRange(-102, -15, -47));
-    }
-
-    SECTION("Range checking - floating point")
-    {
-        // Zero range.
-        REQUIRE(isInRange(0.0, 0.0, 0.0));
-        REQUIRE(isInRange(14.6, 14.6, 14.6));
-        REQUIRE(isInRange(-38.1, -38.1, -38.1));
-
-        // Comfortably in range.
-        REQUIRE(isInRange(52.4, 0.0, 82.06));
-        REQUIRE(isInRange(52.4, 82.06, 0.0));
-        REQUIRE(isInRange(12.6, 12.4, 12.9));
-        REQUIRE(isInRange(12.6, 12.9, 12.4));
-        REQUIRE(isInRange(294.51, 119.93, 479.22));
-        REQUIRE(isInRange(294.51, 479.22, 119.93));
-        REQUIRE(isInRange(-99.4, 0.0, -140.5));
-        REQUIRE(isInRange(-99.4, -140.5, 0.0));
-        REQUIRE(isInRange(-47.0, -46.8, -47.3));
-        REQUIRE(isInRange(-47.0, -47.3, -46.8));
-        REQUIRE(isInRange(-497.94, -226.3, -855.1));
-        REQUIRE(isInRange(-497.94, -855.1, -226.3));
-
-        // Comfortably in range - boundaries straddling zero.
-        REQUIRE(isInRange(0.0, -53.5, 193.6));
-        REQUIRE(isInRange(0.0, 193.6, -53.5));
-        REQUIRE(isInRange(48.92, -951.8, 364.2));
-        REQUIRE(isInRange(48.92, 364.2, -951.8));
-        REQUIRE(isInRange(-66.8, -354.9, 1001.2));
-        REQUIRE(isInRange(-66.8, 1001.2, -354.9));
-
-        // In range - exactly on boundary.
-        REQUIRE(isInRange(28.5, 28.5, 37.7));
-        REQUIRE(isInRange(28.5, 37.7, 28.5));
-        REQUIRE(isInRange(37.7, 28.5, 37.7));
-        REQUIRE(isInRange(37.7, 37.7, 28.5));
-        REQUIRE(isInRange(-48.3, -9.9, -62.7));
-        REQUIRE(isInRange(-48.3, -62.7, -9.9));
-        REQUIRE(isInRange(-62.7, -9.9, -62.7));
-        REQUIRE(isInRange(-62.7, -62.7, -9.9));
-
-        // Out of range - just outside boundary.
-        REQUIRE_FALSE(isInRange(58.2, 58.3, 58.9));
-        REQUIRE_FALSE(isInRange(58.2, 58.9, 58.3));
-        REQUIRE_FALSE(isInRange(59.0, 58.3, 58.9));
-        REQUIRE_FALSE(isInRange(59.0, 58.9, 58.3));
-        REQUIRE_FALSE(isInRange(-13.5, -13.6, -20.8));
-        REQUIRE_FALSE(isInRange(-13.5, -20.8, -13.6));
-        REQUIRE_FALSE(isInRange(-20.9, -13.6, -20.8));
-        REQUIRE_FALSE(isInRange(-20.9, -20.8, -13.6));
-
-        // Comfortably out of range.
-        REQUIRE_FALSE(isInRange(38.2, 14.63, 24.222));
-        REQUIRE_FALSE(isInRange(38.2, 24.222, 14.63));
-        REQUIRE_FALSE(isInRange(59.9, 1035.48, 2094.99));
-        REQUIRE_FALSE(isInRange(59.9, 2094.99, 1035.48));
-        REQUIRE_FALSE(isInRange(-16.2, -37.1, -19.65));
-        REQUIRE_FALSE(isInRange(-16.2, -19.65, -37.1));
-        REQUIRE_FALSE(isInRange(-49.02, -3.01, -12.8));
-        REQUIRE_FALSE(isInRange(-49.02, -12.8, -3.01));
-    }
-}
-
 TEST_CASE("Utils - General numerical", "[Utils]")
 {
     SECTION("diff")
@@ -720,7 +423,7 @@ TEST_CASE("Utils - General numerical", "[Utils]")
         REQUIRE(wrap(-101, 94, -101) == -101);
         REQUIRE(wrap(93, -101, 94) == 93);
         REQUIRE(wrap(93, 94, -101) == 93);
-        
+
         // Off top of range.
         REQUIRE(wrap(7, 0, 7) == 0);
         REQUIRE(wrap(7, 7, 0) == 0);
@@ -858,6 +561,303 @@ TEST_CASE("Utils - General numerical", "[Utils]")
         REQUIRE(wrap(-15.5, 13.9, -15.4) == Approx(13.8));
         REQUIRE(wrap(-41.63, -15.4, 13.9) == Approx(-12.33));
         REQUIRE(wrap(-41.63, 13.9, -15.4) == Approx(-12.33));
+    }
+}
+
+TEST_CASE("Utils - Comparisons", "[Utils]")
+{
+    SECTION("isApproxEqual - integers")
+    {
+        // Exact matches
+        REQUIRE(isApproxEqual(0, 0, 0));
+        REQUIRE(isApproxEqual(0, 0, 2));
+        REQUIRE(isApproxEqual(-303, -303, 5));
+        REQUIRE(isApproxEqual(774, 774, 1));
+
+        // Approximate matches
+        REQUIRE(isApproxEqual(-6, 0, 10));
+        REQUIRE(isApproxEqual(4, 0, 6));
+        REQUIRE(isApproxEqual(-138, -136, 3));
+        REQUIRE(isApproxEqual(214, 215, 2));
+
+        // Approximate matches crossing zero
+        REQUIRE(isApproxEqual(-2, 3, 5));
+        REQUIRE(isApproxEqual(2, -5, 7));
+
+        // Small mismatches crossing zero
+        REQUIRE_FALSE(isApproxEqual(-3, 3, 5));
+        REQUIRE_FALSE(isApproxEqual(3, -5, 7));
+
+        // No confusion between positive/negative
+        REQUIRE_FALSE(isApproxEqual(-198, 198, 4));
+        REQUIRE_FALSE(isApproxEqual(122, -122, 35));
+
+        // Big mismatches
+        REQUIRE_FALSE(isApproxEqual(-325, -280, 23));
+        REQUIRE_FALSE(isApproxEqual(830, 716, 47));
+        REQUIRE_FALSE(isApproxEqual(-2765, 2108, 247));
+        REQUIRE_FALSE(isApproxEqual(5862, -9735, 2008));
+
+        // Boundary matches
+        REQUIRE(isApproxEqual(9, 10, 1));
+        REQUIRE(isApproxEqual(11, 10, 1));
+        REQUIRE(isApproxEqual(-9, -10, 1));
+        REQUIRE(isApproxEqual(-11, -10, 1));
+        REQUIRE(isApproxEqual(42, 63, 21));
+        REQUIRE(isApproxEqual(84, 63, 21));
+        REQUIRE(isApproxEqual(-42, -63, 21));
+        REQUIRE(isApproxEqual(-84, -63, 21));
+
+        // Boundary mismatches
+        REQUIRE_FALSE(isApproxEqual(8, 10, 1));
+        REQUIRE_FALSE(isApproxEqual(12, 10, 1));
+        REQUIRE_FALSE(isApproxEqual(-8, -10, 1));
+        REQUIRE_FALSE(isApproxEqual(-12, -10, 1));
+        REQUIRE_FALSE(isApproxEqual(41, 63, 21));
+        REQUIRE_FALSE(isApproxEqual(85, 63, 21));
+        REQUIRE_FALSE(isApproxEqual(-41, -63, 21));
+        REQUIRE_FALSE(isApproxEqual(-85, -63, 21));
+
+        // TODO: Test negative margin
+    }
+
+    SECTION("isApproxEqual - floating point")
+    {
+        // Exact matches
+        REQUIRE(isApproxEqual(0.0, 0.0, 0.0));
+        REQUIRE(isApproxEqual(0.0, 0.0, 1.23));
+        REQUIRE(isApproxEqual(-194.56, -194.56, 3.6));
+        REQUIRE(isApproxEqual(871.02, 871.02, 4.901));
+
+        // Approximate matches
+        REQUIRE(isApproxEqual(1.5, 1.4, 0.2));
+        REQUIRE(isApproxEqual(-3.8, -4.1, 0.4));
+        REQUIRE(isApproxEqual(-13.6, -14.9, 2.76));
+        REQUIRE(isApproxEqual(24.54, 27.0, 3.0));
+        REQUIRE(isApproxEqual(-6594.34, -6402.939, 353.4));
+        REQUIRE(isApproxEqual(1390.114, 1253.332, 250.0));
+
+        // Approximate matches crossing zero
+        REQUIRE(isApproxEqual(-5.49, 2.48, 11.88));
+        REQUIRE(isApproxEqual(6.97, -3.74, 15.6));
+
+        // Small mismatches crossing zero
+        REQUIRE_FALSE(isApproxEqual(-8.112, 2.48, 6.91));
+        REQUIRE_FALSE(isApproxEqual(5.901, -4.446, 7.27));
+
+        // No confusion between positive/negative
+        REQUIRE_FALSE(isApproxEqual(-314.23, 314.23, 3.19));
+        REQUIRE_FALSE(isApproxEqual(461.39, -461.39, 41.36));
+
+        // Big mismatches
+        REQUIRE_FALSE(isApproxEqual(-386.13, -963.41, 27.041));
+        REQUIRE_FALSE(isApproxEqual(136.36, 549.36, 27.041));
+        REQUIRE_FALSE(isApproxEqual(37896.27, -2902.847, 1326.94));
+        REQUIRE_FALSE(isApproxEqual(-29653.165, 9572.187, 3618.2));
+
+        // Boundary matches
+        // (be careful of floating point accuracy with these tests)
+        REQUIRE(isApproxEqual(74.31, 74.32, 0.0101));
+        REQUIRE(isApproxEqual(74.33, 74.32, 0.0101));
+        REQUIRE(isApproxEqual(-74.31, -74.32, 0.0101));
+        REQUIRE(isApproxEqual(-74.33, -74.32, 0.0101));
+        REQUIRE(isApproxEqual(64.92, 58.67, 6.2501));
+        REQUIRE(isApproxEqual(52.42, 58.67, 6.2501));
+        REQUIRE(isApproxEqual(-64.92, -58.67, 6.2501));
+        REQUIRE(isApproxEqual(-52.42, -58.67, 6.2501));
+
+        // Boundary mismatches
+        // (be careful of floating point accuracy with these tests)
+        REQUIRE_FALSE(isApproxEqual(74.3098, 74.32, 0.0101));
+        REQUIRE_FALSE(isApproxEqual(74.3302, 74.32, 0.0101));
+        REQUIRE_FALSE(isApproxEqual(-74.3098, -74.32, 0.0101));
+        REQUIRE_FALSE(isApproxEqual(-74.3302, -74.32, 0.0101));
+        REQUIRE_FALSE(isApproxEqual(64.9202, 58.67, 6.2501));
+        REQUIRE_FALSE(isApproxEqual(52.4199, 58.67, 6.2501));
+        REQUIRE_FALSE(isApproxEqual(-64.9202, -58.67, 6.2501));
+        REQUIRE_FALSE(isApproxEqual(-52.4198, -58.67, 6.2501));
+
+        // TODO: Test negative margin
+    }
+
+    SECTION("isApproxZero - integers")
+    {
+        // Exact matches
+        REQUIRE(isApproxZero(0, 0));
+        REQUIRE(isApproxZero(0, 1));
+
+        // Approximate matches
+        REQUIRE(isApproxZero(-2, 3));
+        REQUIRE(isApproxZero(2, 3));
+        REQUIRE(isApproxZero(-5, 10));
+        REQUIRE(isApproxZero(5, 10));
+
+        // Boundary matches
+        REQUIRE(isApproxZero(-1, 1));
+        REQUIRE(isApproxZero(1, 1));
+        REQUIRE(isApproxZero(-28, 28));
+        REQUIRE(isApproxZero(28, 28));
+
+        // Boundary mismatches
+        REQUIRE_FALSE(isApproxZero(-2, 1));
+        REQUIRE_FALSE(isApproxZero(2, 1));
+        REQUIRE_FALSE(isApproxZero(-41, 40));
+        REQUIRE_FALSE(isApproxZero(41, 40));
+
+        // Big mismatches
+        REQUIRE_FALSE(isApproxZero(-47, 23));
+        REQUIRE_FALSE(isApproxZero(93, 38));
+
+        // TODO: Test negative margin
+    }
+
+    SECTION("isApproxZero - floating point")
+    {
+        // Exact matches
+        REQUIRE(isApproxZero(0.0, 0.0));
+        REQUIRE(isApproxZero(0.0, 1.0));
+
+        // Approximate matches
+        REQUIRE(isApproxZero(0.4, 0.9));
+        REQUIRE(isApproxZero(-0.3, 0.7));
+        REQUIRE(isApproxZero(-2.2, 3.1));
+        REQUIRE(isApproxZero(2.2, 3.1));
+        REQUIRE(isApproxZero(-5.6, 6.3));
+        REQUIRE(isApproxZero(5.6, 6.2));
+
+        // Boundary matches
+        REQUIRE(isApproxZero(-1.4, 1.4));
+        REQUIRE(isApproxZero(1.4, 1.4));
+        REQUIRE(isApproxZero(-37.16, 37.16));
+        REQUIRE(isApproxZero(37.16, 37.16));
+
+        // Boundary mismatches
+        REQUIRE_FALSE(isApproxZero(-2.6, 2.58));
+        REQUIRE_FALSE(isApproxZero(2.6, 2.58));
+        REQUIRE_FALSE(isApproxZero(-52.85, 52.83));
+        REQUIRE_FALSE(isApproxZero(52.85, 52.83));
+
+        // Big mismatches
+        REQUIRE_FALSE(isApproxZero(-63.281, 14.107));
+        REQUIRE_FALSE(isApproxZero(947.682, 37.869));
+
+        // TODO: Test negative margin
+    }
+
+    SECTION("Range checking - integer")
+    {
+        // Zero range.
+        REQUIRE(isInRange(0, 0, 0));
+        REQUIRE(isInRange(382, 382, 382));
+        REQUIRE(isInRange(-48, -48, -48));
+
+        // Comfortably in range.
+        REQUIRE(isInRange(23, 0, 40));
+        REQUIRE(isInRange(23, 40, 0));
+        REQUIRE(isInRange(502, 389, 1930));
+        REQUIRE(isInRange(502, 1930, 389));
+        REQUIRE(isInRange(-38, 0, -50));
+        REQUIRE(isInRange(-38, -50, 0));
+        REQUIRE(isInRange(-283, -102, -819));
+        REQUIRE(isInRange(-283, -819, -102));
+
+        // Comfortably in range - boundaries straddling zero.
+        REQUIRE(isInRange(0, -299, 391));
+        REQUIRE(isInRange(0, 391, -299));
+        REQUIRE(isInRange(13, -58, 962));
+        REQUIRE(isInRange(13, 962, -58));
+        REQUIRE(isInRange(-28, -98, 442));
+        REQUIRE(isInRange(-28, 442, -98));
+
+        // In range - exactly on boundary.
+        REQUIRE(isInRange(40, 40, 91));
+        REQUIRE(isInRange(40, 91, 40));
+        REQUIRE(isInRange(91, 40, 91));
+        REQUIRE(isInRange(91, 91, 40));
+        REQUIRE(isInRange(-211, -38, -211));
+        REQUIRE(isInRange(-211, -211, -38));
+        REQUIRE(isInRange(-38, -38, -211));
+        REQUIRE(isInRange(-38, -211, -38));
+
+        // Out of range - just outside boundary.
+        REQUIRE_FALSE(isInRange(42, 43, 56));
+        REQUIRE_FALSE(isInRange(42, 56, 43));
+        REQUIRE_FALSE(isInRange(57, 43, 56));
+        REQUIRE_FALSE(isInRange(57, 56, 43));
+        REQUIRE_FALSE(isInRange(-66, -67, -78));
+        REQUIRE_FALSE(isInRange(-66, -78, -67));
+        REQUIRE_FALSE(isInRange(-79, -67, -78));
+        REQUIRE_FALSE(isInRange(-79, -78, -67));
+
+        // Comfortably out of range.
+        REQUIRE_FALSE(isInRange(45, 50, 60));
+        REQUIRE_FALSE(isInRange(45, 60, 50));
+        REQUIRE_FALSE(isInRange(36, 2, 11));
+        REQUIRE_FALSE(isInRange(36, 11, 2));
+        REQUIRE_FALSE(isInRange(-9, -28, -14));
+        REQUIRE_FALSE(isInRange(-9, -14, -28));
+        REQUIRE_FALSE(isInRange(-102, -47, -15));
+        REQUIRE_FALSE(isInRange(-102, -15, -47));
+    }
+
+    SECTION("Range checking - floating point")
+    {
+        // Zero range.
+        REQUIRE(isInRange(0.0, 0.0, 0.0));
+        REQUIRE(isInRange(14.6, 14.6, 14.6));
+        REQUIRE(isInRange(-38.1, -38.1, -38.1));
+
+        // Comfortably in range.
+        REQUIRE(isInRange(52.4, 0.0, 82.06));
+        REQUIRE(isInRange(52.4, 82.06, 0.0));
+        REQUIRE(isInRange(12.6, 12.4, 12.9));
+        REQUIRE(isInRange(12.6, 12.9, 12.4));
+        REQUIRE(isInRange(294.51, 119.93, 479.22));
+        REQUIRE(isInRange(294.51, 479.22, 119.93));
+        REQUIRE(isInRange(-99.4, 0.0, -140.5));
+        REQUIRE(isInRange(-99.4, -140.5, 0.0));
+        REQUIRE(isInRange(-47.0, -46.8, -47.3));
+        REQUIRE(isInRange(-47.0, -47.3, -46.8));
+        REQUIRE(isInRange(-497.94, -226.3, -855.1));
+        REQUIRE(isInRange(-497.94, -855.1, -226.3));
+
+        // Comfortably in range - boundaries straddling zero.
+        REQUIRE(isInRange(0.0, -53.5, 193.6));
+        REQUIRE(isInRange(0.0, 193.6, -53.5));
+        REQUIRE(isInRange(48.92, -951.8, 364.2));
+        REQUIRE(isInRange(48.92, 364.2, -951.8));
+        REQUIRE(isInRange(-66.8, -354.9, 1001.2));
+        REQUIRE(isInRange(-66.8, 1001.2, -354.9));
+
+        // In range - exactly on boundary.
+        REQUIRE(isInRange(28.5, 28.5, 37.7));
+        REQUIRE(isInRange(28.5, 37.7, 28.5));
+        REQUIRE(isInRange(37.7, 28.5, 37.7));
+        REQUIRE(isInRange(37.7, 37.7, 28.5));
+        REQUIRE(isInRange(-48.3, -9.9, -62.7));
+        REQUIRE(isInRange(-48.3, -62.7, -9.9));
+        REQUIRE(isInRange(-62.7, -9.9, -62.7));
+        REQUIRE(isInRange(-62.7, -62.7, -9.9));
+
+        // Out of range - just outside boundary.
+        REQUIRE_FALSE(isInRange(58.2, 58.3, 58.9));
+        REQUIRE_FALSE(isInRange(58.2, 58.9, 58.3));
+        REQUIRE_FALSE(isInRange(59.0, 58.3, 58.9));
+        REQUIRE_FALSE(isInRange(59.0, 58.9, 58.3));
+        REQUIRE_FALSE(isInRange(-13.5, -13.6, -20.8));
+        REQUIRE_FALSE(isInRange(-13.5, -20.8, -13.6));
+        REQUIRE_FALSE(isInRange(-20.9, -13.6, -20.8));
+        REQUIRE_FALSE(isInRange(-20.9, -20.8, -13.6));
+
+        // Comfortably out of range.
+        REQUIRE_FALSE(isInRange(38.2, 14.63, 24.222));
+        REQUIRE_FALSE(isInRange(38.2, 24.222, 14.63));
+        REQUIRE_FALSE(isInRange(59.9, 1035.48, 2094.99));
+        REQUIRE_FALSE(isInRange(59.9, 2094.99, 1035.48));
+        REQUIRE_FALSE(isInRange(-16.2, -37.1, -19.65));
+        REQUIRE_FALSE(isInRange(-16.2, -19.65, -37.1));
+        REQUIRE_FALSE(isInRange(-49.02, -3.01, -12.8));
+        REQUIRE_FALSE(isInRange(-49.02, -12.8, -3.01));
     }
 }
 

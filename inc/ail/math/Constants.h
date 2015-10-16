@@ -19,13 +19,13 @@ Released open source under the MIT licence.
 namespace ail {
 namespace math {
 //--------------
-    
+
 /// Get the value of pi.
 /// Template parameter is required to specify the return type.
 /// Example:  float val = pi<float>();
 /// Only allows floating point types (e.g. float and double). Compilation will fail for any other type.
 template <typename T_ty>
-inline constexpr typename std::enable_if_t<std::is_floating_point<T_ty>::value, T_ty> pi()
+inline constexpr typename std::enable_if<std::is_floating_point<T_ty>::value, T_ty>::type pi()
 {
     return T_ty(3.141592653589793);
 }

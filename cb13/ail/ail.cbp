@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="ail" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/ail" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="obj/Debug/" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-Weffc++" />
+					<Add option="-std=c++11" />
+					<Add option="-Wall" />
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/ail" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="obj/Release/" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-std=c++11" />
+			<Add option="-Wall" />
+			<Add directory="../../inc/ail" />
+		</Compiler>
+		<Unit filename="../../inc/ail/math/BoundingBox2d.h" />
+		<Unit filename="../../inc/ail/math/BoundingBox2d.inl" />
+		<Unit filename="../../inc/ail/math/Constants.h" />
+		<Unit filename="../../inc/ail/math/Polar.h" />
+		<Unit filename="../../inc/ail/math/Polar.inl" />
+		<Unit filename="../../inc/ail/math/Utils.h" />
+		<Unit filename="../../inc/ail/math/Vector2d.h" />
+		<Unit filename="../../inc/ail/math/Vector2d.inl" />
+		<Unit filename="../../inc/ail/math/ailmath.h" />
+		<Unit filename="../../inc/ail/math/tmod.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

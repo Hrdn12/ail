@@ -214,3 +214,5 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+*.depend
+cb13/ail.workspace.layout
