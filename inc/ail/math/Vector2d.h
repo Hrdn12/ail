@@ -82,6 +82,8 @@ public:
     /// This can be useful for some comparisons.
     T_ty getSqMagnitude() const;
 
+    // TODO: rectilinear length / manhattan length
+
     /// Normalise this vector in place (makes it a unit vector).
     void normalise();
     /// Get a normalised copy of this vector.
@@ -112,11 +114,13 @@ public:
     /// Check if this vector represents a position within a certain distance of another.
     /// The comparison uses Euclidean distance, making it more practical for most
     ///  purposes than isApproxEqual().
+    /// The absolute value of dist is used.
     bool isNear(const Vector2d<T_ty> & other, const T_ty dist) const;
 
     /// Check if this vector is approximately equal to another, within a given margin.
     /// This checks each component independently for approximate equality.
     /// The isNear() function may be more useful for most purposes.
+    /// The absolute value of margin is used.
     bool isApproxEqual(const Vector2d<T_ty> & other, const T_ty margin) const;
 
 

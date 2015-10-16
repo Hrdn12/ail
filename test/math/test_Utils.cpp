@@ -202,6 +202,8 @@ TEST_CASE("Utils - Comparisons", "[Utils]")
         REQUIRE_FALSE(isApproxEqual(85, 63, 21));
         REQUIRE_FALSE(isApproxEqual(-41, -63, 21));
         REQUIRE_FALSE(isApproxEqual(-85, -63, 21));
+        
+        // TODO: Test negative margin
     }
 
     SECTION("isApproxEqual - floating point")
@@ -259,6 +261,8 @@ TEST_CASE("Utils - Comparisons", "[Utils]")
         REQUIRE_FALSE(isApproxEqual(52.4199, 58.67, 6.2501));
         REQUIRE_FALSE(isApproxEqual(-64.9202, -58.67, 6.2501));
         REQUIRE_FALSE(isApproxEqual(-52.4198, -58.67, 6.2501));
+
+        // TODO: Test negative margin
     }
 
     SECTION("isApproxZero - integers")
@@ -288,6 +292,8 @@ TEST_CASE("Utils - Comparisons", "[Utils]")
         // Big mismatches
         REQUIRE_FALSE(isApproxZero(-47, 23));
         REQUIRE_FALSE(isApproxZero(93, 38));
+
+        // TODO: Test negative margin
     }
 
     SECTION("isApproxZero - floating point")
@@ -319,6 +325,8 @@ TEST_CASE("Utils - Comparisons", "[Utils]")
         // Big mismatches
         REQUIRE_FALSE(isApproxZero(-63.281, 14.107));
         REQUIRE_FALSE(isApproxZero(947.682, 37.869));
+
+        // TODO: Test negative margin
     }
 
     SECTION("Range checking - integer")

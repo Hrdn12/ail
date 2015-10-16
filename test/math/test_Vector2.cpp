@@ -28,9 +28,13 @@ TEST_CASE("Vector2d - construction and assignment", "[Vector2d]")
 
     SECTION("Construction with decimal fractions")
     {
-        Vector2d<double> v(12.34, 56.78);
-        REQUIRE(v.x == Approx(12.34));
-        REQUIRE(v.y == Approx(56.78));
+        Vector2d<double> v1(12.34, 56.78);
+        REQUIRE(v1.x == Approx(12.34));
+        REQUIRE(v1.y == Approx(56.78));
+
+        Vector2d<double> v2(-0.38, 0.45);
+        REQUIRE(v2.x == Approx(-0.38));
+        REQUIRE(v2.y == Approx(0.45));
     }
 
     SECTION("Copy construction")
@@ -86,7 +90,11 @@ TEST_CASE("Vector2d - comparison operators", "[Vector2d]")
 
         REQUIRE(vi1 == vi1);
         REQUIRE(vi1 == vi2);
+        REQUIRE(vi2 == vi1);
         REQUIRE_FALSE(vi1 == vi3);
+        REQUIRE_FALSE(vi2 == vi3);
+        REQUIRE_FALSE(vi3 == vi1);
+        REQUIRE_FALSE(vi3 == vi2);
 
         Vector2d<double> vd1(34.5, 23.4);
         Vector2d<double> vd2(34.5, 23.4);
@@ -94,7 +102,11 @@ TEST_CASE("Vector2d - comparison operators", "[Vector2d]")
         
         REQUIRE(vd1 == vd1);
         REQUIRE(vd1 == vd2);
+        REQUIRE(vd2 == vd1);
         REQUIRE_FALSE(vd1 == vd3);
+        REQUIRE_FALSE(vd2 == vd3);
+        REQUIRE_FALSE(vd3 == vd1);
+        REQUIRE_FALSE(vd3 == vd2);
     }
 
     SECTION("Inequality")
@@ -105,15 +117,23 @@ TEST_CASE("Vector2d - comparison operators", "[Vector2d]")
 
         REQUIRE_FALSE(vi1 != vi1);
         REQUIRE_FALSE(vi1 != vi2);
+        REQUIRE_FALSE(vi2 != vi1);
         REQUIRE(vi1 != vi3);
+        REQUIRE(vi2 != vi3);
+        REQUIRE(vi3 != vi1);
+        REQUIRE(vi3 != vi2);
 
         Vector2d<double> vd1(34.5f, 23.4f);
         Vector2d<double> vd2(34.5f, 23.4f);
         Vector2d<double> vd3(12.3f, 45.6f);
 
-        REQUIRE_FALSE(vd1 != vd1);
-        REQUIRE_FALSE(vd1 != vd2);
-        REQUIRE(vd1 != vd3);
+        REQUIRE_FALSE(vi1 != vi1);
+        REQUIRE_FALSE(vi1 != vi2);
+        REQUIRE_FALSE(vi2 != vi1);
+        REQUIRE(vi1 != vi3);
+        REQUIRE(vi2 != vi3);
+        REQUIRE(vi3 != vi1);
+        REQUIRE(vi3 != vi2);
     }
 }
 
@@ -242,6 +262,23 @@ TEST_CASE("Vector2d - basic arithmetic", "[Vector2d]")
         REQUIRE(vd.y == Approx(2.81578947));
     }
 
+    SECTION("Combined arithmetic")
+    {
+        Vector2d<int> vi =
+            Vector2d<int>(-3, 0)
+            + Vector2d<int>(4, -1) * 5
+            - Vector2d<int>(12, 21) / 3;
+        REQUIRE(vi.x == 13);
+        REQUIRE(vi.y == -12);
+
+        Vector2d<double> vd =
+            -156.8 / Vector2d<double>(2.1, -9.6) / 2.0
+            + Vector2d<double>(-18.9, 22.1)
+            - 8.8 * Vector2d<double>(12.4, 0.5);
+        REQUIRE(vd.x == Approx(-165.35333333));
+        REQUIRE(vd.y == Approx(25.86666667));
+    }
+
     SECTION("Negation")
     {
         Vector2d<int> vi = -Vector2d<int>(-99, 47);
@@ -252,40 +289,52 @@ TEST_CASE("Vector2d - basic arithmetic", "[Vector2d]")
         REQUIRE(vd.x == -14.6);
         REQUIRE(vd.y == 8.2);
     }
-
-    // TODO: Test 3 or more arithmetic operations in a single expression.
 }
 
 TEST_CASE("Vector2d - general operations", "[Vector2d]")
 {
     SECTION("Magnitude")
     {
-        // TODO: add more tests here
+        // Magnitude.
+        REQUIRE(Vector2d<double>(-12.31, 0.0).getMagnitude() == Approx(12.31));
+        REQUIRE(Vector2d<double>(0.0, 134.369).getMagnitude() == Approx(134.369));
+        REQUIRE(Vector2d<double>(5.0, 10.0).getMagnitude() == Approx(11.180339887));
+        REQUIRE(Vector2d<double>(-9.3, 4.7).getMagnitude() == Approx(10.42017274));
+        REQUIRE(Vector2d<double>(2.005, -19.3).getMagnitude() == Approx(19.40386624));
 
-        Vector2d<double> v(5.0, 10.0);
-        REQUIRE(v.getMagnitude() == Approx(11.180339887));
+        // Squared magnitude.
+        REQUIRE(Vector2d<double>(54.3, 0.0).getSqMagnitude() == Approx(2948.49));
+        REQUIRE(Vector2d<double>(0.0, -18.81).getSqMagnitude() == Approx(353.8161));
+        REQUIRE(Vector2d<double>(4.0, 3.0).getSqMagnitude() == Approx(25.0));
+        REQUIRE(Vector2d<double>(-22.09, 1.1).getSqMagnitude() == Approx(489.1781));
+        REQUIRE(Vector2d<double>(8.4, -7.17).getSqMagnitude() == Approx(121.9689));
 
-        v.set(4.0, 3.0);
-        REQUIRE(v.getSqMagnitude() == Approx(25.0));
+        // Cross-checking:
+        Vector2d<double> v(42.99, -1.07);
+        REQUIRE(v.getSqMagnitude() == Approx(v.getMagnitude() * v.getMagnitude()));
     }
 
     SECTION("Normalisation")
     {
-        // TODO: add more tests here
+        Vector2d<double> v1, v2;
 
-        // Normalise in place
-        Vector2d<double> v1(-43.2, 87.6);
+        v1.set(-43.2, 87.6);
+        v2 = v1.getNormalised();
         v1.normalise();
         REQUIRE(v1.x == Approx(-0.44229248));
         REQUIRE(v1.y == Approx(0.89687087));
+        REQUIRE(v2.x == Approx(v1.x));
+        REQUIRE(v2.y == Approx(v1.y));
         REQUIRE(v1.getMagnitude() == Approx(1.0));
 
-        // Normalised copy
-        Vector2d<double> v2(87.6, -43.2);
-        Vector2d<double> v3 = v2.getNormalised();
-        REQUIRE(v3.x == Approx(0.89687087));
-        REQUIRE(v3.y == Approx(-0.44229248));
-        REQUIRE(v3.getMagnitude() == Approx(1.0));
+        v1.set(12.36, 55.9);
+        v2 = v1.getNormalised();
+        v1.normalise();
+        REQUIRE(v1.x == Approx(0.21589463));
+        REQUIRE(v1.y == Approx(0.97641667));
+        REQUIRE(v2.x == Approx(v1.x));
+        REQUIRE(v2.y == Approx(v1.y));
+        REQUIRE(v1.getMagnitude() == Approx(1.0));
     }
 
     SECTION("Dot product")
@@ -319,19 +368,30 @@ TEST_CASE("Vector2d - general operations", "[Vector2d]")
 
     SECTION("Tangent")
     {
-        // TODO: add more tests here
+        Vector2d<double> v, vl, vr;
 
-        // Right tangent
-        Vector2d<double> v1(8.8, 1.9);
-        Vector2d<double> v2 = v1.getRightTangent();
-        REQUIRE(v2.x == 1.9);
-        REQUIRE(v2.y == -8.8);
+        v.set(8.8, 1.9);
+        vl = v.getLeftTangent();
+        vr = v.getRightTangent();
+        REQUIRE(vl.x == -1.9);
+        REQUIRE(vl.y == 8.8);
+        REQUIRE(vr.x == 1.9);
+        REQUIRE(vr.y == -8.8);
+        REQUIRE(v.getNormalised().dot(vl.getNormalised()) == Approx(0.0));
+        REQUIRE(v.getNormalised().dot(vr.getNormalised()) == Approx(0.0));
+        REQUIRE(vl.getNormalised().dot(vr.getNormalised()) == Approx(-1.0));
 
-        // Left tangent
-        v1.set(-3.7, 2.4);
-        v2 = v1.getLeftTangent();
-        REQUIRE(v2.x == -2.4);
-        REQUIRE(v2.y == -3.7);
+
+        v.set(-16.64, 0.28);
+        vl = v.getLeftTangent();
+        vr = v.getRightTangent();
+        REQUIRE(vl.x == -0.28);
+        REQUIRE(vl.y == -16.64);
+        REQUIRE(vr.x == 0.28);
+        REQUIRE(vr.y == 16.64);
+        REQUIRE(v.getNormalised().dot(vl.getNormalised()) == Approx(0.0));
+        REQUIRE(v.getNormalised().dot(vr.getNormalised()) == Approx(0.0));
+        REQUIRE(vl.getNormalised().dot(vr.getNormalised()) == Approx(-1.0));
     }
 
     SECTION("Projection")
@@ -360,7 +420,6 @@ TEST_CASE("Vector2d - general operations", "[Vector2d]")
         REQUIRE(Vector2d<double>(5.136, 19.64).getDistance(Vector2d<double>(-14.1, 27.3)) == Approx(20.705055));
         REQUIRE(Vector2d<double>(-57.301, 2.88).getDistance(Vector2d<double>(9.648, -101.9)) == Approx(124.342338));
 
-
         // Squared distance
         // Axis-aligned
         REQUIRE(Vector2d<double>(10.0, 0.0).getSqDistance(Vector2d<double>(24.94, 0.0)) == Approx(223.2036));
@@ -372,8 +431,18 @@ TEST_CASE("Vector2d - general operations", "[Vector2d]")
         REQUIRE(Vector2d<double>(-57.301, 2.88).getSqDistance(Vector2d<double>(9.648, -101.9)) == Approx(15461.01701931));
     }
 
-    SECTION("Equivalence and equality")
+    SECTION("Proximity")
     {
+        // Exact match
+        REQUIRE(Vector2d<double>(0.0, 0.0).isNear(Vector2d<double>(0.0, 0.0), 0.0));
+        REQUIRE(Vector2d<double>(-5.39, 4.16).isNear(Vector2d<double>(-5.39, 4.16), 0.0));
+        
+        // TODO: implement
+    }
+
+    SECTION("Approx equality")
+    {
+        // TODO: implement
     }
 }
 

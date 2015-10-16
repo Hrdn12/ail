@@ -129,21 +129,20 @@ inline constexpr T_ty
 // Comparisons.
     
 /// Check if two values are approximately equal, plus/minus the given margin.
-/// Assumes margin is positive.
+/// The absolute value of margin is used.
 template <typename T_ty>
 inline constexpr bool isApproxEqual(const T_ty lhs, const T_ty rhs, const T_ty margin)
 {
-    assert(margin >= 0);
-    return diff(lhs, rhs) <= margin;
+    return diff(lhs, rhs) <= ((margin >= 0.0) ? margin : margin * -1.0);
 }
 
 /// Check if a value is approximately zero, plus/minus the given margin.
-/// Assumes margin is positive.
+/// The absolute value of margin is used.
 template <typename T_ty>
 inline constexpr bool isApproxZero(const T_ty val, const T_ty margin)
 {
     assert(margin >= 0);
-    return (val >= 0 ? val : -val) <= margin;
+    return (val >= 0 ? val : -val) <= ((margin >= 0.0) ? margin : margin * -1.0);
 }
     
 /// Check if a value is within the range defined by rangeMin and rangeMax.
