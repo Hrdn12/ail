@@ -74,15 +74,18 @@ public:
     /// Sets both components in one call.
     void set(const T_ty tX, const T_ty tY);
 
-    /// Get the magnitude (length) of this vector
-    T_ty getMagnitude() const;
+    /// Get the Euclidean length of this vector.
+    T_ty getLength() const;
 
-    /// Get the squared magnitude of this vector
-    /// This is much faster than getMagnitude() as it avoids a square root.
+    /// Get the squared Euclidean length of this vector
+    /// This is much faster than getLength() as it avoids a square root.
     /// This can be useful for some comparisons.
-    T_ty getSqMagnitude() const;
+    T_ty getSqLength() const;
 
-    // TODO: rectilinear length / manhattan length
+    /// Get the rectilinear length of this vector.
+    /// Also known as the Manhattan length.
+    /// This returns the sum of the components' magnitudes.
+    T_ty getRectilinearLength() const;
 
     /// Normalise this vector in place (makes it a unit vector).
     void normalise();
@@ -111,15 +114,27 @@ public:
     /// Treating both vectors as positions, get the square of the distance between this vector and another.
     T_ty getSqDistance(const Vector2d<T_ty> & other) const;
 
+    /// Treating both vectors as positions, get the rectilinear distance between this vector and another.
+    /// This gets the sum of the differences between each component, also
+    ///  known as the Manhattan distance.
+    T_ty getRectilinearDistance(const Vector2d<T_ty> & other) const;
+
     /// Check if this vector represents a position within a certain distance of another.
     /// The comparison uses Euclidean distance, making it more practical for most
-    ///  purposes than isApproxEqual().
+    ///  purposes than isNearRectilinear() or isApproxEqual(). Those functions
+    ///  are more suitable for integer types or fast comparisons though.
     /// The absolute value of dist is used.
     bool isNear(const Vector2d<T_ty> & other, const T_ty dist) const;
 
+    /// Check if this vector represents a position within a certain distance of another.
+    /// The comparison uses Euclidean distance, making it more practical for most
+    ///  purposes than isNearRectilinear() or isApproxEqual(). Those functions
+    ///  are more suitable for integer types or fast comparisons though.
+    /// The absolute value of dist is used.
+    bool isNearRectilinear(const Vector2d<T_ty> & other, const T_ty dist) const;
+
     /// Check if this vector is approximately equal to another, within a given margin.
-    /// This checks each component independently for approximate equality.
-    /// The isNear() function may be more useful for most purposes.
+    /// The isNear() or isNearRectilinear() functions may be more useful for most purposes.
     /// The absolute value of margin is used.
     bool isApproxEqual(const Vector2d<T_ty> & other, const T_ty margin) const;
 

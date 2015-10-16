@@ -53,7 +53,7 @@ template <typename T_ty>
 Vector2d<T_ty>::~Vector2d()
 {
 }
-    
+
 //------------------------------------------------------------------------------
 // Operators.
 
@@ -115,7 +115,7 @@ Vector2d<T_ty> Vector2d<T_ty>::operator - () const
 {
     return Vector2d<T_ty>(-x, -y);
 }
-    
+
 //------------------------------------------------------------------------------
 // Accessors / operations.
 
@@ -127,21 +127,27 @@ void Vector2d<T_ty>::set(const T_ty tX, const T_ty tY)
 }
 
 template <typename T_ty>
-T_ty Vector2d<T_ty>::getMagnitude() const
+T_ty Vector2d<T_ty>::getLength() const
 {
     return std::sqrt((x * x) + (y * y));
 }
 
 template <typename T_ty>
-T_ty Vector2d<T_ty>::getSqMagnitude() const
+T_ty Vector2d<T_ty>::getSqLength() const
 {
     return (x*x) + (y*y);
 }
 
 template <typename T_ty>
+T_ty Vector2d<T_ty>::getRectilinearLength() const
+{
+    return std::abs(x) + std::abs(y);
+}
+
+template <typename T_ty>
 void Vector2d<T_ty>::normalise()
 {
-    const T_ty mag = getMagnitude();
+    const T_ty mag = getLength();
     if (mag != 0) {
         x /= mag;
         y /= mag;
@@ -177,7 +183,7 @@ T_ty Vector2d<T_ty>::dot(const Vector2d<T_ty> &rhs) const
 template <typename T_ty>
 T_ty Vector2d<T_ty>::getScalarProjection(const Vector2d<T_ty> &rhs) const
 {
-    const T_ty rhsMag = rhs.getMagnitude();
+    const T_ty rhsMag = rhs.getLength();
     if (rhsMag == 0) return 0;
     return dot(rhs) / rhsMag;
 }
@@ -185,7 +191,7 @@ T_ty Vector2d<T_ty>::getScalarProjection(const Vector2d<T_ty> &rhs) const
 template <typename T_ty>
 Vector2d<T_ty> Vector2d<T_ty>::getVectorProjection(const Vector2d<T_ty> &rhs) const
 {
-    const T_ty rhsSqMag = rhs.getSqMagnitude();
+    const T_ty rhsSqMag = rhs.getSqLength();
     if (rhsSqMag == 0) return Vector2d<T_ty>();
     return (dot(rhs) / rhsSqMag) * rhs;
 }
@@ -193,13 +199,19 @@ Vector2d<T_ty> Vector2d<T_ty>::getVectorProjection(const Vector2d<T_ty> &rhs) co
 template <typename T_ty>
 T_ty Vector2d<T_ty>::getDistance(const Vector2d<T_ty> & other) const
 {
-    return (*this - other).getMagnitude();
+    return (*this - other).getLength();
 }
 
 template <typename T_ty>
 T_ty Vector2d<T_ty>::getSqDistance(const Vector2d<T_ty> & other) const
 {
-    return (*this - other).getSqMagnitude();
+    return (*this - other).getSqLength();
+}
+
+template <typename T_ty>
+T_ty Vector2d<T_ty>::getRectilinearDistance(const Vector2d<T_ty> & other) const
+{
+    return (*this - other).getRectilinearLength();
 }
 
 template <typename T_ty>
@@ -209,11 +221,17 @@ bool Vector2d<T_ty>::isNear(const Vector2d<T_ty> & other, const T_ty dist) const
 }
 
 template <typename T_ty>
+bool Vector2d<T_ty>::isNearRectilinear(const Vector2d<T_ty> & other, const T_ty dist) const
+{
+    return getRectilinearDistance(other) <= (dist * dist);
+}
+
+template <typename T_ty>
 bool Vector2d<T_ty>::isApproxEqual(const Vector2d<T_ty> & other, const T_ty margin) const
 {
     return
-        isApproxEqual(x, other.x, margin) &&
-        isApproxEqual(y, other.y, margin);
+        ail::math::isApproxEqual(x, other.x, margin) &&
+        ail::math::isApproxEqual(y, other.y, margin);
 }
 
 //------------------------------------------------------------------------------
@@ -222,7 +240,7 @@ bool Vector2d<T_ty>::isApproxEqual(const Vector2d<T_ty> & other, const T_ty marg
 template <typename T_ty>
 void Vector2d<T_ty>::toPolar(Polar<T_ty> & output) const
 {
-    output.mag = getMagnitude();
+    output.mag = getLength();
     output.angle = static_cast<T_ty>(std::atan2(y, x));
     output.simplify();
 }
@@ -253,7 +271,7 @@ Vector2d<T_ty> operator - (const Vector2d<T_ty> & lhs, const Vector2d<T_ty> & rh
     Vector2d<T_ty> ans(lhs);
     return ans -= rhs;
 }
-	
+
 /// Multiplies a cartesian vector by a scalar and returns the result.
 template <typename T_ty>
 Vector2d<T_ty> operator * (const Vector2d<T_ty> & lhs, const T_ty & rhs)

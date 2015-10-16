@@ -38,12 +38,12 @@ public:
 
     /// Copy constructor.
     Polar(const Polar<T_ty> & rhs);
-        
+
     /// Convert a cartesian coordinate into polar.
     /// This will use the simplest possible representation of a polar angle,
     ///  i.e. the magnitude will be positive, and the angle will be positive and
     ///  less than 2 pi radians (a full circle).
-    explicit Polar(const Vector2d<T_ty> &rhs);
+    explicit Polar(const Vector2d<T_ty> & rhs);
 
     /// Destructor.
     ~Polar();
@@ -54,13 +54,13 @@ public:
 
     /// Assignment operator.
     Polar<T_ty> & operator = (const Polar<T_ty> & rhs);
-        
+
     /// Test if this coordinate is exactly equal to another.
     /// Note that this does a simple equality check on the underlying numbers.
     /// It does not check for equivalence, e.g. it will treats 0 radians as being
     ///  not equal to 2 pi radians, even though they are equivalent.
     bool operator == (const Polar<T_ty> & rhs) const;
-        
+
     /// Test if this coordinate is NOT exactly equal to another.
     /// Note that this does a simple inequality check on the underlying numbers.
     /// It does not check for equivalence, e.g. it will treats 0 radians as being
@@ -71,19 +71,19 @@ public:
     /// The returned copy has the magnitude negated. The angle is not changed.
     Polar<T_ty> operator - () const;
 
-        
+
 //------------------------------------------------------------------------------
 // Accessors / operations.
-    
+
     /// Set the angle and magnitude in one call.
     void set(const T_ty angle, const T_ty mag);
-        
+
     /// Simplify this coordinate in-place (modifies the current object).
     /// This doesn't change the direction/distance represented by the vector,
     ///  but it ensures the angle is between 0 and two pi, and that the magnitude
     ///  is positive.
     void simplify();
-        
+
     /// Get a simplified copy of this vector.
     /// The returned polar vector will still represent the same direction/distance
     ///  as this object, but the angle will be between 0 and two pi, and the
@@ -109,7 +109,7 @@ public:
     /// Angle of this coordinate (radians).
     /// In a cartesian XY plane, 0 radians points +X, half pi radians points +Y.
     T_ty angle;
-        
+
     /// Magnitude of this coordinate (length of the vector).
     T_ty mag;
 };

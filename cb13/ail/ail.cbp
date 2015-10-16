@@ -15,8 +15,6 @@
 				<Option createDefFile="1" />
 				<Compiler>
 					<Add option="-Weffc++" />
-					<Add option="-std=c++11" />
-					<Add option="-Wall" />
 					<Add option="-g" />
 				</Compiler>
 			</Target>
@@ -38,7 +36,6 @@
 		</Build>
 		<Compiler>
 			<Add option="-std=c++11" />
-			<Add option="-Wall" />
 			<Add directory="../../inc/ail" />
 		</Compiler>
 		<Unit filename="../../inc/ail/math/BoundingBox2d.h" />
