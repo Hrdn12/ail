@@ -223,7 +223,7 @@ bool Vector2d<T_ty>::isNear(const Vector2d<T_ty> & other, const T_ty dist) const
 template <typename T_ty>
 bool Vector2d<T_ty>::isNearRectilinear(const Vector2d<T_ty> & other, const T_ty dist) const
 {
-    return getRectilinearDistance(other) <= (dist * dist);
+    return getRectilinearDistance(other) <= std::abs(dist);
 }
 
 template <typename T_ty>

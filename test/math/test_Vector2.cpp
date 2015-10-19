@@ -293,16 +293,17 @@ TEST_CASE("Vector2d - basic arithmetic", "[Vector2d]")
 
 TEST_CASE("Vector2d - general operations", "[Vector2d]")
 {
-    SECTION("Length")
+    SECTION("Euclidean length")
     {
-        // Euclidean length.
         REQUIRE(Vector2d<double>(-12.31, 0.0).getLength() == Approx(12.31));
         REQUIRE(Vector2d<double>(0.0, 134.369).getLength() == Approx(134.369));
         REQUIRE(Vector2d<double>(5.0, 10.0).getLength() == Approx(11.180339887));
         REQUIRE(Vector2d<double>(-9.3, 4.7).getLength() == Approx(10.42017274));
         REQUIRE(Vector2d<double>(2.005, -19.3).getLength() == Approx(19.40386624));
+    }
 
-        // Squared length.
+    SECTION("Euclidean squared length")
+    {
         REQUIRE(Vector2d<double>(54.3, 0.0).getSqLength() == Approx(2948.49));
         REQUIRE(Vector2d<double>(0.0, -18.81).getSqLength() == Approx(353.8161));
         REQUIRE(Vector2d<double>(4.0, 3.0).getSqLength() == Approx(25.0));
@@ -312,14 +313,18 @@ TEST_CASE("Vector2d - general operations", "[Vector2d]")
         // Cross-checking:
         Vector2d<double> v(42.99, -1.07);
         REQUIRE(v.getSqLength() == Approx(v.getLength() * v.getLength()));
+    }
 
-        // Rectilinear length - integer.
+    SECTION("Rectilinear length - integer")
+    {
         REQUIRE(Vector2d<int>(0, 0).getRectilinearLength() == 0);
         REQUIRE(Vector2d<int>(3, 9).getRectilinearLength() == 12);
         REQUIRE(Vector2d<int>(-7, 3).getRectilinearLength() == 10);
         REQUIRE(Vector2d<int>(4, -4).getRectilinearLength() == 8);
+    }
 
-        // Rectilinear length - floating point.
+    SECTION("Rectilinear length - floating point")
+    {
         REQUIRE(Vector2d<double>(0.0, 0.0).getRectilinearLength() == Approx(0.0));
         REQUIRE(Vector2d<double>(2.4, 7.9).getRectilinearLength() == Approx(10.3));
         REQUIRE(Vector2d<double>(-13.6, 5.01).getRectilinearLength() == Approx(18.61));
@@ -331,8 +336,8 @@ TEST_CASE("Vector2d - general operations", "[Vector2d]")
         Vector2d<double> v1, v2;
 
         v1.set(-43.2, 87.6);
-        v2 = v1.getNormalised();
-        v1.normalise();
+        v2 = v1.getNormalised(); // copy
+        v1.normalise();          // in-place
         REQUIRE(v1.x == Approx(-0.44229248));
         REQUIRE(v1.y == Approx(0.89687087));
         REQUIRE(v2.x == Approx(v1.x));
@@ -340,8 +345,8 @@ TEST_CASE("Vector2d - general operations", "[Vector2d]")
         REQUIRE(v1.getLength() == Approx(1.0));
 
         v1.set(12.36, 55.9);
-        v2 = v1.getNormalised();
-        v1.normalise();
+        v2 = v1.getNormalised(); // copy
+        v1.normalise();          // in-place
         REQUIRE(v1.x == Approx(0.21589463));
         REQUIRE(v1.y == Approx(0.97641667));
         REQUIRE(v2.x == Approx(v1.x));
@@ -408,7 +413,7 @@ TEST_CASE("Vector2d - general operations", "[Vector2d]")
 
     SECTION("Projection")
     {
-        // TODO: add more tests here
+        // TODO: split into separate scalar and vector projection sections, and add more tests
 
         Vector2d<double> v1(4.0, 3.0);
         Vector2d<double> v2(2.0, 4.0);
@@ -420,9 +425,8 @@ TEST_CASE("Vector2d - general operations", "[Vector2d]")
         REQUIRE(v3.y == Approx(2.4));
     }
 
-    SECTION("Distance")
+    SECTION("Euclidean distance")
     {
-        // Euclidean distance
         // Zero distance
         REQUIRE(Vector2d<double>(0.0, 0.0).getDistance(Vector2d<double>(0.0, 0.0)) == Approx(0.0));
         REQUIRE(Vector2d<double>(2.6, -9.1).getDistance(Vector2d<double>(2.6, -9.1)) == Approx(0.0));
@@ -434,8 +438,10 @@ TEST_CASE("Vector2d - general operations", "[Vector2d]")
         // Arbitrary
         REQUIRE(Vector2d<double>(5.136, 19.64).getDistance(Vector2d<double>(-14.1, 27.3)) == Approx(20.705055));
         REQUIRE(Vector2d<double>(-57.301, 2.88).getDistance(Vector2d<double>(9.648, -101.9)) == Approx(124.342338));
+    }
 
-        // Squared Euclidean distance
+    SECTION("Euclidean squared distance")
+    {
         // Zero distance
         REQUIRE(Vector2d<double>(0.0, 0.0).getSqDistance(Vector2d<double>(0.0, 0.0)) == Approx(0.0));
         REQUIRE(Vector2d<double>(2.6, -9.1).getSqDistance(Vector2d<double>(2.6, -9.1)) == Approx(0.0));
@@ -447,8 +453,10 @@ TEST_CASE("Vector2d - general operations", "[Vector2d]")
         // Arbitrary
         REQUIRE(Vector2d<double>(5.136, 19.64).getSqDistance(Vector2d<double>(-14.1, 27.3)) == Approx(428.69930255));
         REQUIRE(Vector2d<double>(-57.301, 2.88).getSqDistance(Vector2d<double>(9.648, -101.9)) == Approx(15461.01701931));
+    }
 
-        // Rectilinear distance - integer
+    SECTION("Rectilinear distance - integer")
+    {
         // Zero distance
         REQUIRE(Vector2d<int>(0, 0).getRectilinearDistance(Vector2d<int>(0, 0)) == 0);
         REQUIRE(Vector2d<int>(-54, 1).getRectilinearDistance(Vector2d<int>(-54, 1)) == 0);
@@ -460,8 +468,10 @@ TEST_CASE("Vector2d - general operations", "[Vector2d]")
         // Arbitrary
         REQUIRE(Vector2d<int>(15, 6).getRectilinearDistance(Vector2d<int>(3, 21)) == 27);
         REQUIRE(Vector2d<int>(-2, 46).getRectilinearDistance(Vector2d<int>(13, 63)) == 32);
+    }
 
-        // Rectilinear distance - floating point
+    SECTION("Rectilinear distance - floating point")
+    {
         // Zero distance
         REQUIRE(Vector2d<double>(0.0, 0.0).getRectilinearDistance(Vector2d<double>(0.0, 0.0)) == Approx(0.0));
         REQUIRE(Vector2d<double>(2.6, -9.1).getRectilinearDistance(Vector2d<double>(2.6, -9.1)) == Approx(0.0));
@@ -475,7 +485,7 @@ TEST_CASE("Vector2d - general operations", "[Vector2d]")
         REQUIRE(Vector2d<double>(-57.301, 2.88).getRectilinearDistance(Vector2d<double>(9.648, -101.9)) == Approx(171.729));
     }
 
-    SECTION("Proximity - Euclidean")
+    SECTION("Euclidean proximity")
     {
         // Note: The sign of the margin value should make no difference (negative is OK).
 
@@ -486,15 +496,15 @@ TEST_CASE("Vector2d - general operations", "[Vector2d]")
         REQUIRE(Vector2d<double>(46.98, -18.6).isNear(Vector2d<double>(46.98, -18.6), -24.1));
 
         // In range - constrained to X axis
-        REQUIRE(Vector2d<double>(26.8, 14.51).isNear(Vector2d<double>(22.94, 14.51), 8.6));
-        REQUIRE(Vector2d<double>(26.8, 14.51).isNear(Vector2d<double>(22.94, 14.51), -8.6));
-        REQUIRE(Vector2d<double>(-11.97, -1.1).isNear(Vector2d<double>(-31.8, -1.1), 34.5));
-        REQUIRE(Vector2d<double>(-11.97, -1.1).isNear(Vector2d<double>(-31.8, -1.1), -34.5));
+        REQUIRE(Vector2d<double>(26.8, 0.0).isNear(Vector2d<double>(22.94, 0.0), 8.6));
+        REQUIRE(Vector2d<double>(26.8, 0.0).isNear(Vector2d<double>(22.94, 0.0), -8.6));
+        REQUIRE(Vector2d<double>(-11.97, 0.0).isNear(Vector2d<double>(-31.8, 0.0), 34.5));
+        REQUIRE(Vector2d<double>(-11.97, 0.0).isNear(Vector2d<double>(-31.8, 0.0), -34.5));
         // In range - constrained to Y axis
-        REQUIRE(Vector2d<double>(14.2, -9.7).isNear(Vector2d<double>(14.2, -22.01), 15.5));
-        REQUIRE(Vector2d<double>(14.2, -9.7).isNear(Vector2d<double>(14.2, -22.01), -15.5));
-        REQUIRE(Vector2d<double>(87.4, 54.24).isNear(Vector2d<double>(87.4, 49.3), 8.1));
-        REQUIRE(Vector2d<double>(87.4, 54.24).isNear(Vector2d<double>(87.4, 49.3), -8.1));
+        REQUIRE(Vector2d<double>(0.0, -9.7).isNear(Vector2d<double>(0.0, -22.01), 15.5));
+        REQUIRE(Vector2d<double>(0.0, -9.7).isNear(Vector2d<double>(0.0, -22.01), -15.5));
+        REQUIRE(Vector2d<double>(0.0, 54.24).isNear(Vector2d<double>(0.0, 49.3), 8.1));
+        REQUIRE(Vector2d<double>(0.0, 54.24).isNear(Vector2d<double>(0.0, 49.3), -8.1));
         // In range - no constraints
         REQUIRE(Vector2d<double>(112.44, -33.92).isNear(Vector2d<double>(107.66, -31.101), 13.99));
         REQUIRE(Vector2d<double>(112.44, -33.92).isNear(Vector2d<double>(107.66, -31.101), -13.99));
@@ -502,15 +512,15 @@ TEST_CASE("Vector2d - general operations", "[Vector2d]")
         REQUIRE(Vector2d<double>(-4.82, -411.13).isNear(Vector2d<double>(-5.04, -460.53), -65.88));
 
         // Boundary - constrained to X axis
-        REQUIRE(Vector2d<double>(26.8, 14.51).isNear(Vector2d<double>(22.94, 14.51), 3.88));
-        REQUIRE(Vector2d<double>(26.8, 14.51).isNear(Vector2d<double>(22.94, 14.51), -3.88));
-        REQUIRE(Vector2d<double>(-11.97, -1.1).isNear(Vector2d<double>(-31.8, -1.1), 19.85));
-        REQUIRE(Vector2d<double>(-11.97, -1.1).isNear(Vector2d<double>(-31.8, -1.1), -19.85));
+        REQUIRE(Vector2d<double>(26.8, 0.0).isNear(Vector2d<double>(22.94, 0.0), 3.88));
+        REQUIRE(Vector2d<double>(26.8, 0.0).isNear(Vector2d<double>(22.94, 0.0), -3.88));
+        REQUIRE(Vector2d<double>(-11.97, 0.0).isNear(Vector2d<double>(-31.8, 0.0), 19.85));
+        REQUIRE(Vector2d<double>(-11.97, 0.0).isNear(Vector2d<double>(-31.8, 0.0), -19.85));
         // Boundary - constrained to Y axis
-        REQUIRE(Vector2d<double>(14.2, -9.7).isNear(Vector2d<double>(14.2, -22.01), 12.33));
-        REQUIRE(Vector2d<double>(14.2, -9.7).isNear(Vector2d<double>(14.2, -22.01), -12.33));
-        REQUIRE(Vector2d<double>(87.4, 54.24).isNear(Vector2d<double>(87.4, 49.3), 4.96));
-        REQUIRE(Vector2d<double>(87.4, 54.24).isNear(Vector2d<double>(87.4, 49.3), -4.96));
+        REQUIRE(Vector2d<double>(0.0, -9.7).isNear(Vector2d<double>(0.0, -22.01), 12.33));
+        REQUIRE(Vector2d<double>(0.0, -9.7).isNear(Vector2d<double>(0.0, -22.01), -12.33));
+        REQUIRE(Vector2d<double>(0.0, 54.24).isNear(Vector2d<double>(0.0, 49.3), 4.96));
+        REQUIRE(Vector2d<double>(0.0, 54.24).isNear(Vector2d<double>(0.0, 49.3), -4.96));
         // Boundary - no constraints
         REQUIRE(Vector2d<double>(112.44, -33.92).isNear(Vector2d<double>(107.66, -31.101), 5.57));
         REQUIRE(Vector2d<double>(112.44, -33.92).isNear(Vector2d<double>(107.66, -31.101), -5.57));
@@ -518,15 +528,15 @@ TEST_CASE("Vector2d - general operations", "[Vector2d]")
         REQUIRE(Vector2d<double>(-4.82, -411.13).isNear(Vector2d<double>(-5.04, -460.53), -49.42));
 
         // Out of range - constrained to X axis
-        REQUIRE_FALSE(Vector2d<double>(26.8, 14.51).isNear(Vector2d<double>(22.94, 14.51), 1.48));
-        REQUIRE_FALSE(Vector2d<double>(26.8, 14.51).isNear(Vector2d<double>(22.94, 14.51), -1.48));
-        REQUIRE_FALSE(Vector2d<double>(-11.97, -1.1).isNear(Vector2d<double>(-31.8, -1.1), 18.98));
-        REQUIRE_FALSE(Vector2d<double>(-11.97, -1.1).isNear(Vector2d<double>(-31.8, -1.1), -18.98));
+        REQUIRE_FALSE(Vector2d<double>(26.8, 0.0).isNear(Vector2d<double>(22.94, 0.0), 1.48));
+        REQUIRE_FALSE(Vector2d<double>(26.8, 0.0).isNear(Vector2d<double>(22.94, 0.0), -1.48));
+        REQUIRE_FALSE(Vector2d<double>(-11.97, 0.0).isNear(Vector2d<double>(-31.8, 0.0), 18.98));
+        REQUIRE_FALSE(Vector2d<double>(-11.97, 0.0).isNear(Vector2d<double>(-31.8, 0.0), -18.98));
         // Out of range - constrained to Y axis
-        REQUIRE_FALSE(Vector2d<double>(14.2, -9.7).isNear(Vector2d<double>(14.2, -22.01), 7.6));
-        REQUIRE_FALSE(Vector2d<double>(14.2, -9.7).isNear(Vector2d<double>(14.2, -22.01), -7.6));
-        REQUIRE_FALSE(Vector2d<double>(87.4, 54.24).isNear(Vector2d<double>(87.4, 49.3), 4.67));
-        REQUIRE_FALSE(Vector2d<double>(87.4, 54.24).isNear(Vector2d<double>(87.4, 49.3), -4.67));
+        REQUIRE_FALSE(Vector2d<double>(0.0, -9.7).isNear(Vector2d<double>(0.0, -22.01), 7.6));
+        REQUIRE_FALSE(Vector2d<double>(0.0, -9.7).isNear(Vector2d<double>(0.0, -22.01), -7.6));
+        REQUIRE_FALSE(Vector2d<double>(0.0, 54.24).isNear(Vector2d<double>(0.0, 49.3), 4.67));
+        REQUIRE_FALSE(Vector2d<double>(0.0, 54.24).isNear(Vector2d<double>(0.0, 49.3), -4.67));
         // Out of range - no constraints
         REQUIRE_FALSE(Vector2d<double>(112.44, -33.92).isNear(Vector2d<double>(107.66, -31.101), 1.901));
         REQUIRE_FALSE(Vector2d<double>(112.44, -33.92).isNear(Vector2d<double>(107.66, -31.101), -1.901));
@@ -534,11 +544,122 @@ TEST_CASE("Vector2d - general operations", "[Vector2d]")
         REQUIRE_FALSE(Vector2d<double>(-4.82, -411.13).isNear(Vector2d<double>(-5.04, -460.53), -46.112));
     }
 
-    SECTION("Proximity - Rectilinear")
+    SECTION("Rectilinear proximity - integer")
     {
         // Note: The sign of the margin value should make no difference (negative is OK).
 
-        // TODO: Implement
+        // Exact match
+        REQUIRE(Vector2d<int>(0, 0).isNearRectilinear(Vector2d<int>(0, 0), 0));
+        REQUIRE(Vector2d<int>(12, -4).isNearRectilinear(Vector2d<int>(12, -4), 0));
+        REQUIRE(Vector2d<int>(-9, 25).isNearRectilinear(Vector2d<int>(-9, 25), 2));
+        REQUIRE(Vector2d<int>(-9, 25).isNearRectilinear(Vector2d<int>(-9, 25), -2));
+
+        // In range - constrained to X axis
+        REQUIRE(Vector2d<int>(20, 0).isNearRectilinear(Vector2d<int>(22, 0), 4));
+        REQUIRE(Vector2d<int>(20, 0).isNearRectilinear(Vector2d<int>(22, 0), -4));
+        REQUIRE(Vector2d<int>(3, 0).isNearRectilinear(Vector2d<int>(-6, 0), 14));
+        REQUIRE(Vector2d<int>(3, 0).isNearRectilinear(Vector2d<int>(-6, 0), -14));
+        // In range - constrained to Y axis
+        REQUIRE(Vector2d<int>(0, 43).isNearRectilinear(Vector2d<int>(0, 38), 10));
+        REQUIRE(Vector2d<int>(0, 43).isNearRectilinear(Vector2d<int>(0, 38), -10));
+        REQUIRE(Vector2d<int>(0, -4).isNearRectilinear(Vector2d<int>(0, -12), 9));
+        REQUIRE(Vector2d<int>(0, -4).isNearRectilinear(Vector2d<int>(0, -12), -9));
+        // In range - no constraints
+        REQUIRE(Vector2d<int>(12, -4).isNearRectilinear(Vector2d<int>(3, 5), 23));
+        REQUIRE(Vector2d<int>(12, -4).isNearRectilinear(Vector2d<int>(3, 5), -23));
+        REQUIRE(Vector2d<int>(-1, 22).isNearRectilinear(Vector2d<int>(-6, 19), 11));
+        REQUIRE(Vector2d<int>(-1, 22).isNearRectilinear(Vector2d<int>(-6, 19), -11));
+
+        // Boundary - constrained to X axis
+        REQUIRE(Vector2d<int>(20, 0).isNearRectilinear(Vector2d<int>(22, 0), 2));
+        REQUIRE(Vector2d<int>(20, 0).isNearRectilinear(Vector2d<int>(22, 0), -2));
+        REQUIRE(Vector2d<int>(3, 0).isNearRectilinear(Vector2d<int>(-6, 0), 9));
+        REQUIRE(Vector2d<int>(3, 0).isNearRectilinear(Vector2d<int>(-6, 0), -9));
+        // Boundary - constrained to Y axis
+        REQUIRE(Vector2d<int>(0, 43).isNearRectilinear(Vector2d<int>(0, 38), 5));
+        REQUIRE(Vector2d<int>(0, 43).isNearRectilinear(Vector2d<int>(0, 38), -5));
+        REQUIRE(Vector2d<int>(0, -4).isNearRectilinear(Vector2d<int>(0, -12), 8));
+        REQUIRE(Vector2d<int>(0, -4).isNearRectilinear(Vector2d<int>(0, -12), -8));
+        // Boundary - no constraints
+        REQUIRE(Vector2d<int>(12, -4).isNearRectilinear(Vector2d<int>(3, 5), 18));
+        REQUIRE(Vector2d<int>(12, -4).isNearRectilinear(Vector2d<int>(3, 5), -18));
+        REQUIRE(Vector2d<int>(-1, 22).isNearRectilinear(Vector2d<int>(-6, 19), 8));
+        REQUIRE(Vector2d<int>(-1, 22).isNearRectilinear(Vector2d<int>(-6, 19), -8));
+
+        // Out of range - constrained to X axis
+        REQUIRE_FALSE(Vector2d<int>(20, 0).isNearRectilinear(Vector2d<int>(22, 0), 1));
+        REQUIRE_FALSE(Vector2d<int>(20, 0).isNearRectilinear(Vector2d<int>(22, 0), -1));
+        REQUIRE_FALSE(Vector2d<int>(3, 0).isNearRectilinear(Vector2d<int>(-6, 0), 6));
+        REQUIRE_FALSE(Vector2d<int>(3, 0).isNearRectilinear(Vector2d<int>(-6, 0), -6));
+        // Out of range - constrained to Y axis
+        REQUIRE_FALSE(Vector2d<int>(0, 43).isNearRectilinear(Vector2d<int>(0, 38), 2));
+        REQUIRE_FALSE(Vector2d<int>(0, 43).isNearRectilinear(Vector2d<int>(0, 38), -2));
+        REQUIRE_FALSE(Vector2d<int>(0, -4).isNearRectilinear(Vector2d<int>(0, -12), 5));
+        REQUIRE_FALSE(Vector2d<int>(0, -4).isNearRectilinear(Vector2d<int>(0, -12), -5));
+        // Out of range - no constraints
+        REQUIRE_FALSE(Vector2d<int>(12, -4).isNearRectilinear(Vector2d<int>(3, 5), 15));
+        REQUIRE_FALSE(Vector2d<int>(12, -4).isNearRectilinear(Vector2d<int>(3, 5), -15));
+        REQUIRE_FALSE(Vector2d<int>(-1, 22).isNearRectilinear(Vector2d<int>(-6, 19), 3));
+        REQUIRE_FALSE(Vector2d<int>(-1, 22).isNearRectilinear(Vector2d<int>(-6, 19), -3));
+    }
+
+    SECTION("Rectilinear proximity - floating point")
+    {
+        // Note: The sign of the margin value should make no difference (negative is OK).
+
+        // Exact match
+        REQUIRE(Vector2d<double>(0.0, 0.0).isNearRectilinear(Vector2d<double>(0.0, 0.0), 0.0));
+        REQUIRE(Vector2d<double>(45.11, -20.9).isNearRectilinear(Vector2d<double>(45.11, -20.9), 0.0));
+        REQUIRE(Vector2d<double>(-2.23, 0.6).isNearRectilinear(Vector2d<double>(-2.23, 0.6), 3.4));
+        REQUIRE(Vector2d<double>(-2.23, 0.6).isNearRectilinear(Vector2d<double>(-2.23, 0.6), -3.4));
+
+        // In range - constrained to X axis
+        REQUIRE(Vector2d<double>(4.46, 0.0).isNearRectilinear(Vector2d<double>(-0.2, 0.0), 8.2));
+        REQUIRE(Vector2d<double>(4.46, 0.0).isNearRectilinear(Vector2d<double>(-0.2, 0.0), -8.2));
+        REQUIRE(Vector2d<double>(19.8, 0.0).isNearRectilinear(Vector2d<double>(24.77, 0.0), 10.13));
+        REQUIRE(Vector2d<double>(19.8, 0.0).isNearRectilinear(Vector2d<double>(24.77, 0.0), -10.13));
+        // In range - constrained to Y axis
+        REQUIRE(Vector2d<double>(0.0, 7.16).isNearRectilinear(Vector2d<double>(0.0, 10.22), 6.69));
+        REQUIRE(Vector2d<double>(0.0, 7.16).isNearRectilinear(Vector2d<double>(0.0, 10.22), -6.69));
+        REQUIRE(Vector2d<double>(0.0, -5.501).isNearRectilinear(Vector2d<double>(0.0, 2.7), 14.26));
+        REQUIRE(Vector2d<double>(0.0, -5.501).isNearRectilinear(Vector2d<double>(0.0, 2.7), -14.26));
+        // In range - no constraints
+        REQUIRE(Vector2d<double>(0.1, 0.2).isNearRectilinear(Vector2d<double>(0.5, -0.6), 2.5));
+        REQUIRE(Vector2d<double>(0.1, 0.2).isNearRectilinear(Vector2d<double>(0.5, -0.6), -2.5));
+        REQUIRE(Vector2d<double>(-59.312, 33.36).isNearRectilinear(Vector2d<double>(41.11, -16.38), 167.76));
+        REQUIRE(Vector2d<double>(-59.312, 33.36).isNearRectilinear(Vector2d<double>(41.11, -16.38), -167.76));
+
+        // Boundary - constrained to X axis
+        REQUIRE(Vector2d<double>(4.46, 0.0).isNearRectilinear(Vector2d<double>(-0.2, 0.0), 4.68));
+        REQUIRE(Vector2d<double>(4.46, 0.0).isNearRectilinear(Vector2d<double>(-0.2, 0.0), -4.68));
+        REQUIRE(Vector2d<double>(19.8, 0.0).isNearRectilinear(Vector2d<double>(24.77, 0.0), 4.99));
+        REQUIRE(Vector2d<double>(19.8, 0.0).isNearRectilinear(Vector2d<double>(24.77, 0.0), -4.99));
+        // Boundary - constrained to Y axis
+        REQUIRE(Vector2d<double>(0.0, 7.16).isNearRectilinear(Vector2d<double>(0.0, 10.22), 3.08));
+        REQUIRE(Vector2d<double>(0.0, 7.16).isNearRectilinear(Vector2d<double>(0.0, 10.22), -3.08));
+        REQUIRE(Vector2d<double>(0.0, -5.501).isNearRectilinear(Vector2d<double>(0.0, 2.7), 8.221));
+        REQUIRE(Vector2d<double>(0.0, -5.501).isNearRectilinear(Vector2d<double>(0.0, 2.7), -8.221));
+        // Boundary - no constraints
+        REQUIRE(Vector2d<double>(0.1, 0.2).isNearRectilinear(Vector2d<double>(0.5, -0.6), 1.22));
+        REQUIRE(Vector2d<double>(0.1, 0.2).isNearRectilinear(Vector2d<double>(0.5, -0.6), -1.22));
+        REQUIRE(Vector2d<double>(-59.312, 33.36).isNearRectilinear(Vector2d<double>(41.11, -16.38), 150.182));
+        REQUIRE(Vector2d<double>(-59.312, 33.36).isNearRectilinear(Vector2d<double>(41.11, -16.38), -150.182));
+
+        // Out of range - constrained to X axis
+        REQUIRE_FALSE(Vector2d<double>(4.46, 0.0).isNearRectilinear(Vector2d<double>(-0.2, 0.0), 4.1));
+        REQUIRE_FALSE(Vector2d<double>(4.46, 0.0).isNearRectilinear(Vector2d<double>(-0.2, 0.0), -4.1));
+        REQUIRE_FALSE(Vector2d<double>(19.8, 0.0).isNearRectilinear(Vector2d<double>(24.77, 0.0), 3.08));
+        REQUIRE_FALSE(Vector2d<double>(19.8, 0.0).isNearRectilinear(Vector2d<double>(24.77, 0.0), -3.08));
+        // Out of range - constrained to Y axis
+        REQUIRE_FALSE(Vector2d<double>(0.0, 7.16).isNearRectilinear(Vector2d<double>(0.0, 10.22), 2.4));
+        REQUIRE_FALSE(Vector2d<double>(0.0, 7.16).isNearRectilinear(Vector2d<double>(0.0, 10.22), -2.4));
+        REQUIRE_FALSE(Vector2d<double>(0.0, -5.501).isNearRectilinear(Vector2d<double>(0.0, 2.7), 7.93));
+        REQUIRE_FALSE(Vector2d<double>(0.0, -5.501).isNearRectilinear(Vector2d<double>(0.0, 2.7), -7.93));
+        // Out of range - no constraints
+        REQUIRE_FALSE(Vector2d<double>(0.1, 0.2).isNearRectilinear(Vector2d<double>(0.5, -0.6), 0.44));
+        REQUIRE_FALSE(Vector2d<double>(0.1, 0.2).isNearRectilinear(Vector2d<double>(0.5, -0.6), -0.44));
+        REQUIRE_FALSE(Vector2d<double>(-59.312, 33.36).isNearRectilinear(Vector2d<double>(41.11, -16.38), 146.39));
+        REQUIRE_FALSE(Vector2d<double>(-59.312, 33.36).isNearRectilinear(Vector2d<double>(41.11, -16.38), -146.39));
     }
 
     SECTION("Approx equality - integer")
