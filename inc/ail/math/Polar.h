@@ -90,7 +90,7 @@ public:
     ///  magnitude will be positive.
     Polar<T_ty> getSimplified() const;
 
-    // TODO: method to test for approximate equivalence. It will effectivcely
+    // TODO: method to test for approximate equivalence. It will effectively
     //  simply the coordinates before comparison.
 
 //------------------------------------------------------------------------------

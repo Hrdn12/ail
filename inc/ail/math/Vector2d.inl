@@ -11,6 +11,7 @@
 
 #include <cmath>
 #include <cassert>
+#include <stdexcept>
 
 #include "Vector2d.h"
 #include "Polar.h"
@@ -28,6 +29,16 @@ template <typename T_ty>
 Vector2d<T_ty>::Vector2d() :
     x(0), y(0)
 {
+}
+
+template <typename T_ty>
+Vector2d<T_ty>::Vector2d(std::initializer_list<T_ty> args)
+{
+    if (args.size() != 2)
+        throw std::invalid_argument("Expected 2 arguments in initializer list.");
+
+    x = *args.begin();
+    y = *(args.begin() + 1);
 }
 
 template <typename T_ty>

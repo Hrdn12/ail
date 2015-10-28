@@ -9,6 +9,8 @@
     Released open source under the MIT licence.
 */
 
+#include <initializer_list>
+
 //--------------
 namespace ail {
 namespace math {
@@ -32,6 +34,10 @@ public:
 
     /// Constructor - initialises each component directly.
     Vector2d(const T_ty tX, const T_ty tY);
+
+    /// Constructor - initializer list.
+    /// Components are ordered: x, y
+    Vector2d(std::initializer_list<T_ty> args);
 
     /// Copy constructor.
     Vector2d(const Vector2d<T_ty> & rhs);
