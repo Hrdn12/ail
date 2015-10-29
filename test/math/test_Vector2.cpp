@@ -163,161 +163,169 @@ TEST_CASE("Vector2d - comparison operators", "[Vector2d]")
     }
 }
 
-TEST_CASE("Vector2d - basic arithmetic", "[Vector2d]")
+TEST_CASE("Vector2d - integer arithmetic", "[Vector2d]")
 {
-    // TODO: split into integer and floating point test cases
-    // TODO: move vector and scalar declarations out into common variables which are re-used throughout sections
+    Vector2d<int>
+        v1(0, 0),       v2(15, 26),
+        v3(-31, 11),    v4(29, -5),
+        v5(-41, -18),   v6(301, 297);
+
+    const int s1 = 0, s2 = 33, s3 = -7;
 
     SECTION("Vector addition")
     {
-        Vector2d<int> vi = Vector2d<int>(-4, 9) + Vector2d<int>(16, 13);
-        REQUIRE(vi.x == 12);
-        REQUIRE(vi.y == 22);
+        v1 = v1 + v2;
+        REQUIRE(v1.x == 15);
+        REQUIRE(v1.y == 26);
 
-        Vector2d<double> vd = Vector2d<double>(1.2, 3.4) + Vector2d<double>(2.3, 4.5);
-        REQUIRE(vd.x == Approx(3.5));
-        REQUIRE(vd.y == Approx(7.9));
+        v3 = v3 + v4;
+        REQUIRE(v3.x == -2);
+        REQUIRE(v3.y == 6);
+
+        v5 = v5 + v6;
+        REQUIRE(v5.x == 260);
+        REQUIRE(v5.y == 279);
     }
 
     SECTION("Vector addition assignment")
     {
-        Vector2d<int> vi(22, 1);
-        vi += Vector2d<int>(1, -3);
-        REQUIRE(vi.x == 23);
-        REQUIRE(vi.y == -2);
+        v1 += v2;
+        REQUIRE(v1.x == 15);
+        REQUIRE(v1.y == 26);
 
-        Vector2d<double> vd(2.3, 4.5);
-        vd += Vector2d<double>(3.4, 5.6);
-        REQUIRE(vd.x == Approx(5.7));
-        REQUIRE(vd.y == Approx(10.1));
+        v3 += v4;
+        REQUIRE(v3.x == -2);
+        REQUIRE(v3.y == 6);
+
+        v5 += v6;
+        REQUIRE(v5.x == 260);
+        REQUIRE(v5.y == 279);
     }
 
     SECTION("Vector subtraction")
     {
-        Vector2d<int> vi = Vector2d<int>(19, -8) - Vector2d<int>(20, -2);
-        REQUIRE(vi.x == -1);
-        REQUIRE(vi.y == -6);
+        v1 = v1 - v2;
+        REQUIRE(v1.x == -15);
+        REQUIRE(v1.y == -26);
 
-        Vector2d<double> vd = Vector2d<double>(4.5, 3.2) - Vector2d<double>(3.1, 2.6);
-        REQUIRE(vd.x == Approx(1.4));
-        REQUIRE(vd.y == Approx(0.6));
+        v3 = v3 - v4;
+        REQUIRE(v3.x == -60);
+        REQUIRE(v3.y == 16);
+
+        v5 = v5 - v6;
+        REQUIRE(v5.x == -342);
+        REQUIRE(v5.y == -315);
     }
 
     SECTION("Vector subtraction assignment")
     {
-        Vector2d<int> vi(44, 26);
-        vi -= Vector2d<int>(37, 28);
-        REQUIRE(vi.x == 7);
-        REQUIRE(vi.y == -2);
+        v1 -= v2;
+        REQUIRE(v1.x == -15);
+        REQUIRE(v1.y == -26);
 
-        Vector2d<double> vd(6.3, 5.1);
-        vd -= Vector2d<double>(5.2, 1.8);
-        REQUIRE(vd.x == Approx(1.1));
-        REQUIRE(vd.y == Approx(3.3));
+        v3 -= v4;
+        REQUIRE(v3.x == -60);
+        REQUIRE(v3.y == 16);
+
+        v5 -= v6;
+        REQUIRE(v5.x == -342);
+        REQUIRE(v5.y == -315);
     }
 
     SECTION("Scalar multiplication")
     {
-        Vector2d<int> vi;
-        Vector2d<double> vd;
+        v2 = v2 * s1;
+        REQUIRE(v2.x == 0);
+        REQUIRE(v2.y == 0);
 
-        // Vector x scalar
-        vi = Vector2d<int>(4, -1) * 5;
-        REQUIRE(vi.x == 20);
-        REQUIRE(vi.y == -5);
+        v4 = v4 * s2;
+        REQUIRE(v4.x == 957);
+        REQUIRE(v4.y == -165);
 
-        vd = Vector2d<double>(8.4, 3.3) * 4.5;
-        REQUIRE(vd.x == Approx(37.8));
-        REQUIRE(vd.y == Approx(14.85));
-
-
-        // Scalar x vector
-        vi = 5 * Vector2d<int>(4, -1);
-        REQUIRE(vi.x == 20);
-        REQUIRE(vi.y == -5);
-
-        vd = 4.5 * Vector2d<double>(8.4, 3.3);
-        REQUIRE(vd.x == Approx(37.8));
-        REQUIRE(vd.y == Approx(14.85));
+        v6 = s3 * v6; // scalar first
+        REQUIRE(v6.x == -2107);
+        REQUIRE(v6.y == -2079);
     }
 
     SECTION("Scalar multiplication assignment")
     {
-        Vector2d<int> vi(-6, 14);
-        vi *= 7;
-        REQUIRE(vi.x == -42);
-        REQUIRE(vi.y == 98);
+        v2 *= s1;
+        REQUIRE(v2.x == 0);
+        REQUIRE(v2.y == 0);
 
-        Vector2d<double> vd(3.9, 9.6);
-        vd *= 5.1;
-        REQUIRE(vd.x == Approx(19.89));
-        REQUIRE(vd.y == Approx(48.96));
+        v4 *= s2;
+        REQUIRE(v4.x == 957);
+        REQUIRE(v4.y == -165);
+
+        v6 *= s3;
+        REQUIRE(v6.x == -2107);
+        REQUIRE(v6.y == -2079);
     }
 
     SECTION("Scalar division")
     {
-        Vector2d<int> vi;
-        Vector2d<double> vd;
+        v2 = v2 / s3;
+        REQUIRE(v2.x == -2);
+        REQUIRE(v2.y == -3);
 
-        // Vector divided by scalar
-        vi = Vector2d<int>(12, 6) / 3;
-        REQUIRE(vi.x == 4);
-        REQUIRE(vi.y == 2);
+        v3 = s2 / v3; // scalar first
+        REQUIRE(v3.x == -1);
+        REQUIRE(v3.y == 3);
 
-        vd = Vector2d<double>(12.3, 6.7) / 2.2;
-        REQUIRE(vd.x == Approx(5.59090909));
-        REQUIRE(vd.y == Approx(3.04545455));
-
-        // Scalar divided by vector
-        vi = 50 / Vector2d<int>(10, 25);
-        REQUIRE(vi.x == Approx(5));
-        REQUIRE(vi.y == Approx(2));
-
-        vd = 7.2 / Vector2d<double>(8.11, -16.4);
-        REQUIRE(vd.x == Approx(0.887792));
-        REQUIRE(vd.y == Approx(-0.439024));
+        v6 = v6 / s2;
+        REQUIRE(v6.x == 9);
+        REQUIRE(v6.y == 9);
     }
 
     SECTION("Scalar division assignment")
     {
-        Vector2d<int> vi(10, 28);
-        vi /= 2;
-        REQUIRE(vi.x == 5);
-        REQUIRE(vi.y == 14);
+        v2 /= s3;
+        REQUIRE(v2.x == -2);
+        REQUIRE(v2.y == -3);
 
-        Vector2d<double> vd(8.6, 10.7);
-        vd /= 3.8;
-        REQUIRE(vd.x == Approx(2.26315789));
-        REQUIRE(vd.y == Approx(2.81578947));
-    }
+        v3 /= s2;
+        REQUIRE(v3.x == 0);
+        REQUIRE(v3.y == 0);
 
-    SECTION("Combined arithmetic")
-    {
-        Vector2d<int> vi =
-            Vector2d<int>(-3, 0)
-            + Vector2d<int>(4, -1) * 5
-            - Vector2d<int>(12, 21) / 3;
-        REQUIRE(vi.x == 13);
-        REQUIRE(vi.y == -12);
-
-        Vector2d<double> vd =
-            -156.8 / Vector2d<double>(2.1, -9.6) / 2.0
-            + Vector2d<double>(-18.9, 22.1)
-            - 8.8 * Vector2d<double>(12.4, 0.5);
-        REQUIRE(vd.x == Approx(-165.35333333));
-        REQUIRE(vd.y == Approx(25.86666667));
+        v6 /= s2;
+        REQUIRE(v6.x == 9);
+        REQUIRE(v6.y == 9);
     }
 
     SECTION("Negation")
     {
-        Vector2d<int> vi = -Vector2d<int>(-99, 47);
-        REQUIRE(vi.x == 99);
-        REQUIRE(vi.y == -47);
+        v1 = -v1;
+        REQUIRE(v1.x == 0);
+        REQUIRE(v1.y == 0);
 
-        Vector2d<double> vd = -Vector2d<double>(14.6, -8.2);
-        REQUIRE(vd.x == -14.6);
-        REQUIRE(vd.y == 8.2);
+        v3 = -v3;
+        REQUIRE(v3.x == 31);
+        REQUIRE(v3.y == -11);
+
+        v5 = -v5;
+        REQUIRE(v5.x == 41);
+        REQUIRE(v5.y == 18);
     }
+
+    SECTION("Combined arithmetic")
+    {
+        v1 -= v2 * s2 + v3 - v6 / s3 + s1 / v5;
+
+        REQUIRE(v1.x == -507);
+        REQUIRE(v1.y == -911);
+    }
+}
+
+TEST_CASE("Vector2d - floating point arithmetic", "[Vector2d]")
+{
+    Vector2d<double>
+        v1(0.0, 0.0), v2(0.59, 0.22),
+        v3(-14.6, 21.4), v4(30.05, -8.4),
+        v5(-10.6, -41.11), v6(204.109, 571.99);
+
+    double s1 = 0.0, s2 = 5.6, s3 = -2.5;
+
+    // TODO: Implement test sections (similar to integer arithmetic case)
 }
 
 TEST_CASE("Vector2d - length", "[Vector2d]")
