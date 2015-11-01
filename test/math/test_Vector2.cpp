@@ -325,7 +325,148 @@ TEST_CASE("Vector2d - floating point arithmetic", "[Vector2d]")
 
     double s1 = 0.0, s2 = 5.6, s3 = -2.5;
 
-    // TODO: Implement test sections (similar to integer arithmetic case)
+    SECTION("Vector addition")
+    {
+        v1 = v1 + v2;
+        REQUIRE(v1.x == Approx(0.59));
+        REQUIRE(v1.y == Approx(0.22));
+
+        v3 = v3 + v4;
+        REQUIRE(v3.x == Approx(15.45));
+        REQUIRE(v3.y == Approx(13.0));
+
+        v5 = v5 + v6;
+        REQUIRE(v5.x == Approx(193.509));
+        REQUIRE(v5.y == Approx(530.88));
+    }
+
+    SECTION("Vector addition assignment")
+    {
+        v1 += v2;
+        REQUIRE(v1.x == Approx(0.59));
+        REQUIRE(v1.y == Approx(0.22));
+
+        v3 += v4;
+        REQUIRE(v3.x == Approx(15.45));
+        REQUIRE(v3.y == Approx(13.0));
+
+        v5 += v6;
+        REQUIRE(v5.x == Approx(193.509));
+        REQUIRE(v5.y == Approx(530.88));
+    }
+
+    SECTION("Vector subtraction")
+    {
+        v1 = v1 - v2;
+        REQUIRE(v1.x == Approx(-0.59));
+        REQUIRE(v1.y == Approx(-0.22));
+
+        v3 = v3 - v4;
+        REQUIRE(v3.x == Approx(-44.65));
+        REQUIRE(v3.y == Approx(29.8));
+
+        v5 = v5 - v6;
+        REQUIRE(v5.x == Approx(-214.709));
+        REQUIRE(v5.y == Approx(-613.1));
+    }
+
+    SECTION("Vector subtraction assignment")
+    {
+        v1 -= v2;
+        REQUIRE(v1.x == Approx(-0.59));
+        REQUIRE(v1.y == Approx(-0.22));
+
+        v3 -= v4;
+        REQUIRE(v3.x == Approx(-44.65));
+        REQUIRE(v3.y == Approx(29.8));
+
+        v5 -= v6;
+        REQUIRE(v5.x == Approx(-214.709));
+        REQUIRE(v5.y == Approx(-613.1));
+    }
+
+    SECTION("Scalar multiplication")
+    {
+        v2 = v2 * s1;
+        REQUIRE(v2.x == Approx(0.0));
+        REQUIRE(v2.y == Approx(0.0));
+
+        v4 = v4 * s2;
+        REQUIRE(v4.x == Approx(168.28));
+        REQUIRE(v4.y == Approx(-47.04));
+
+        v6 = s3 * v6; // scalar first
+        REQUIRE(v6.x == Approx(-510.2725));
+        REQUIRE(v6.y == Approx(-1429.975));
+    }
+
+    SECTION("Scalar multiplication assignment")
+    {
+        v2 *= s1;
+        REQUIRE(v2.x == Approx(0.0));
+        REQUIRE(v2.y == Approx(0.0));
+
+        v4 *= s2;
+        REQUIRE(v4.x == Approx(168.28));
+        REQUIRE(v4.y == Approx(-47.04));
+
+        v6 *= s3;
+        REQUIRE(v6.x == Approx(-510.2725));
+        REQUIRE(v6.y == Approx(-1429.975));
+    }
+
+    SECTION("Scalar division")
+    {
+        v2 = v2 / s3;
+        REQUIRE(v2.x == Approx(-0.236));
+        REQUIRE(v2.y == Approx(-0.088));
+
+        v3 = s2 / v3; // scalar first
+        REQUIRE(v3.x == Approx(-0.38356164));
+        REQUIRE(v3.y == Approx(0.26168224));
+
+        v6 = v6 / s2;
+        REQUIRE(v6.x == Approx(36.44803571));
+        REQUIRE(v6.y == Approx(102.14107143));
+    }
+
+    SECTION("Scalar division assignment")
+    {
+        v2 /= s3;
+        REQUIRE(v2.x == Approx(-0.236));
+        REQUIRE(v2.y == Approx(-0.088));
+
+        v3 /= s2;
+        REQUIRE(v3.x == Approx(-2.60714286));
+        REQUIRE(v3.y == Approx(3.82142857));
+
+        v6 /= s2;
+        REQUIRE(v6.x == Approx(36.44803571));
+        REQUIRE(v6.y == Approx(102.14107143));
+    }
+
+    SECTION("Negation")
+    {
+        v1 = -v1;
+        REQUIRE(v1.x == Approx(0.0));
+        REQUIRE(v1.y == Approx(0.0));
+
+        v3 = -v3;
+        REQUIRE(v3.x == Approx(14.6));
+        REQUIRE(v3.y == Approx(-21.4));
+
+        v5 = -v5;
+        REQUIRE(v5.x == Approx(10.6));
+        REQUIRE(v5.y == Approx(41.11));
+    }
+
+    SECTION("Combined arithmetic")
+    {
+        v1 -= v2 * s2 + v3 - v6 / s3 + s1 / v5;
+
+        REQUIRE(v1.x == Approx(-70.3476));
+        REQUIRE(v1.y == Approx(-251.428));
+    }
 }
 
 TEST_CASE("Vector2d - length", "[Vector2d]")
