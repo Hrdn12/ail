@@ -35,8 +35,8 @@ public:
     /// Constructor - initialises each component directly.
     Vector2d(const T_ty tX, const T_ty tY);
 
-    /// Constructor - initializer list.
-    /// Components are ordered: x, y
+    /// Constructor - initializer list. Components are ordered: x, y.
+    /// If initialiser list is empty then components are initialised to 0.
     Vector2d(std::initializer_list<T_ty> args);
 
     /// Copy constructor.

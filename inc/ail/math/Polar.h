@@ -36,6 +36,10 @@ public:
     /// Angle is measured in radians.
     Polar(const T_ty angle, const T_ty mag);
 
+    /// Constructor - initializer list. Components are ordered: angle, magnitude.
+    /// If initialiser list is empty then components are initialised to 0.
+    Polar(std::initializer_list<T_ty> args);
+
     /// Copy constructor.
     Polar(const Polar<T_ty> & rhs);
 
@@ -90,8 +94,24 @@ public:
     ///  magnitude will be positive.
     Polar<T_ty> getSimplified() const;
 
-    // TODO: method to test for approximate equivalence. It will effectively
-    //  simply the coordinates before comparison.
+    /// Check if this vector represents a point within a certain distance of another.
+    /// This effectively converts both to cartesian coordinates and uses
+    ///  a Euclidean distance test.
+    /// The sign of dist doesn't matter. Its absolute value will be used.
+    bool isNear(const Polar<T_ty> & other, const T_ty dist) const;
+
+    /// Check if this vector is approximately equal to another, within a given margin.
+    /// Uses the same maring for angle and magnitude.
+    /// This does a simple comparison of the components, e.g. it will not detect
+    ///  that two pi radians is equivalent to zero radians.
+    bool isApproxEqual(const Polar<T_ty> & other, const T_ty margin) const;
+
+    /// Check if this vector is approximately equal to another, within a given margin.
+    /// Has separate margins for angle and magnitude.
+    /// This does a simple comparison of the components, e.g. it will not detect
+    ///  that two pi radians is equivalent to zero radians.
+    bool isApproxEqual(const Polar<T_ty> & other, const T_ty angleMargin, const T_ty magMargin) const;
+
 
 //------------------------------------------------------------------------------
 // Conversions.

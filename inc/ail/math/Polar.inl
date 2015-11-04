@@ -13,6 +13,7 @@
 
 #include <cmath>
 #include <cassert>
+#include <stdexcept>
 
 #include "Polar.h"
 #include "Vector2d.h"
@@ -37,6 +38,21 @@ template <typename T_ty>
 Polar<T_ty>::Polar(const T_ty angle, const T_ty mag) :
     angle(angle), mag(mag)
 {
+}
+
+
+template <typename T_ty>
+Polar<T_ty>::Polar(std::initializer_list<T_ty> args) :
+    Polar()
+{
+    if (args.size() == 0)
+        return;
+
+    if (args.size() != 2)
+        throw std::invalid_argument("Expected 2 arguments in initializer list.");
+
+    angle = *args.begin();
+    mag = *(args.begin() + 1);
 }
 
 template <typename T_ty>
@@ -115,6 +131,28 @@ Polar<T_ty> Polar<T_ty>::getSimplified() const
     Polar<T_ty> output(*this);
     output.simplify();
     return output;
+}
+
+template <typename T_ty>
+bool Polar<T_ty>::isNear(const Polar<T_ty> & other, const T_ty dist) const
+{
+    return toVector2d().isNear(other.toVector2d(), dist);
+}
+
+template <typename T_ty>
+bool Polar<T_ty>::isApproxEqual(const Polar<T_ty> & other, const T_ty margin) const
+{
+    return
+        ail::math::isApproxEqual(angle, other.angle, margin) &&
+        ail::math::isApproxEqual(mag, other.mag, margin);
+}
+
+template <typename T_ty>
+bool Polar<T_ty>::isApproxEqual(const Polar<T_ty> & other, const T_ty angleMargin, const T_ty magMargin) const
+{
+    return
+        ail::math::isApproxEqual(angle, other.angle, angleMargin) &&
+        ail::math::isApproxEqual(mag, other.mag, magMargin);
 }
 
 //------------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 
 using namespace ail::math;
 
-TEST_CASE("Vector2d - construction and assignment", "[Vector2d]")
+TEST_CASE("Vector2d - construction and assignment", "[math::Vector2d]")
 {
     SECTION("Default construction to 0")
     {
@@ -46,6 +46,10 @@ TEST_CASE("Vector2d - construction and assignment", "[Vector2d]")
         Vector2d<int> v2 {-33, 10};
         REQUIRE(v2.x == -33);
         REQUIRE(v2.y == 10);
+
+        Vector2d<int> v3 {};
+        REQUIRE(v3.x == 0);
+        REQUIRE(v3.y == 0);
     }
 
     SECTION("Uniform initialisation - floating point")
@@ -57,10 +61,17 @@ TEST_CASE("Vector2d - construction and assignment", "[Vector2d]")
         Vector2d<double> v2 {-0.38, 0.45};
         REQUIRE(v2.x == Approx(-0.38));
         REQUIRE(v2.y == Approx(0.45));
+
+        Vector2d<double> v3 {};
+        REQUIRE(v3.x == 0.0);
+        REQUIRE(v3.y == 0.0);
     }
 
     SECTION("Uniform initialisation - wrong size")
     {
+        REQUIRE_THROWS(Vector2d<int> {14});
+        REQUIRE_THROWS((Vector2d<int> {26, 53, 12}));
+
         REQUIRE_THROWS(Vector2d<double> {1.25});
         REQUIRE_THROWS((Vector2d<double> {5.96, 4.67, 9.001}));
     }
@@ -108,7 +119,7 @@ TEST_CASE("Vector2d - construction and assignment", "[Vector2d]")
     }
 }
 
-TEST_CASE("Vector2d - comparison operators", "[Vector2d]")
+TEST_CASE("Vector2d - comparison operators", "[math::Vector2d]")
 {
     Vector2d<int> vi1(22, -87);
     Vector2d<int> vi2(22, -87);
@@ -163,7 +174,7 @@ TEST_CASE("Vector2d - comparison operators", "[Vector2d]")
     }
 }
 
-TEST_CASE("Vector2d - integer arithmetic", "[Vector2d]")
+TEST_CASE("Vector2d - integer arithmetic", "[math::Vector2d]")
 {
     Vector2d<int>
         v1(0, 0),       v2(15, 26),
@@ -316,7 +327,7 @@ TEST_CASE("Vector2d - integer arithmetic", "[Vector2d]")
     }
 }
 
-TEST_CASE("Vector2d - floating point arithmetic", "[Vector2d]")
+TEST_CASE("Vector2d - floating point arithmetic", "[math::Vector2d]")
 {
     Vector2d<double>
         v1(0.0, 0.0), v2(0.59, 0.22),
@@ -469,7 +480,7 @@ TEST_CASE("Vector2d - floating point arithmetic", "[Vector2d]")
     }
 }
 
-TEST_CASE("Vector2d - length", "[Vector2d]")
+TEST_CASE("Vector2d - length", "[math::Vector2d]")
 {
     Vector2d<double> vd1(0.0, 0.0);
     Vector2d<double> vd2(-12.31, 0.0);
@@ -536,7 +547,7 @@ TEST_CASE("Vector2d - length", "[Vector2d]")
     }
 }
 
-TEST_CASE("Vector2d - dot product", "[Vector2d]")
+TEST_CASE("Vector2d - dot product", "[math::Vector2d]")
 {
     Vector2d<double> v1a(3.4, 9.2);
     Vector2d<double> v1b(9.2, -3.4); // right angles to v1
@@ -626,7 +637,7 @@ TEST_CASE("Vector2d - projection")
     }
 }
 
-TEST_CASE("Vector2d - normalisation", "[Vector2d]")
+TEST_CASE("Vector2d - normalisation", "[math::Vector2d]")
 {
     SECTION("Normalisation")
     {
@@ -652,7 +663,7 @@ TEST_CASE("Vector2d - normalisation", "[Vector2d]")
     }
 }
 
-TEST_CASE("Vector2d - tangents", "[Vector2d]")
+TEST_CASE("Vector2d - tangents", "[math::Vector2d]")
 {
     Vector2d<int> vi1(15, 26);
     Vector2d<int> vi1_l(-26, 15);
@@ -723,7 +734,7 @@ TEST_CASE("Vector2d - tangents", "[Vector2d]")
     }
 }
 
-TEST_CASE("Vector2d - distance", "[Vector2d]")
+TEST_CASE("Vector2d - distance", "[math::Vector2d]")
 {
     Vector2d<double>
         vd1(0.0, 0.0),          vd2(2.6, -9.1),
@@ -795,7 +806,7 @@ TEST_CASE("Vector2d - distance", "[Vector2d]")
     }
 }
 
-TEST_CASE("Vector2d - proximity", "[Vector2d]")
+TEST_CASE("Vector2d - proximity", "[math::Vector2d]")
 {
     SECTION("Euclidean proximity")
     {
@@ -1058,7 +1069,7 @@ TEST_CASE("Vector2d - proximity", "[Vector2d]")
 
 }
 
-TEST_CASE("Vector2d - polar conversions", "[Vector2d]")
+TEST_CASE("Vector2d - polar conversions", "[math::Vector2d]")
 {
     SECTION("Construction from Polar<>")
     {

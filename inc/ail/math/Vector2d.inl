@@ -32,8 +32,12 @@ Vector2d<T_ty>::Vector2d() :
 }
 
 template <typename T_ty>
-Vector2d<T_ty>::Vector2d(std::initializer_list<T_ty> args)
+Vector2d<T_ty>::Vector2d(std::initializer_list<T_ty> args) :
+    Vector2d()
 {
+    if (args.size() == 0)
+        return;
+
     if (args.size() != 2)
         throw std::invalid_argument("Expected 2 arguments in initializer list.");
 
