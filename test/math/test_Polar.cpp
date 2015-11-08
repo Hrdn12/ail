@@ -2,6 +2,14 @@
 
 using namespace ail::math;
 
+/*
+NOTES:
+The tests below deliberately only use floating point instantiations of Polar.
+The class represents angles as radians so an integer specialisation would be
+impractically inaccurate.
+*/
+
+
 TEST_CASE("Polar - construction and assignment", "[math::Polar]")
 {
     SECTION("Default construction to 0")
@@ -219,6 +227,8 @@ TEST_CASE("Polar - approximate equality", "[math::Polar]")
         p5(-2.69, 12.5),
         p6(-3.8, 11.6);
 
+    // Note: The sign of the margin doesn't matter. Test with both.
+
     SECTION("Same margin")
     {
         // Exactly equal.
@@ -226,10 +236,38 @@ TEST_CASE("Polar - approximate equality", "[math::Polar]")
         REQUIRE(p2.isApproxEqual(p2, 0.1));
 
         // Comfortably within margin.
+        REQUIRE(p1.isApproxEqual(p2, 1.84));
+        REQUIRE(p2.isApproxEqual(p3, 5.4));
+        REQUIRE(p3.isApproxEqual(p4, 4.6));
+        REQUIRE(p4.isApproxEqual(p5, 19.701));
+        REQUIRE(p5.isApproxEqual(p6, 2.5));
 
-        // Near margin.
+        // Just inside margin.
+        REQUIRE(p1.isApproxEqual(p2, 1.43));
+        REQUIRE(p2.isApproxEqual(p3, 3.36));
+        REQUIRE(p3.isApproxEqual(p4, 3.07));
+        REQUIRE(p4.isApproxEqual(p5, 11.27));
+        REQUIRE(p5.isApproxEqual(p6, 1.12));
 
-        // Outside margin.
+        // Just outside margin.
+        REQUIRE_FALSE(p1.isApproxEqual(p2, 1.41));
+        REQUIRE_FALSE(p2.isApproxEqual(p3, 3.34));
+        REQUIRE_FALSE(p3.isApproxEqual(p4, 3.05));
+        REQUIRE_FALSE(p4.isApproxEqual(p5, 11.25));
+        REQUIRE_FALSE(p5.isApproxEqual(p6, 1.1));
+
+        // Comfortably outside margin.
+        REQUIRE_FALSE(p1.isApproxEqual(p2, 0.853));
+        REQUIRE_FALSE(p2.isApproxEqual(p3, 2.4));
+        REQUIRE_FALSE(p3.isApproxEqual(p4, 2.33));
+        REQUIRE_FALSE(p4.isApproxEqual(p5, 9.66));
+        REQUIRE_FALSE(p5.isApproxEqual(p6, 0.55));
+
+        // Negative margin should work the same as positive.
+        REQUIRE(p2.isApproxEqual(p3, -5.4));
+        REQUIRE(p2.isApproxEqual(p3, -3.36));
+        REQUIRE_FALSE(p2.isApproxEqual(p3, -3.34));
+        REQUIRE_FALSE(p2.isApproxEqual(p3, -2.4));
     }
 
     SECTION("Different margins")
@@ -239,9 +277,223 @@ TEST_CASE("Polar - approximate equality", "[math::Polar]")
         REQUIRE(p2.isApproxEqual(p2, 0.05, 0.1));
 
         // Comfortably within margin.
+        REQUIRE(p1.isApproxEqual(p2, 2.19, 1.454));
+        REQUIRE(p2.isApproxEqual(p3, 0.93, 6.22));
+        REQUIRE(p3.isApproxEqual(p4, 3.6, 4.9));
+        REQUIRE(p4.isApproxEqual(p5, 8.3, 13.17));
+        REQUIRE(p5.isApproxEqual(p6, 2.5, 2.2));
 
-        // Near margin.
+        // Just inside margin.
+        REQUIRE(p1.isApproxEqual(p2, 1.43, 0.96));
+        REQUIRE(p2.isApproxEqual(p3, 0.1, 3.361));
+        REQUIRE(p3.isApproxEqual(p4, 2.503, 3.071));
+        REQUIRE(p4.isApproxEqual(p5, 6.703, 11.27));
+        REQUIRE(p5.isApproxEqual(p6, 1.12, 0.91));
 
-        // Outside margin.
+        // Just outside margin.
+        REQUIRE_FALSE(p1.isApproxEqual(p2, 1.41, 0.94));
+        REQUIRE_FALSE(p2.isApproxEqual(p3, 0.08, 3.277));
+        REQUIRE_FALSE(p3.isApproxEqual(p4, 2.483, 3.051));
+        REQUIRE_FALSE(p4.isApproxEqual(p5, 3.683, 11.25));
+        REQUIRE_FALSE(p5.isApproxEqual(p6, 1.1, 0.89));
+
+        // Comfortably outside margin.
+        REQUIRE_FALSE(p1.isApproxEqual(p2, 0.98, 0.46));
+        REQUIRE_FALSE(p2.isApproxEqual(p3, 0.02, 1.108));
+        REQUIRE_FALSE(p3.isApproxEqual(p4, 2.13, 1.76));
+        REQUIRE_FALSE(p4.isApproxEqual(p5, 3.19, 9.811));
+        REQUIRE_FALSE(p5.isApproxEqual(p6, 0.87, 0.46));
+
+        // Negative margin should work the same as positive.
+        REQUIRE(p2.isApproxEqual(p3, -0.93, -6.22));
+        REQUIRE(p2.isApproxEqual(p3, -0.1, -3.361));
+        REQUIRE_FALSE(p2.isApproxEqual(p3, -0.08, -3.277));
+        REQUIRE_FALSE(p2.isApproxEqual(p3, -0.02, -1.108));
+    }
+}
+
+TEST_CASE("Polar - Vector2d conversions", "[math::Polar]")
+{
+    const Vector2d<double>
+        v1(0.0, 0.0),
+        v2(146.0, 0.0),  v3(-1.39, 0.0),
+        v4(0.0, 24.31),  v5(0.0, -55.7),
+        v6(5.36, -5.36), v7(-12.77, 18.32), v8(-71.87, -2.4);
+
+    const Polar<double>
+        p1(0.0, 0.0),          p2(5.9, 0.0),         p3(-19.3, 0.0),
+        p4(0.0, 7.6),          p5(0.0, -19.2),       p6(3.14159265, 12.6),    p7(-3.14159265, -18.9),
+        p8(1.57079633, 5.1),   p9(1.57079633, -3.7), p10(4.71238898, 42.8),   p11(-1.57079633, -55.01),
+        p12(-0.78539816, 9.8), p13(5.3361, 4.3),     p14(9.894328, -151.664);
+
+    SECTION("Construction from Vector2d")
+    {
+        Polar<double> p;
+
+        // Zero magnitude
+        p = Polar<double>(v1);
+        REQUIRE(p.angle == Approx(0.0));
+        REQUIRE(p.mag == Approx(0.0));
+
+        // X axis
+        p = Polar<double>(v2);
+        REQUIRE(p.angle == Approx(0.0));
+        REQUIRE(p.mag == Approx(146.0));
+
+        p = Polar<double>(v3);
+        REQUIRE(p.angle == Approx(3.14159265));
+        REQUIRE(p.mag == Approx(1.39));
+
+        // Y axis
+        p = Polar<double>(v4);
+        REQUIRE(p.angle == Approx(1.57079633));
+        REQUIRE(p.mag == Approx(24.31));
+
+        p = Polar<double>(v5);
+        REQUIRE(p.angle == Approx(4.71238898));
+        REQUIRE(p.mag == Approx(55.7));
+
+        // Arbitrary directions
+        p = Polar<double>(v6);
+        REQUIRE(p.angle == Approx(5.49778714));
+        REQUIRE(p.mag == Approx(7.58018469));
+
+        p = Polar<double>(v7);
+        REQUIRE(p.angle == Approx(2.17954130));
+        REQUIRE(p.mag == Approx(22.33148674));
+
+        p = Polar<double>(v8);
+        REQUIRE(p.angle == Approx(3.17497388));
+        REQUIRE(p.mag == Approx(71.91006119));
+    }
+
+    SECTION("Conversion to Vector2d (modify by reference)")
+    {
+        Vector2d<double> v;
+
+        // Zero magnitude
+        p1.toVector2d(v);
+        REQUIRE(v.x == Approx(0.0));
+        REQUIRE(v.y == Approx(0.0));
+
+        p2.toVector2d(v);
+        REQUIRE(v.x == Approx(0.0));
+        REQUIRE(v.y == Approx(0.0));
+
+        p3.toVector2d(v);
+        REQUIRE(v.x == Approx(0.0));
+        REQUIRE(v.y == Approx(0.0));
+
+        // X axis
+        p4.toVector2d(v);
+        REQUIRE(v.x == Approx(7.6));
+        REQUIRE(v.y == Approx(0.0));
+
+        p5.toVector2d(v);
+        REQUIRE(v.x == Approx(-19.2));
+        REQUIRE(v.y == Approx(0.0));
+
+        p6.toVector2d(v);
+        REQUIRE(v.x == Approx(-12.6));
+        REQUIRE(v.y == Approx(0.0));
+
+        p7.toVector2d(v);
+        REQUIRE(v.x == Approx(18.9));
+        REQUIRE(v.y == Approx(0.0));
+
+        // Y axis
+        p8.toVector2d(v);
+        REQUIRE(v.x == Approx(0.0));
+        REQUIRE(v.y == Approx(5.1));
+
+        p9.toVector2d(v);
+        REQUIRE(v.x == Approx(0.0));
+        REQUIRE(v.y == Approx(-3.7));
+
+        p10.toVector2d(v);
+        REQUIRE(v.x == Approx(0.0));
+        REQUIRE(v.y == Approx(-42.8));
+
+        p11.toVector2d(v);
+        REQUIRE(v.x == Approx(0.0));
+        REQUIRE(v.y == Approx(55.01));
+
+        // Arbitrary directions
+        p12.toVector2d(v);
+        REQUIRE(v.x == Approx(6.929646));
+        REQUIRE(v.y == Approx(-6.929646));
+
+        p13.toVector2d(v);
+        REQUIRE(v.x == Approx(2.51142133));
+        REQUIRE(v.y == Approx(-3.49038149));
+
+        p14.toVector2d(v);
+        REQUIRE(v.x == Approx(135.24970542));
+        REQUIRE(v.y == Approx(68.62569547));
+    }
+
+    SECTION("Conversion to Vector2d (return by value)")
+    {
+        Vector2d<double> v;
+
+        // Zero magnitude
+        v = p1.toVector2d();
+        REQUIRE(v.x == Approx(0.0));
+        REQUIRE(v.y == Approx(0.0));
+
+        v = p2.toVector2d();
+        REQUIRE(v.x == Approx(0.0));
+        REQUIRE(v.y == Approx(0.0));
+
+        v = p3.toVector2d();
+        REQUIRE(v.x == Approx(0.0));
+        REQUIRE(v.y == Approx(0.0));
+
+        // X axis
+        v = p4.toVector2d();
+        REQUIRE(v.x == Approx(7.6));
+        REQUIRE(v.y == Approx(0.0));
+
+        v = p5.toVector2d();
+        REQUIRE(v.x == Approx(-19.2));
+        REQUIRE(v.y == Approx(0.0));
+
+        v = p6.toVector2d();
+        REQUIRE(v.x == Approx(-12.6));
+        REQUIRE(v.y == Approx(0.0));
+
+        v = p7.toVector2d();
+        REQUIRE(v.x == Approx(18.9));
+        REQUIRE(v.y == Approx(0.0));
+
+        // Y axis
+        v = p8.toVector2d();
+        REQUIRE(v.x == Approx(0.0));
+        REQUIRE(v.y == Approx(5.1));
+
+        v = p9.toVector2d();
+        REQUIRE(v.x == Approx(0.0));
+        REQUIRE(v.y == Approx(-3.7));
+
+        v = p10.toVector2d();
+        REQUIRE(v.x == Approx(0.0));
+        REQUIRE(v.y == Approx(-42.8));
+
+        v = p11.toVector2d();
+        REQUIRE(v.x == Approx(0.0));
+        REQUIRE(v.y == Approx(55.01));
+
+        // Arbitrary directions
+        v = p12.toVector2d();
+        REQUIRE(v.x == Approx(6.929646));
+        REQUIRE(v.y == Approx(-6.929646));
+
+        v = p13.toVector2d();
+        REQUIRE(v.x == Approx(2.51142133));
+        REQUIRE(v.y == Approx(-3.49038149));
+
+        v = p14.toVector2d();
+        REQUIRE(v.x == Approx(135.24970542));
+        REQUIRE(v.y == Approx(68.62569547));
     }
 }

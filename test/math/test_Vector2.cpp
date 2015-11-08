@@ -121,13 +121,15 @@ TEST_CASE("Vector2d - construction and assignment", "[math::Vector2d]")
 
 TEST_CASE("Vector2d - comparison operators", "[math::Vector2d]")
 {
-    Vector2d<int> vi1(22, -87);
-    Vector2d<int> vi2(22, -87);
-    Vector2d<int> vi3(66, 15);
+    const Vector2d<int>
+        vi1(22, -87),
+        vi2(22, -87),
+        vi3(66, 15);
 
-    Vector2d<double> vd1(34.5, 23.4);
-    Vector2d<double> vd2(34.5, 23.4);
-    Vector2d<double> vd3(-12.3, 45.6);
+    const Vector2d<double>
+        vd1(34.5, 23.4),
+        vd2(34.5, 23.4),
+        vd3(-12.3, 45.6);
 
     SECTION("Equality - integers")
     {
@@ -334,7 +336,7 @@ TEST_CASE("Vector2d - floating point arithmetic", "[math::Vector2d]")
         v3(-14.6, 21.4), v4(30.05, -8.4),
         v5(-10.6, -41.11), v6(204.109, 571.99);
 
-    double s1 = 0.0, s2 = 5.6, s3 = -2.5;
+    const double s1 = 0.0, s2 = 5.6, s3 = -2.5;
 
     SECTION("Vector addition")
     {
@@ -482,19 +484,21 @@ TEST_CASE("Vector2d - floating point arithmetic", "[math::Vector2d]")
 
 TEST_CASE("Vector2d - length", "[math::Vector2d]")
 {
-    Vector2d<double> vd1(0.0, 0.0);
-    Vector2d<double> vd2(-12.31, 0.0);
-    Vector2d<double> vd3(0.0, 134.369);
-    Vector2d<double> vd4(5.0, 10.0);
-    Vector2d<double> vd5(-9.3, 4.7);
-    Vector2d<double> vd6(2.005, -19.3);
+    const Vector2d<double>
+        vd1(0.0, 0.0),
+        vd2(-12.31, 0.0),
+        vd3(0.0, 134.369),
+        vd4(5.0, 10.0),
+        vd5(-9.3, 4.7),
+        vd6(2.005, -19.3);
 
-    Vector2d<int> vi1(0, 0);
-    Vector2d<int> vi2(3, 9);
-    Vector2d<int> vi3(-7, 3);
-    Vector2d<int> vi4(4, -4);
-    Vector2d<int> vi5(153, 209);
-    Vector2d<int> vi6(-391, -227);
+    const Vector2d<int>
+        vi1(0, 0),
+        vi2(3, 9),
+        vi3(-7, 3),
+        vi4(4, -4),
+        vi5(153, 209),
+        vi6(-391, -227);
 
     SECTION("Euclidean length")
     {
@@ -549,17 +553,19 @@ TEST_CASE("Vector2d - length", "[math::Vector2d]")
 
 TEST_CASE("Vector2d - dot product", "[math::Vector2d]")
 {
-    Vector2d<double> v1a(3.4, 9.2);
-    Vector2d<double> v1b(9.2, -3.4); // right angles to v1
-    Vector2d<double> v1c(-9.2, 3.4); // right angles to v1
-    Vector2d<double> v2(8.6, 1.9);
-    Vector2d<double> v3(-2.7, 0.1);
+    const Vector2d<double>
+        v1a(3.4, 9.2),
+        v1b(9.2, -3.4), // right angles to v1
+        v1c(-9.2, 3.4), // right angles to v1
+        v2(8.6, 1.9),
+        v3(-2.7, 0.1);
 
-    Vector2d<double> v1aUnit = v1a.getNormalised();
-    Vector2d<double> v1bUnit = v1b.getNormalised();
-    Vector2d<double> v1cUnit = v1c.getNormalised();
-    Vector2d<double> v2Unit = v2.getNormalised();
-    Vector2d<double> v3Unit = v3.getNormalised();
+    const Vector2d<double>
+        v1aUnit = v1a.getNormalised(),
+        v1bUnit = v1b.getNormalised(),
+        v1cUnit = v1c.getNormalised(),
+        v2Unit = v2.getNormalised(),
+        v3Unit = v3.getNormalised();
 
     SECTION("Same vector")
     {
@@ -596,10 +602,11 @@ TEST_CASE("Vector2d - dot product", "[math::Vector2d]")
 
 TEST_CASE("Vector2d - projection")
 {
-    Vector2d<double> v1(0.0, 0.0);
-    Vector2d<double> v2(4.69, 9.71);
-    Vector2d<double> v3(-13.44, 21.8);
-    Vector2d<double> v4(0.11, -12.6);
+    const Vector2d<double>
+        v1(0.0, 0.0),
+        v2(4.69, 9.71),
+        v3(-13.44, 21.8),
+        v4(0.11, -12.6);
 
     SECTION("Scalar projection")
     {
@@ -665,21 +672,13 @@ TEST_CASE("Vector2d - normalisation", "[math::Vector2d]")
 
 TEST_CASE("Vector2d - tangents", "[math::Vector2d]")
 {
-    Vector2d<int> vi1(15, 26);
-    Vector2d<int> vi1_l(-26, 15);
-    Vector2d<int> vi1_r(26, -15);
-    
-    Vector2d<int> vi2(-19, 42);
-    Vector2d<int> vi2_l(-42, -19);
-    Vector2d<int> vi2_r(42, 19);
+    const Vector2d<int>
+        vi1(15, 26),  vi1_l(-26, 15),  vi1_r(26, -15),
+        vi2(-19, 42), vi2_l(-42, -19), vi2_r(42, 19);
 
-    Vector2d<double> vd1(0.339, -33.91);
-    Vector2d<double> vd1_l(33.91, 0.339);
-    Vector2d<double> vd1_r(-33.91, -0.339);
-
-    Vector2d<double> vd2(-156.3, -64.002);
-    Vector2d<double> vd2_l(64.002, -156.3);
-    Vector2d<double> vd2_r(-64.002, 156.3);
+    const Vector2d<double>
+        vd1(0.339, -33.91),   vd1_l(33.91, 0.339),   vd1_r(-33.91, -0.339),
+        vd2(-156.3, -64.002), vd2_l(64.002, -156.3), vd2_r(-64.002, 156.3);
 
     SECTION("Left - integer")
     {
@@ -736,7 +735,7 @@ TEST_CASE("Vector2d - tangents", "[math::Vector2d]")
 
 TEST_CASE("Vector2d - distance", "[math::Vector2d]")
 {
-    Vector2d<double>
+    const Vector2d<double>
         vd1(0.0, 0.0),          vd2(2.6, -9.1),
         vd3(10.0, 0.0),         vd4(24.94, 0.0),
         vd5(6.0, 0.0),          vd6(-4.22, 0.0),
@@ -808,6 +807,8 @@ TEST_CASE("Vector2d - distance", "[math::Vector2d]")
 
 TEST_CASE("Vector2d - proximity", "[math::Vector2d]")
 {
+    // TODO: Construct vectors here instead of in the test sections.
+
     SECTION("Euclidean proximity")
     {
         // Note: The sign of the margin value should make no difference (negative is OK).
@@ -1069,151 +1070,163 @@ TEST_CASE("Vector2d - proximity", "[math::Vector2d]")
 
 }
 
-TEST_CASE("Vector2d - polar conversions", "[math::Vector2d]")
+TEST_CASE("Vector2d - Polar conversions", "[math::Vector2d]")
 {
-    SECTION("Construction from Polar<>")
+    const Polar<double>
+        p1(0.0, 0.0),          p2(5.9, 0.0),         p3(-19.3, 0.0),
+        p4(0.0, 7.6),          p5(0.0, -19.2),       p6(3.14159265, 12.6),    p7(-3.14159265, -18.9),
+        p8(1.57079633, 5.1),   p9(1.57079633, -3.7), p10(4.71238898, 42.8),   p11(-1.57079633, -55.01),
+        p12(-0.78539816, 9.8), p13(5.3361, 4.3),     p14(9.894328, -151.664);
+
+    const Vector2d<double>
+        v1(0.0, 0.0),
+        v2(146.0, 0.0),  v3(-1.39, 0.0),
+        v4(0.0, 24.31),  v5(0.0, -55.7),
+        v6(5.36, -5.36), v7(-12.77, 18.32), v8(-71.87, -2.4);
+
+    SECTION("Construction from Polar")
     {
         Vector2d<double> v;
 
         // Zero magnitude
-        v = Vector2d<double>(Polar<double>(0.0, 0.0));
+        v = Vector2d<double>(p1);
         REQUIRE(v.x == Approx(0.0));
         REQUIRE(v.y == Approx(0.0));
 
-        v = Vector2d<double>(Polar<double>(5.9, 0.0));
+        v = Vector2d<double>(p2);
         REQUIRE(v.x == Approx(0.0));
         REQUIRE(v.y == Approx(0.0));
 
-        v = Vector2d<double>(Polar<double>(-19.3, 0.0));
+        v = Vector2d<double>(p3);
         REQUIRE(v.x == Approx(0.0));
         REQUIRE(v.y == Approx(0.0));
 
         // X axis
-        v = Vector2d<double>(Polar<double>(0.0, 7.6));
+        v = Vector2d<double>(p4);
         REQUIRE(v.x == Approx(7.6));
         REQUIRE(v.y == Approx(0.0));
 
-        v = Vector2d<double>(Polar<double>(0.0, -19.2));
+        v = Vector2d<double>(p5);
         REQUIRE(v.x == Approx(-19.2));
         REQUIRE(v.y == Approx(0.0));
 
-        v = Vector2d<double>(Polar<double>(3.14159265, 12.6));
+        v = Vector2d<double>(p6);
         REQUIRE(v.x == Approx(-12.6));
         REQUIRE(v.y == Approx(0.0));
 
-        v = Vector2d<double>(Polar<double>(-3.14159265, -18.9));
+        v = Vector2d<double>(p7);
         REQUIRE(v.x == Approx(18.9));
         REQUIRE(v.y == Approx(0.0));
 
         // Y axis
-        v = Vector2d<double>(Polar<double>(1.57079633, 5.1));
+        v = Vector2d<double>(p8);
         REQUIRE(v.x == Approx(0.0));
         REQUIRE(v.y == Approx(5.1));
 
-        v = Vector2d<double>(Polar<double>(1.57079633, -3.7));
+        v = Vector2d<double>(p9);
         REQUIRE(v.x == Approx(0.0));
         REQUIRE(v.y == Approx(-3.7));
 
-        v = Vector2d<double>(Polar<double>(4.71238898, 42.8));
+        v = Vector2d<double>(p10);
         REQUIRE(v.x == Approx(0.0));
         REQUIRE(v.y == Approx(-42.8));
 
-        v = Vector2d<double>(Polar<double>(-1.57079633, -55.01));
+        v = Vector2d<double>(p11);
         REQUIRE(v.x == Approx(0.0));
         REQUIRE(v.y == Approx(55.01));
 
         // Arbitrary directions
-        v = Vector2d<double>(Polar<double>(-0.78539816, 9.8));
+        v = Vector2d<double>(p12);
         REQUIRE(v.x == Approx(6.929646));
         REQUIRE(v.y == Approx(-6.929646));
 
-        v = Vector2d<double>(Polar<double>(5.3361, 4.3));
+        v = Vector2d<double>(p13);
         REQUIRE(v.x == Approx(2.51142133));
         REQUIRE(v.y == Approx(-3.49038149));
 
-        v = Vector2d<double>(Polar<double>(9.894328, -151.664));
+        v = Vector2d<double>(p14);
         REQUIRE(v.x == Approx(135.24970542));
         REQUIRE(v.y == Approx(68.62569547));
     }
 
-    SECTION("Conversion to Polar<> (return by reference)")
+    SECTION("Conversion to Polar (modify by reference)")
     {
         Polar<double> p;
 
         // Zero magnitude
-        Vector2d<double>(0.0, 0.0).toPolar(p);
+        v1.toPolar(p);
         REQUIRE(p.angle == Approx(0.0));
         REQUIRE(p.mag == Approx(0.0));
 
         // X axis
-        Vector2d<double>(146.0, 0.0).toPolar(p);
+        v2.toPolar(p);
         REQUIRE(p.angle == Approx(0.0));
         REQUIRE(p.mag == Approx(146.0));
 
-        Vector2d<double>(-1.39, 0.0).toPolar(p);
+        v3.toPolar(p);
         REQUIRE(p.angle == Approx(3.14159265));
         REQUIRE(p.mag == Approx(1.39));
 
         // Y axis
-        Vector2d<double>(0.0, 24.31).toPolar(p);
+        v4.toPolar(p);
         REQUIRE(p.angle == Approx(1.57079633));
         REQUIRE(p.mag == Approx(24.31));
 
-        Vector2d<double>(0.0, -55.7).toPolar(p);
+        v5.toPolar(p);
         REQUIRE(p.angle == Approx(4.71238898));
         REQUIRE(p.mag == Approx(55.7));
 
         // Arbitrary directions
-        Vector2d<double>(5.36, -5.36).toPolar(p);
+        v6.toPolar(p);
         REQUIRE(p.angle == Approx(5.49778714));
         REQUIRE(p.mag == Approx(7.58018469));
 
-        Vector2d<double>(-12.77, 18.32).toPolar(p);
+        v7.toPolar(p);
         REQUIRE(p.angle == Approx(2.17954130));
         REQUIRE(p.mag == Approx(22.33148674));
 
-        Vector2d<double>(-71.87, -2.4).toPolar(p);
+        v8.toPolar(p);
         REQUIRE(p.angle == Approx(3.17497388));
         REQUIRE(p.mag == Approx(71.91006119));
     }
 
-    SECTION("Conversion to Polar<> (return by value)")
+    SECTION("Conversion to Polar (return by value)")
     {
         Polar<double> p;
 
         // Zero magnitude
-        p = Vector2d<double>(0.0, 0.0).toPolar();
+        p = v1.toPolar();
         REQUIRE(p.angle == Approx(0.0));
         REQUIRE(p.mag == Approx(0.0));
 
         // X axis
-        p = Vector2d<double>(146.0, 0.0).toPolar();
+        p = v2.toPolar();
         REQUIRE(p.angle == Approx(0.0));
         REQUIRE(p.mag == Approx(146.0));
 
-        p = Vector2d<double>(-1.39, 0.0).toPolar();
+        p = v3.toPolar();
         REQUIRE(p.angle == Approx(3.14159265));
         REQUIRE(p.mag == Approx(1.39));
 
         // Y axis
-        p = Vector2d<double>(0.0, 24.31).toPolar();
+        p = v4.toPolar();
         REQUIRE(p.angle == Approx(1.57079633));
         REQUIRE(p.mag == Approx(24.31));
 
-        p = Vector2d<double>(0.0, -55.7).toPolar();
+        p = v5.toPolar();
         REQUIRE(p.angle == Approx(4.71238898));
         REQUIRE(p.mag == Approx(55.7));
 
         // Arbitrary directions
-        p = Vector2d<double>(5.36, -5.36).toPolar();
+        p = v6.toPolar();
         REQUIRE(p.angle == Approx(5.49778714));
         REQUIRE(p.mag == Approx(7.58018469));
 
-        p = Vector2d<double>(-12.77, 18.32).toPolar();
+        p = v7.toPolar();
         REQUIRE(p.angle == Approx(2.17954130));
         REQUIRE(p.mag == Approx(22.33148674));
 
-        p = Vector2d<double>(-71.87, -2.4).toPolar();
+        p = v8.toPolar();
         REQUIRE(p.angle == Approx(3.17497388));
         REQUIRE(p.mag == Approx(71.91006119));
     }
