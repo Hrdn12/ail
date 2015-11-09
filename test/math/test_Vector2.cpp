@@ -7,86 +7,86 @@ TEST_CASE("Vector2d - construction and assignment", "[math::Vector2d]")
     SECTION("Default construction to 0")
     {
         Vector2d<int> vi;
-        REQUIRE(vi.x == 0);
-        REQUIRE(vi.y == 0);
+        CHECK(vi.x == 0);
+        CHECK(vi.y == 0);
 
         Vector2d<double> vd;
-        REQUIRE(vd.x == 0.0);
-        REQUIRE(vd.y == 0.0);
+        CHECK(vd.x == 0.0);
+        CHECK(vd.y == 0.0);
     }
 
     SECTION("Construction - integers")
     {
         Vector2d<int> v1(81, -4);
-        REQUIRE(v1.x == 81);
-        REQUIRE(v1.y == -4);
+        CHECK(v1.x == 81);
+        CHECK(v1.y == -4);
 
         Vector2d<int> v2(-33, 10);
-        REQUIRE(v2.x == -33);
-        REQUIRE(v2.y == 10);
+        CHECK(v2.x == -33);
+        CHECK(v2.y == 10);
     }
 
     SECTION("Construction - floating point")
     {
         Vector2d<double> v1(12.34, -56.78);
-        REQUIRE(v1.x == Approx(12.34));
-        REQUIRE(v1.y == Approx(-56.78));
+        CHECK(v1.x == Approx(12.34));
+        CHECK(v1.y == Approx(-56.78));
 
         Vector2d<double> v2(-0.38, 0.45);
-        REQUIRE(v2.x == Approx(-0.38));
-        REQUIRE(v2.y == Approx(0.45));
+        CHECK(v2.x == Approx(-0.38));
+        CHECK(v2.y == Approx(0.45));
     }
 
     SECTION("Uniform initialisation - integer")
     {
         Vector2d<int> v1 {81, -4};
-        REQUIRE(v1.x == 81);
-        REQUIRE(v1.y == -4);
+        CHECK(v1.x == 81);
+        CHECK(v1.y == -4);
 
         Vector2d<int> v2 {-33, 10};
-        REQUIRE(v2.x == -33);
-        REQUIRE(v2.y == 10);
+        CHECK(v2.x == -33);
+        CHECK(v2.y == 10);
 
         Vector2d<int> v3 {};
-        REQUIRE(v3.x == 0);
-        REQUIRE(v3.y == 0);
+        CHECK(v3.x == 0);
+        CHECK(v3.y == 0);
     }
 
     SECTION("Uniform initialisation - floating point")
     {
         Vector2d<double> v1 {12.34, -56.78};
-        REQUIRE(v1.x == Approx(12.34));
-        REQUIRE(v1.y == Approx(-56.78));
+        CHECK(v1.x == Approx(12.34));
+        CHECK(v1.y == Approx(-56.78));
 
         Vector2d<double> v2 {-0.38, 0.45};
-        REQUIRE(v2.x == Approx(-0.38));
-        REQUIRE(v2.y == Approx(0.45));
+        CHECK(v2.x == Approx(-0.38));
+        CHECK(v2.y == Approx(0.45));
 
         Vector2d<double> v3 {};
-        REQUIRE(v3.x == 0.0);
-        REQUIRE(v3.y == 0.0);
+        CHECK(v3.x == 0.0);
+        CHECK(v3.y == 0.0);
     }
 
     SECTION("Uniform initialisation - wrong size")
     {
-        REQUIRE_THROWS(Vector2d<int> {14});
-        REQUIRE_THROWS((Vector2d<int> {26, 53, 12}));
+        CHECK_THROWS(Vector2d<int> {14});
+        CHECK_THROWS((Vector2d<int> {26, 53, 12}));
 
-        REQUIRE_THROWS(Vector2d<double> {1.25});
-        REQUIRE_THROWS((Vector2d<double> {5.96, 4.67, 9.001}));
+        CHECK_THROWS(Vector2d<double> {1.25});
+        CHECK_THROWS((Vector2d<double> {5.96, 4.67, 9.001}));
     }
 
     SECTION("Copy construction")
     {
         Vector2d<int> vi1(27, -1);
         Vector2d<int> vi2(vi1);
-        REQUIRE(vi2.x == 27);
-        REQUIRE(vi2.y == -1);
+        CHECK(vi2.x == vi1.x);
+        CHECK(vi2.y == vi1.y);
 
         Vector2d<double> vd1(34.21, 78.56);
         Vector2d<double> vd2(vd1);
-        REQUIRE(vd2.x == 34.21);
-        REQUIRE(vd2.y == 78.56);
+        CHECK(vd2.x == vd1.x);
+        CHECK(vd2.y == vd1.y);
     }
 
     SECTION("Copy assignment")
@@ -94,14 +94,14 @@ TEST_CASE("Vector2d - construction and assignment", "[math::Vector2d]")
         Vector2d<int> vi1(-44, 2);
         Vector2d<int> vi2;
         vi2 = vi1;
-        REQUIRE(vi2.x == -44);
-        REQUIRE(vi2.y == 2);
+        CHECK(vi2.x == vi1.x);
+        CHECK(vi2.y == vi1.y);
 
         Vector2d<double> vd1(43.21, 87.65);
         Vector2d<double> vd2;
         vd2 = vd1;
-        REQUIRE(vd2.x == 43.21);
-        REQUIRE(vd2.y == 87.65);
+        CHECK(vd2.x == vd1.x);
+        CHECK(vd2.y == vd1.y);
     }
 
     SECTION("set() modifier")
@@ -110,12 +110,12 @@ TEST_CASE("Vector2d - construction and assignment", "[math::Vector2d]")
         Vector2d<double> vd;
 
         vi.set(132, 53);
-        REQUIRE(vi.x == 132);
-        REQUIRE(vi.y == 53);
+        CHECK(vi.x == 132);
+        CHECK(vi.y == 53);
 
         vd.set(5.13, -4.98);
-        REQUIRE(vd.x == 5.13);
-        REQUIRE(vd.y == -4.98);
+        CHECK(vd.x == 5.13);
+        CHECK(vd.y == -4.98);
     }
 }
 
@@ -133,46 +133,46 @@ TEST_CASE("Vector2d - comparison operators", "[math::Vector2d]")
 
     SECTION("Equality - integers")
     {
-        REQUIRE(vi1 == vi1);
-        REQUIRE(vi1 == vi2);
-        REQUIRE(vi2 == vi1);
-        REQUIRE_FALSE(vi1 == vi3);
-        REQUIRE_FALSE(vi2 == vi3);
-        REQUIRE_FALSE(vi3 == vi1);
-        REQUIRE_FALSE(vi3 == vi2);
+        CHECK(vi1 == vi1);
+        CHECK(vi1 == vi2);
+        CHECK(vi2 == vi1);
+        CHECK_FALSE(vi1 == vi3);
+        CHECK_FALSE(vi2 == vi3);
+        CHECK_FALSE(vi3 == vi1);
+        CHECK_FALSE(vi3 == vi2);
     }
 
     SECTION("Equality - floating point")
     {
-        REQUIRE(vd1 == vd1);
-        REQUIRE(vd1 == vd2);
-        REQUIRE(vd2 == vd1);
-        REQUIRE_FALSE(vd1 == vd3);
-        REQUIRE_FALSE(vd2 == vd3);
-        REQUIRE_FALSE(vd3 == vd1);
-        REQUIRE_FALSE(vd3 == vd2);
+        CHECK(vd1 == vd1);
+        CHECK(vd1 == vd2);
+        CHECK(vd2 == vd1);
+        CHECK_FALSE(vd1 == vd3);
+        CHECK_FALSE(vd2 == vd3);
+        CHECK_FALSE(vd3 == vd1);
+        CHECK_FALSE(vd3 == vd2);
     }
 
     SECTION("Inequality - integers")
     {
-        REQUIRE_FALSE(vi1 != vi1);
-        REQUIRE_FALSE(vi1 != vi2);
-        REQUIRE_FALSE(vi2 != vi1);
-        REQUIRE(vi1 != vi3);
-        REQUIRE(vi2 != vi3);
-        REQUIRE(vi3 != vi1);
-        REQUIRE(vi3 != vi2);
+        CHECK_FALSE(vi1 != vi1);
+        CHECK_FALSE(vi1 != vi2);
+        CHECK_FALSE(vi2 != vi1);
+        CHECK(vi1 != vi3);
+        CHECK(vi2 != vi3);
+        CHECK(vi3 != vi1);
+        CHECK(vi3 != vi2);
     }
 
     SECTION("Inequality - floating point")
     {
-        REQUIRE_FALSE(vi1 != vi1);
-        REQUIRE_FALSE(vi1 != vi2);
-        REQUIRE_FALSE(vi2 != vi1);
-        REQUIRE(vi1 != vi3);
-        REQUIRE(vi2 != vi3);
-        REQUIRE(vi3 != vi1);
-        REQUIRE(vi3 != vi2);
+        CHECK_FALSE(vi1 != vi1);
+        CHECK_FALSE(vi1 != vi2);
+        CHECK_FALSE(vi2 != vi1);
+        CHECK(vi1 != vi3);
+        CHECK(vi2 != vi3);
+        CHECK(vi3 != vi1);
+        CHECK(vi3 != vi2);
     }
 }
 
@@ -188,144 +188,144 @@ TEST_CASE("Vector2d - integer arithmetic", "[math::Vector2d]")
     SECTION("Vector addition")
     {
         v1 = v1 + v2;
-        REQUIRE(v1.x == 15);
-        REQUIRE(v1.y == 26);
+        CHECK(v1.x == 15);
+        CHECK(v1.y == 26);
 
         v3 = v3 + v4;
-        REQUIRE(v3.x == -2);
-        REQUIRE(v3.y == 6);
+        CHECK(v3.x == -2);
+        CHECK(v3.y == 6);
 
         v5 = v5 + v6;
-        REQUIRE(v5.x == 260);
-        REQUIRE(v5.y == 279);
+        CHECK(v5.x == 260);
+        CHECK(v5.y == 279);
     }
 
     SECTION("Vector addition assignment")
     {
         v1 += v2;
-        REQUIRE(v1.x == 15);
-        REQUIRE(v1.y == 26);
+        CHECK(v1.x == 15);
+        CHECK(v1.y == 26);
 
         v3 += v4;
-        REQUIRE(v3.x == -2);
-        REQUIRE(v3.y == 6);
+        CHECK(v3.x == -2);
+        CHECK(v3.y == 6);
 
         v5 += v6;
-        REQUIRE(v5.x == 260);
-        REQUIRE(v5.y == 279);
+        CHECK(v5.x == 260);
+        CHECK(v5.y == 279);
     }
 
     SECTION("Vector subtraction")
     {
         v1 = v1 - v2;
-        REQUIRE(v1.x == -15);
-        REQUIRE(v1.y == -26);
+        CHECK(v1.x == -15);
+        CHECK(v1.y == -26);
 
         v3 = v3 - v4;
-        REQUIRE(v3.x == -60);
-        REQUIRE(v3.y == 16);
+        CHECK(v3.x == -60);
+        CHECK(v3.y == 16);
 
         v5 = v5 - v6;
-        REQUIRE(v5.x == -342);
-        REQUIRE(v5.y == -315);
+        CHECK(v5.x == -342);
+        CHECK(v5.y == -315);
     }
 
     SECTION("Vector subtraction assignment")
     {
         v1 -= v2;
-        REQUIRE(v1.x == -15);
-        REQUIRE(v1.y == -26);
+        CHECK(v1.x == -15);
+        CHECK(v1.y == -26);
 
         v3 -= v4;
-        REQUIRE(v3.x == -60);
-        REQUIRE(v3.y == 16);
+        CHECK(v3.x == -60);
+        CHECK(v3.y == 16);
 
         v5 -= v6;
-        REQUIRE(v5.x == -342);
-        REQUIRE(v5.y == -315);
+        CHECK(v5.x == -342);
+        CHECK(v5.y == -315);
     }
 
     SECTION("Scalar multiplication")
     {
         v2 = v2 * s1;
-        REQUIRE(v2.x == 0);
-        REQUIRE(v2.y == 0);
+        CHECK(v2.x == 0);
+        CHECK(v2.y == 0);
 
         v4 = v4 * s2;
-        REQUIRE(v4.x == 957);
-        REQUIRE(v4.y == -165);
+        CHECK(v4.x == 957);
+        CHECK(v4.y == -165);
 
         v6 = s3 * v6; // scalar first
-        REQUIRE(v6.x == -2107);
-        REQUIRE(v6.y == -2079);
+        CHECK(v6.x == -2107);
+        CHECK(v6.y == -2079);
     }
 
     SECTION("Scalar multiplication assignment")
     {
         v2 *= s1;
-        REQUIRE(v2.x == 0);
-        REQUIRE(v2.y == 0);
+        CHECK(v2.x == 0);
+        CHECK(v2.y == 0);
 
         v4 *= s2;
-        REQUIRE(v4.x == 957);
-        REQUIRE(v4.y == -165);
+        CHECK(v4.x == 957);
+        CHECK(v4.y == -165);
 
         v6 *= s3;
-        REQUIRE(v6.x == -2107);
-        REQUIRE(v6.y == -2079);
+        CHECK(v6.x == -2107);
+        CHECK(v6.y == -2079);
     }
 
     SECTION("Scalar division")
     {
         v2 = v2 / s3;
-        REQUIRE(v2.x == -2);
-        REQUIRE(v2.y == -3);
+        CHECK(v2.x == -2);
+        CHECK(v2.y == -3);
 
         v3 = s2 / v3; // scalar first
-        REQUIRE(v3.x == -1);
-        REQUIRE(v3.y == 3);
+        CHECK(v3.x == -1);
+        CHECK(v3.y == 3);
 
         v6 = v6 / s2;
-        REQUIRE(v6.x == 9);
-        REQUIRE(v6.y == 9);
+        CHECK(v6.x == 9);
+        CHECK(v6.y == 9);
     }
 
     SECTION("Scalar division assignment")
     {
         v2 /= s3;
-        REQUIRE(v2.x == -2);
-        REQUIRE(v2.y == -3);
+        CHECK(v2.x == -2);
+        CHECK(v2.y == -3);
 
         v3 /= s2;
-        REQUIRE(v3.x == 0);
-        REQUIRE(v3.y == 0);
+        CHECK(v3.x == 0);
+        CHECK(v3.y == 0);
 
         v6 /= s2;
-        REQUIRE(v6.x == 9);
-        REQUIRE(v6.y == 9);
+        CHECK(v6.x == 9);
+        CHECK(v6.y == 9);
     }
 
     SECTION("Negation")
     {
         v1 = -v1;
-        REQUIRE(v1.x == 0);
-        REQUIRE(v1.y == 0);
+        CHECK(v1.x == 0);
+        CHECK(v1.y == 0);
 
         v3 = -v3;
-        REQUIRE(v3.x == 31);
-        REQUIRE(v3.y == -11);
+        CHECK(v3.x == 31);
+        CHECK(v3.y == -11);
 
         v5 = -v5;
-        REQUIRE(v5.x == 41);
-        REQUIRE(v5.y == 18);
+        CHECK(v5.x == 41);
+        CHECK(v5.y == 18);
     }
 
     SECTION("Combined arithmetic")
     {
         v1 -= v2 * s2 + v3 - v6 / s3 + s1 / v5;
 
-        REQUIRE(v1.x == -507);
-        REQUIRE(v1.y == -911);
+        CHECK(v1.x == -507);
+        CHECK(v1.y == -911);
     }
 }
 
@@ -341,144 +341,144 @@ TEST_CASE("Vector2d - floating point arithmetic", "[math::Vector2d]")
     SECTION("Vector addition")
     {
         v1 = v1 + v2;
-        REQUIRE(v1.x == Approx(0.59));
-        REQUIRE(v1.y == Approx(0.22));
+        CHECK(v1.x == Approx(0.59));
+        CHECK(v1.y == Approx(0.22));
 
         v3 = v3 + v4;
-        REQUIRE(v3.x == Approx(15.45));
-        REQUIRE(v3.y == Approx(13.0));
+        CHECK(v3.x == Approx(15.45));
+        CHECK(v3.y == Approx(13.0));
 
         v5 = v5 + v6;
-        REQUIRE(v5.x == Approx(193.509));
-        REQUIRE(v5.y == Approx(530.88));
+        CHECK(v5.x == Approx(193.509));
+        CHECK(v5.y == Approx(530.88));
     }
 
     SECTION("Vector addition assignment")
     {
         v1 += v2;
-        REQUIRE(v1.x == Approx(0.59));
-        REQUIRE(v1.y == Approx(0.22));
+        CHECK(v1.x == Approx(0.59));
+        CHECK(v1.y == Approx(0.22));
 
         v3 += v4;
-        REQUIRE(v3.x == Approx(15.45));
-        REQUIRE(v3.y == Approx(13.0));
+        CHECK(v3.x == Approx(15.45));
+        CHECK(v3.y == Approx(13.0));
 
         v5 += v6;
-        REQUIRE(v5.x == Approx(193.509));
-        REQUIRE(v5.y == Approx(530.88));
+        CHECK(v5.x == Approx(193.509));
+        CHECK(v5.y == Approx(530.88));
     }
 
     SECTION("Vector subtraction")
     {
         v1 = v1 - v2;
-        REQUIRE(v1.x == Approx(-0.59));
-        REQUIRE(v1.y == Approx(-0.22));
+        CHECK(v1.x == Approx(-0.59));
+        CHECK(v1.y == Approx(-0.22));
 
         v3 = v3 - v4;
-        REQUIRE(v3.x == Approx(-44.65));
-        REQUIRE(v3.y == Approx(29.8));
+        CHECK(v3.x == Approx(-44.65));
+        CHECK(v3.y == Approx(29.8));
 
         v5 = v5 - v6;
-        REQUIRE(v5.x == Approx(-214.709));
-        REQUIRE(v5.y == Approx(-613.1));
+        CHECK(v5.x == Approx(-214.709));
+        CHECK(v5.y == Approx(-613.1));
     }
 
     SECTION("Vector subtraction assignment")
     {
         v1 -= v2;
-        REQUIRE(v1.x == Approx(-0.59));
-        REQUIRE(v1.y == Approx(-0.22));
+        CHECK(v1.x == Approx(-0.59));
+        CHECK(v1.y == Approx(-0.22));
 
         v3 -= v4;
-        REQUIRE(v3.x == Approx(-44.65));
-        REQUIRE(v3.y == Approx(29.8));
+        CHECK(v3.x == Approx(-44.65));
+        CHECK(v3.y == Approx(29.8));
 
         v5 -= v6;
-        REQUIRE(v5.x == Approx(-214.709));
-        REQUIRE(v5.y == Approx(-613.1));
+        CHECK(v5.x == Approx(-214.709));
+        CHECK(v5.y == Approx(-613.1));
     }
 
     SECTION("Scalar multiplication")
     {
         v2 = v2 * s1;
-        REQUIRE(v2.x == Approx(0.0));
-        REQUIRE(v2.y == Approx(0.0));
+        CHECK(v2.x == Approx(0.0));
+        CHECK(v2.y == Approx(0.0));
 
         v4 = v4 * s2;
-        REQUIRE(v4.x == Approx(168.28));
-        REQUIRE(v4.y == Approx(-47.04));
+        CHECK(v4.x == Approx(168.28));
+        CHECK(v4.y == Approx(-47.04));
 
         v6 = s3 * v6; // scalar first
-        REQUIRE(v6.x == Approx(-510.2725));
-        REQUIRE(v6.y == Approx(-1429.975));
+        CHECK(v6.x == Approx(-510.2725));
+        CHECK(v6.y == Approx(-1429.975));
     }
 
     SECTION("Scalar multiplication assignment")
     {
         v2 *= s1;
-        REQUIRE(v2.x == Approx(0.0));
-        REQUIRE(v2.y == Approx(0.0));
+        CHECK(v2.x == Approx(0.0));
+        CHECK(v2.y == Approx(0.0));
 
         v4 *= s2;
-        REQUIRE(v4.x == Approx(168.28));
-        REQUIRE(v4.y == Approx(-47.04));
+        CHECK(v4.x == Approx(168.28));
+        CHECK(v4.y == Approx(-47.04));
 
         v6 *= s3;
-        REQUIRE(v6.x == Approx(-510.2725));
-        REQUIRE(v6.y == Approx(-1429.975));
+        CHECK(v6.x == Approx(-510.2725));
+        CHECK(v6.y == Approx(-1429.975));
     }
 
     SECTION("Scalar division")
     {
         v2 = v2 / s3;
-        REQUIRE(v2.x == Approx(-0.236));
-        REQUIRE(v2.y == Approx(-0.088));
+        CHECK(v2.x == Approx(-0.236));
+        CHECK(v2.y == Approx(-0.088));
 
         v3 = s2 / v3; // scalar first
-        REQUIRE(v3.x == Approx(-0.38356164));
-        REQUIRE(v3.y == Approx(0.26168224));
+        CHECK(v3.x == Approx(-0.38356164));
+        CHECK(v3.y == Approx(0.26168224));
 
         v6 = v6 / s2;
-        REQUIRE(v6.x == Approx(36.44803571));
-        REQUIRE(v6.y == Approx(102.14107143));
+        CHECK(v6.x == Approx(36.44803571));
+        CHECK(v6.y == Approx(102.14107143));
     }
 
     SECTION("Scalar division assignment")
     {
         v2 /= s3;
-        REQUIRE(v2.x == Approx(-0.236));
-        REQUIRE(v2.y == Approx(-0.088));
+        CHECK(v2.x == Approx(-0.236));
+        CHECK(v2.y == Approx(-0.088));
 
         v3 /= s2;
-        REQUIRE(v3.x == Approx(-2.60714286));
-        REQUIRE(v3.y == Approx(3.82142857));
+        CHECK(v3.x == Approx(-2.60714286));
+        CHECK(v3.y == Approx(3.82142857));
 
         v6 /= s2;
-        REQUIRE(v6.x == Approx(36.44803571));
-        REQUIRE(v6.y == Approx(102.14107143));
+        CHECK(v6.x == Approx(36.44803571));
+        CHECK(v6.y == Approx(102.14107143));
     }
 
     SECTION("Negation")
     {
         v1 = -v1;
-        REQUIRE(v1.x == Approx(0.0));
-        REQUIRE(v1.y == Approx(0.0));
+        CHECK(v1.x == Approx(0.0));
+        CHECK(v1.y == Approx(0.0));
 
         v3 = -v3;
-        REQUIRE(v3.x == Approx(14.6));
-        REQUIRE(v3.y == Approx(-21.4));
+        CHECK(v3.x == Approx(14.6));
+        CHECK(v3.y == Approx(-21.4));
 
         v5 = -v5;
-        REQUIRE(v5.x == Approx(10.6));
-        REQUIRE(v5.y == Approx(41.11));
+        CHECK(v5.x == Approx(10.6));
+        CHECK(v5.y == Approx(41.11));
     }
 
     SECTION("Combined arithmetic")
     {
         v1 -= v2 * s2 + v3 - v6 / s3 + s1 / v5;
 
-        REQUIRE(v1.x == Approx(-70.3476));
-        REQUIRE(v1.y == Approx(-251.428));
+        CHECK(v1.x == Approx(-70.3476));
+        CHECK(v1.y == Approx(-251.428));
     }
 }
 
@@ -502,52 +502,52 @@ TEST_CASE("Vector2d - length", "[math::Vector2d]")
 
     SECTION("Euclidean length")
     {
-        REQUIRE(vd1.getLength() == Approx(0.0));
-        REQUIRE(vd2.getLength() == Approx(12.31));
-        REQUIRE(vd3.getLength() == Approx(134.369));
-        REQUIRE(vd4.getLength() == Approx(11.180339887));
-        REQUIRE(vd5.getLength() == Approx(10.42017274));
-        REQUIRE(vd6.getLength() == Approx(19.40386624));
+        CHECK(vd1.getLength() == Approx(0.0));
+        CHECK(vd2.getLength() == Approx(12.31));
+        CHECK(vd3.getLength() == Approx(134.369));
+        CHECK(vd4.getLength() == Approx(11.180339887));
+        CHECK(vd5.getLength() == Approx(10.42017274));
+        CHECK(vd6.getLength() == Approx(19.40386624));
     }
 
     SECTION("Euclidean squared length")
     {
-        REQUIRE(vd1.getSqLength() == Approx(0.0));
-        REQUIRE(vd2.getSqLength() == Approx(151.5361));
-        REQUIRE(vd3.getSqLength() == Approx(18055.028161));
-        REQUIRE(vd4.getSqLength() == Approx(124.99999999));
-        REQUIRE(vd5.getSqLength() == Approx(108.57999993));
-        REQUIRE(vd6.getSqLength() == Approx(376.51002506));
+        CHECK(vd1.getSqLength() == Approx(0.0));
+        CHECK(vd2.getSqLength() == Approx(151.5361));
+        CHECK(vd3.getSqLength() == Approx(18055.028161));
+        CHECK(vd4.getSqLength() == Approx(124.99999999));
+        CHECK(vd5.getSqLength() == Approx(108.57999993));
+        CHECK(vd6.getSqLength() == Approx(376.51002506));
     }
 
     SECTION("Cross-check: euclidean length vs. square length")
     {
-        REQUIRE(vd1.getSqLength() == Approx(vd1.getLength() * vd1.getLength()));
-        REQUIRE(vd2.getSqLength() == Approx(vd2.getLength() * vd2.getLength()));
-        REQUIRE(vd3.getSqLength() == Approx(vd3.getLength() * vd3.getLength()));
-        REQUIRE(vd4.getSqLength() == Approx(vd4.getLength() * vd4.getLength()));
-        REQUIRE(vd5.getSqLength() == Approx(vd5.getLength() * vd5.getLength()));
-        REQUIRE(vd6.getSqLength() == Approx(vd6.getLength() * vd6.getLength()));
+        CHECK(vd1.getSqLength() == Approx(vd1.getLength() * vd1.getLength()));
+        CHECK(vd2.getSqLength() == Approx(vd2.getLength() * vd2.getLength()));
+        CHECK(vd3.getSqLength() == Approx(vd3.getLength() * vd3.getLength()));
+        CHECK(vd4.getSqLength() == Approx(vd4.getLength() * vd4.getLength()));
+        CHECK(vd5.getSqLength() == Approx(vd5.getLength() * vd5.getLength()));
+        CHECK(vd6.getSqLength() == Approx(vd6.getLength() * vd6.getLength()));
     }
 
     SECTION("Rectilinear length - integer")
     {
-        REQUIRE(vi1.getRectilinearLength() == 0);
-        REQUIRE(vi2.getRectilinearLength() == 12);
-        REQUIRE(vi3.getRectilinearLength() == 10);
-        REQUIRE(vi4.getRectilinearLength() == 8);
-        REQUIRE(vi5.getRectilinearLength() == 362);
-        REQUIRE(vi6.getRectilinearLength() == 618);
+        CHECK(vi1.getRectilinearLength() == 0);
+        CHECK(vi2.getRectilinearLength() == 12);
+        CHECK(vi3.getRectilinearLength() == 10);
+        CHECK(vi4.getRectilinearLength() == 8);
+        CHECK(vi5.getRectilinearLength() == 362);
+        CHECK(vi6.getRectilinearLength() == 618);
     }
 
     SECTION("Rectilinear length - floating point")
     {
-        REQUIRE(vd1.getRectilinearLength() == Approx(0.0));
-        REQUIRE(vd2.getRectilinearLength() == Approx(12.31));
-        REQUIRE(vd3.getRectilinearLength() == Approx(134.369));
-        REQUIRE(vd4.getRectilinearLength() == Approx(15.0));
-        REQUIRE(vd5.getRectilinearLength() == Approx(14.0));
-        REQUIRE(vd6.getRectilinearLength() == Approx(21.305));
+        CHECK(vd1.getRectilinearLength() == Approx(0.0));
+        CHECK(vd2.getRectilinearLength() == Approx(12.31));
+        CHECK(vd3.getRectilinearLength() == Approx(134.369));
+        CHECK(vd4.getRectilinearLength() == Approx(15.0));
+        CHECK(vd5.getRectilinearLength() == Approx(14.0));
+        CHECK(vd6.getRectilinearLength() == Approx(21.305));
     }
 }
 
@@ -569,34 +569,34 @@ TEST_CASE("Vector2d - dot product", "[math::Vector2d]")
 
     SECTION("Same vector")
     {
-        REQUIRE(v1aUnit.dot(v1aUnit) == Approx(1.0));
-        REQUIRE(v2Unit.dot(v2Unit) == Approx(1.0));
-        REQUIRE(v3Unit.dot(v3Unit) == Approx(1.0));
+        CHECK(v1aUnit.dot(v1aUnit) == Approx(1.0));
+        CHECK(v2Unit.dot(v2Unit) == Approx(1.0));
+        CHECK(v3Unit.dot(v3Unit) == Approx(1.0));
     }
 
     SECTION("Acute angle")
     {
-        REQUIRE(v1a.dot(v2) == Approx(46.72));              // not normalised
-        REQUIRE(v1aUnit.dot(v2Unit) == Approx(0.54083950)); // normalised
+        CHECK(v1a.dot(v2) == Approx(46.72));              // not normalised
+        CHECK(v1aUnit.dot(v2Unit) == Approx(0.54083950)); // normalised
     }
 
     SECTION("Right angle")
     {
-        REQUIRE(v1aUnit.dot(v1bUnit) == Approx(0.0));
-        REQUIRE(v1aUnit.dot(v1cUnit) == Approx(0.0));
+        CHECK(v1aUnit.dot(v1bUnit) == Approx(0.0));
+        CHECK(v1aUnit.dot(v1cUnit) == Approx(0.0));
     }
 
     SECTION("Obtuse angle")
     {
-        REQUIRE(v1a.dot(v3) == Approx(-8.26));               // not normalised
-        REQUIRE(v1aUnit.dot(v3Unit) == Approx(-0.31169589)); // normalised
+        CHECK(v1a.dot(v3) == Approx(-8.26));               // not normalised
+        CHECK(v1aUnit.dot(v3Unit) == Approx(-0.31169589)); // normalised
     }
 
     SECTION("Reverse vector")
     {
-        REQUIRE(v1aUnit.dot(-v1aUnit) == Approx(-1.0));
-        REQUIRE(v2Unit.dot(-v2Unit) == Approx(-1.0));
-        REQUIRE(v3Unit.dot(-v3Unit) == Approx(-1.0));
+        CHECK(v1aUnit.dot(-v1aUnit) == Approx(-1.0));
+        CHECK(v2Unit.dot(-v2Unit) == Approx(-1.0));
+        CHECK(v3Unit.dot(-v3Unit) == Approx(-1.0));
     }
 }
 
@@ -610,12 +610,12 @@ TEST_CASE("Vector2d - projection")
 
     SECTION("Scalar projection")
     {
-        REQUIRE(v1.getScalarProjection(v2) == Approx(0.0));
-        REQUIRE(v3.getScalarProjection(v1) == Approx(0.0));
+        CHECK(v1.getScalarProjection(v2) == Approx(0.0));
+        CHECK(v3.getScalarProjection(v1) == Approx(0.0));
         
-        REQUIRE(v2.getScalarProjection(v3) == Approx(5.80414799));
-        REQUIRE(v3.getScalarProjection(v4) == Approx(-21.91649816));
-        REQUIRE(v4.getScalarProjection(v2) == Approx(-11.29800378));
+        CHECK(v2.getScalarProjection(v3) == Approx(5.80414799));
+        CHECK(v3.getScalarProjection(v4) == Approx(-21.91649816));
+        CHECK(v4.getScalarProjection(v2) == Approx(-11.29800378));
     }
 
     SECTION("Vector projection")
@@ -623,24 +623,24 @@ TEST_CASE("Vector2d - projection")
         Vector2d<double> v;
 
         v = v1.getVectorProjection(v2);
-        REQUIRE(v.x == Approx(0.0));
-        REQUIRE(v.y == Approx(0.0));
+        CHECK(v.x == Approx(0.0));
+        CHECK(v.y == Approx(0.0));
 
         v = v3.getVectorProjection(v1);
-        REQUIRE(v.x == Approx(0.0));
-        REQUIRE(v.y == Approx(0.0));
+        CHECK(v.x == Approx(0.0));
+        CHECK(v.y == Approx(0.0));
         
         v = v2.getVectorProjection(v3);
-        REQUIRE(v.x == Approx(-3.04598437));
-        REQUIRE(v.y == Approx(4.94065918));
+        CHECK(v.x == Approx(-3.04598437));
+        CHECK(v.y == Approx(4.94065918));
 
         v = v3.getVectorProjection(v4);
-        REQUIRE(v.x == Approx(-0.19132722));
-        REQUIRE(v.y == Approx(21.91566302));
+        CHECK(v.x == Approx(-0.19132722));
+        CHECK(v.y == Approx(21.91566302));
 
         v = v4.getVectorProjection(v2);
-        REQUIRE(v.x == Approx(-4.91384749));
-        REQUIRE(v.y == Approx(-10.17344544));
+        CHECK(v.x == Approx(-4.91384749));
+        CHECK(v.y == Approx(-10.17344544));
     }
 }
 
@@ -653,20 +653,20 @@ TEST_CASE("Vector2d - normalisation", "[math::Vector2d]")
         v1.set(-43.2, 87.6);
         v2 = v1.getNormalised(); // copy
         v1.normalise();          // in-place
-        REQUIRE(v1.x == Approx(-0.44229248));
-        REQUIRE(v1.y == Approx(0.89687087));
-        REQUIRE(v2.x == Approx(v1.x));
-        REQUIRE(v2.y == Approx(v1.y));
-        REQUIRE(v1.getLength() == Approx(1.0));
+        CHECK(v1.x == Approx(-0.44229248));
+        CHECK(v1.y == Approx(0.89687087));
+        CHECK(v2.x == Approx(v1.x));
+        CHECK(v2.y == Approx(v1.y));
+        CHECK(v1.getLength() == Approx(1.0));
 
         v1.set(12.36, 55.9);
         v2 = v1.getNormalised(); // copy
         v1.normalise();          // in-place
-        REQUIRE(v1.x == Approx(0.21589463));
-        REQUIRE(v1.y == Approx(0.97641667));
-        REQUIRE(v2.x == Approx(v1.x));
-        REQUIRE(v2.y == Approx(v1.y));
-        REQUIRE(v1.getLength() == Approx(1.0));
+        CHECK(v1.x == Approx(0.21589463));
+        CHECK(v1.y == Approx(0.97641667));
+        CHECK(v2.x == Approx(v1.x));
+        CHECK(v2.y == Approx(v1.y));
+        CHECK(v1.getLength() == Approx(1.0));
     }
 }
 
@@ -685,12 +685,12 @@ TEST_CASE("Vector2d - tangents", "[math::Vector2d]")
         Vector2d<int> v;
 
         v = vi1.getLeftTangent();
-        REQUIRE(v.x == vi1_l.x);
-        REQUIRE(v.y == vi1_l.y);
+        CHECK(v.x == vi1_l.x);
+        CHECK(v.y == vi1_l.y);
 
         v = vi2.getLeftTangent();
-        REQUIRE(v.x == vi2_l.x);
-        REQUIRE(v.y == vi2_l.y);
+        CHECK(v.x == vi2_l.x);
+        CHECK(v.y == vi2_l.y);
     }
 
     SECTION("Left - floating point")
@@ -698,12 +698,12 @@ TEST_CASE("Vector2d - tangents", "[math::Vector2d]")
         Vector2d<double> v;
 
         v = vd1.getLeftTangent();
-        REQUIRE(v.x == Approx(vd1_l.x));
-        REQUIRE(v.y == Approx(vd1_l.y));
+        CHECK(v.x == Approx(vd1_l.x));
+        CHECK(v.y == Approx(vd1_l.y));
 
         v = vd2.getLeftTangent();
-        REQUIRE(v.x == Approx(vd2_l.x));
-        REQUIRE(v.y == Approx(vd2_l.y));
+        CHECK(v.x == Approx(vd2_l.x));
+        CHECK(v.y == Approx(vd2_l.y));
     }
 
     SECTION("Right - integer")
@@ -711,12 +711,12 @@ TEST_CASE("Vector2d - tangents", "[math::Vector2d]")
         Vector2d<int> v;
 
         v = vi1.getRightTangent();
-        REQUIRE(v.x == vi1_r.x);
-        REQUIRE(v.y == vi1_r.y);
+        CHECK(v.x == vi1_r.x);
+        CHECK(v.y == vi1_r.y);
 
         v = vi2.getRightTangent();
-        REQUIRE(v.x == vi2_r.x);
-        REQUIRE(v.y == vi2_r.y);
+        CHECK(v.x == vi2_r.x);
+        CHECK(v.y == vi2_r.y);
     }
 
     SECTION("Right - floating point")
@@ -724,12 +724,12 @@ TEST_CASE("Vector2d - tangents", "[math::Vector2d]")
         Vector2d<double> v;
 
         v = vd1.getRightTangent();
-        REQUIRE(v.x == Approx(vd1_r.x));
-        REQUIRE(v.y == Approx(vd1_r.y));
+        CHECK(v.x == Approx(vd1_r.x));
+        CHECK(v.y == Approx(vd1_r.y));
 
         v = vd2.getRightTangent();
-        REQUIRE(v.x == Approx(vd2_r.x));
-        REQUIRE(v.y == Approx(vd2_r.y));
+        CHECK(v.x == Approx(vd2_r.x));
+        CHECK(v.y == Approx(vd2_r.y));
     }
 }
 
@@ -747,61 +747,61 @@ TEST_CASE("Vector2d - distance", "[math::Vector2d]")
     SECTION("Euclidean distance")
     {
         // Zero distance
-        REQUIRE(vd1.getDistance(vd1) == Approx(0.0));
-        REQUIRE(vd2.getDistance(vd2) == Approx(0.0));
+        CHECK(vd1.getDistance(vd1) == Approx(0.0));
+        CHECK(vd2.getDistance(vd2) == Approx(0.0));
         // Axis-aligned
-        REQUIRE(vd3.getDistance(vd4) == Approx(14.94));
-        REQUIRE(vd5.getDistance(vd6) == Approx(10.22));
-        REQUIRE(vd7.getDistance(vd8) == Approx(12.3));
-        REQUIRE(vd9.getDistance(vd10) == Approx(5.409));
+        CHECK(vd3.getDistance(vd4) == Approx(14.94));
+        CHECK(vd5.getDistance(vd6) == Approx(10.22));
+        CHECK(vd7.getDistance(vd8) == Approx(12.3));
+        CHECK(vd9.getDistance(vd10) == Approx(5.409));
         // Arbitrary
-        REQUIRE(vd11.getDistance(vd12) == Approx(20.705055));
-        REQUIRE(vd13.getDistance(vd14) == Approx(124.342338));
+        CHECK(vd11.getDistance(vd12) == Approx(20.705055));
+        CHECK(vd13.getDistance(vd14) == Approx(124.342338));
     }
 
     SECTION("Euclidean squared distance")
     {
         // Zero distance
-        REQUIRE(vd1.getSqDistance(vd1) == Approx(0.0));
-        REQUIRE(vd2.getSqDistance(vd2) == Approx(0.0));
+        CHECK(vd1.getSqDistance(vd1) == Approx(0.0));
+        CHECK(vd2.getSqDistance(vd2) == Approx(0.0));
         // Axis-aligned
-        REQUIRE(vd3.getSqDistance(vd4) == Approx(223.2036));
-        REQUIRE(vd5.getSqDistance(vd6) == Approx(104.4484));
-        REQUIRE(vd7.getSqDistance(vd8) == Approx(151.29));
-        REQUIRE(vd9.getSqDistance(vd10) == Approx(29.257281));
+        CHECK(vd3.getSqDistance(vd4) == Approx(223.2036));
+        CHECK(vd5.getSqDistance(vd6) == Approx(104.4484));
+        CHECK(vd7.getSqDistance(vd8) == Approx(151.29));
+        CHECK(vd9.getSqDistance(vd10) == Approx(29.257281));
         // Arbitrary
-        REQUIRE(vd11.getSqDistance(vd12) == Approx(428.69930255));
-        REQUIRE(vd13.getSqDistance(vd14) == Approx(15461.01701931));
+        CHECK(vd11.getSqDistance(vd12) == Approx(428.69930255));
+        CHECK(vd13.getSqDistance(vd14) == Approx(15461.01701931));
     }
 
     SECTION("Rectilinear distance - integer")
     {
         // Zero distance
-        REQUIRE(Vector2d<int>(0, 0).getRectilinearDistance(Vector2d<int>(0, 0)) == 0);
-        REQUIRE(Vector2d<int>(-54, 1).getRectilinearDistance(Vector2d<int>(-54, 1)) == 0);
+        CHECK(Vector2d<int>(0, 0).getRectilinearDistance(Vector2d<int>(0, 0)) == 0);
+        CHECK(Vector2d<int>(-54, 1).getRectilinearDistance(Vector2d<int>(-54, 1)) == 0);
         // Axis-aligned
-        REQUIRE(Vector2d<int>(5, 3).getRectilinearDistance(Vector2d<int>(9, 3)) == 4);
-        REQUIRE(Vector2d<int>(-21, 0).getRectilinearDistance(Vector2d<int>(5, 0)) == 26);
-        REQUIRE(Vector2d<int>(-4, 11).getRectilinearDistance(Vector2d<int>(-4, 19)) == 8);
-        REQUIRE(Vector2d<int>(0, 7).getRectilinearDistance(Vector2d<int>(0, -8)) == 15);
+        CHECK(Vector2d<int>(5, 3).getRectilinearDistance(Vector2d<int>(9, 3)) == 4);
+        CHECK(Vector2d<int>(-21, 0).getRectilinearDistance(Vector2d<int>(5, 0)) == 26);
+        CHECK(Vector2d<int>(-4, 11).getRectilinearDistance(Vector2d<int>(-4, 19)) == 8);
+        CHECK(Vector2d<int>(0, 7).getRectilinearDistance(Vector2d<int>(0, -8)) == 15);
         // Arbitrary
-        REQUIRE(Vector2d<int>(15, 6).getRectilinearDistance(Vector2d<int>(3, 21)) == 27);
-        REQUIRE(Vector2d<int>(-2, 46).getRectilinearDistance(Vector2d<int>(13, 63)) == 32);
+        CHECK(Vector2d<int>(15, 6).getRectilinearDistance(Vector2d<int>(3, 21)) == 27);
+        CHECK(Vector2d<int>(-2, 46).getRectilinearDistance(Vector2d<int>(13, 63)) == 32);
     }
 
     SECTION("Rectilinear distance - floating point")
     {
         // Zero distance
-        REQUIRE(vd1.getRectilinearDistance(vd1) == Approx(0.0));
-        REQUIRE(vd2.getRectilinearDistance(vd2) == Approx(0.0));
+        CHECK(vd1.getRectilinearDistance(vd1) == Approx(0.0));
+        CHECK(vd2.getRectilinearDistance(vd2) == Approx(0.0));
         // Axis-aligned
-        REQUIRE(vd3.getRectilinearDistance(vd4) == Approx(14.94));
-        REQUIRE(vd5.getRectilinearDistance(vd6) == Approx(10.22));
-        REQUIRE(vd7.getRectilinearDistance(vd8) == Approx(12.3));
-        REQUIRE(vd9.getRectilinearDistance(vd10) == Approx(5.409));
+        CHECK(vd3.getRectilinearDistance(vd4) == Approx(14.94));
+        CHECK(vd5.getRectilinearDistance(vd6) == Approx(10.22));
+        CHECK(vd7.getRectilinearDistance(vd8) == Approx(12.3));
+        CHECK(vd9.getRectilinearDistance(vd10) == Approx(5.409));
         // Arbitrary
-        REQUIRE(vd11.getRectilinearDistance(vd12) == Approx(26.896));
-        REQUIRE(vd13.getRectilinearDistance(vd14) == Approx(171.729));
+        CHECK(vd11.getRectilinearDistance(vd12) == Approx(26.896));
+        CHECK(vd13.getRectilinearDistance(vd14) == Approx(171.729));
     }
 }
 
@@ -814,58 +814,58 @@ TEST_CASE("Vector2d - proximity", "[math::Vector2d]")
         // Note: The sign of the margin value should make no difference (negative is OK).
 
         // Exact match
-        REQUIRE(Vector2d<double>(0.0, 0.0).isNear(Vector2d<double>(0.0, 0.0), 0.0));
-        REQUIRE(Vector2d<double>(-5.39, 4.16).isNear(Vector2d<double>(-5.39, 4.16), 0.0));
-        REQUIRE(Vector2d<double>(46.98, -18.6).isNear(Vector2d<double>(46.98, -18.6), 24.1));
-        REQUIRE(Vector2d<double>(46.98, -18.6).isNear(Vector2d<double>(46.98, -18.6), -24.1));
+        CHECK(Vector2d<double>(0.0, 0.0).isNear(Vector2d<double>(0.0, 0.0), 0.0));
+        CHECK(Vector2d<double>(-5.39, 4.16).isNear(Vector2d<double>(-5.39, 4.16), 0.0));
+        CHECK(Vector2d<double>(46.98, -18.6).isNear(Vector2d<double>(46.98, -18.6), 24.1));
+        CHECK(Vector2d<double>(46.98, -18.6).isNear(Vector2d<double>(46.98, -18.6), -24.1));
 
         // In range - constrained to X axis
-        REQUIRE(Vector2d<double>(26.8, 0.0).isNear(Vector2d<double>(22.94, 0.0), 8.6));
-        REQUIRE(Vector2d<double>(26.8, 0.0).isNear(Vector2d<double>(22.94, 0.0), -8.6));
-        REQUIRE(Vector2d<double>(-11.97, 0.0).isNear(Vector2d<double>(-31.8, 0.0), 34.5));
-        REQUIRE(Vector2d<double>(-11.97, 0.0).isNear(Vector2d<double>(-31.8, 0.0), -34.5));
+        CHECK(Vector2d<double>(26.8, 0.0).isNear(Vector2d<double>(22.94, 0.0), 8.6));
+        CHECK(Vector2d<double>(26.8, 0.0).isNear(Vector2d<double>(22.94, 0.0), -8.6));
+        CHECK(Vector2d<double>(-11.97, 0.0).isNear(Vector2d<double>(-31.8, 0.0), 34.5));
+        CHECK(Vector2d<double>(-11.97, 0.0).isNear(Vector2d<double>(-31.8, 0.0), -34.5));
         // In range - constrained to Y axis
-        REQUIRE(Vector2d<double>(0.0, -9.7).isNear(Vector2d<double>(0.0, -22.01), 15.5));
-        REQUIRE(Vector2d<double>(0.0, -9.7).isNear(Vector2d<double>(0.0, -22.01), -15.5));
-        REQUIRE(Vector2d<double>(0.0, 54.24).isNear(Vector2d<double>(0.0, 49.3), 8.1));
-        REQUIRE(Vector2d<double>(0.0, 54.24).isNear(Vector2d<double>(0.0, 49.3), -8.1));
+        CHECK(Vector2d<double>(0.0, -9.7).isNear(Vector2d<double>(0.0, -22.01), 15.5));
+        CHECK(Vector2d<double>(0.0, -9.7).isNear(Vector2d<double>(0.0, -22.01), -15.5));
+        CHECK(Vector2d<double>(0.0, 54.24).isNear(Vector2d<double>(0.0, 49.3), 8.1));
+        CHECK(Vector2d<double>(0.0, 54.24).isNear(Vector2d<double>(0.0, 49.3), -8.1));
         // In range - no constraints
-        REQUIRE(Vector2d<double>(112.44, -33.92).isNear(Vector2d<double>(107.66, -31.101), 13.99));
-        REQUIRE(Vector2d<double>(112.44, -33.92).isNear(Vector2d<double>(107.66, -31.101), -13.99));
-        REQUIRE(Vector2d<double>(-4.82, -411.13).isNear(Vector2d<double>(-5.04, -460.53), 65.88));
-        REQUIRE(Vector2d<double>(-4.82, -411.13).isNear(Vector2d<double>(-5.04, -460.53), -65.88));
+        CHECK(Vector2d<double>(112.44, -33.92).isNear(Vector2d<double>(107.66, -31.101), 13.99));
+        CHECK(Vector2d<double>(112.44, -33.92).isNear(Vector2d<double>(107.66, -31.101), -13.99));
+        CHECK(Vector2d<double>(-4.82, -411.13).isNear(Vector2d<double>(-5.04, -460.53), 65.88));
+        CHECK(Vector2d<double>(-4.82, -411.13).isNear(Vector2d<double>(-5.04, -460.53), -65.88));
 
         // Boundary - constrained to X axis
-        REQUIRE(Vector2d<double>(26.8, 0.0).isNear(Vector2d<double>(22.94, 0.0), 3.88));
-        REQUIRE(Vector2d<double>(26.8, 0.0).isNear(Vector2d<double>(22.94, 0.0), -3.88));
-        REQUIRE(Vector2d<double>(-11.97, 0.0).isNear(Vector2d<double>(-31.8, 0.0), 19.85));
-        REQUIRE(Vector2d<double>(-11.97, 0.0).isNear(Vector2d<double>(-31.8, 0.0), -19.85));
+        CHECK(Vector2d<double>(26.8, 0.0).isNear(Vector2d<double>(22.94, 0.0), 3.88));
+        CHECK(Vector2d<double>(26.8, 0.0).isNear(Vector2d<double>(22.94, 0.0), -3.88));
+        CHECK(Vector2d<double>(-11.97, 0.0).isNear(Vector2d<double>(-31.8, 0.0), 19.85));
+        CHECK(Vector2d<double>(-11.97, 0.0).isNear(Vector2d<double>(-31.8, 0.0), -19.85));
         // Boundary - constrained to Y axis
-        REQUIRE(Vector2d<double>(0.0, -9.7).isNear(Vector2d<double>(0.0, -22.01), 12.33));
-        REQUIRE(Vector2d<double>(0.0, -9.7).isNear(Vector2d<double>(0.0, -22.01), -12.33));
-        REQUIRE(Vector2d<double>(0.0, 54.24).isNear(Vector2d<double>(0.0, 49.3), 4.96));
-        REQUIRE(Vector2d<double>(0.0, 54.24).isNear(Vector2d<double>(0.0, 49.3), -4.96));
+        CHECK(Vector2d<double>(0.0, -9.7).isNear(Vector2d<double>(0.0, -22.01), 12.33));
+        CHECK(Vector2d<double>(0.0, -9.7).isNear(Vector2d<double>(0.0, -22.01), -12.33));
+        CHECK(Vector2d<double>(0.0, 54.24).isNear(Vector2d<double>(0.0, 49.3), 4.96));
+        CHECK(Vector2d<double>(0.0, 54.24).isNear(Vector2d<double>(0.0, 49.3), -4.96));
         // Boundary - no constraints
-        REQUIRE(Vector2d<double>(112.44, -33.92).isNear(Vector2d<double>(107.66, -31.101), 5.57));
-        REQUIRE(Vector2d<double>(112.44, -33.92).isNear(Vector2d<double>(107.66, -31.101), -5.57));
-        REQUIRE(Vector2d<double>(-4.82, -411.13).isNear(Vector2d<double>(-5.04, -460.53), 49.42));
-        REQUIRE(Vector2d<double>(-4.82, -411.13).isNear(Vector2d<double>(-5.04, -460.53), -49.42));
+        CHECK(Vector2d<double>(112.44, -33.92).isNear(Vector2d<double>(107.66, -31.101), 5.57));
+        CHECK(Vector2d<double>(112.44, -33.92).isNear(Vector2d<double>(107.66, -31.101), -5.57));
+        CHECK(Vector2d<double>(-4.82, -411.13).isNear(Vector2d<double>(-5.04, -460.53), 49.42));
+        CHECK(Vector2d<double>(-4.82, -411.13).isNear(Vector2d<double>(-5.04, -460.53), -49.42));
 
         // Out of range - constrained to X axis
-        REQUIRE_FALSE(Vector2d<double>(26.8, 0.0).isNear(Vector2d<double>(22.94, 0.0), 1.48));
-        REQUIRE_FALSE(Vector2d<double>(26.8, 0.0).isNear(Vector2d<double>(22.94, 0.0), -1.48));
-        REQUIRE_FALSE(Vector2d<double>(-11.97, 0.0).isNear(Vector2d<double>(-31.8, 0.0), 18.98));
-        REQUIRE_FALSE(Vector2d<double>(-11.97, 0.0).isNear(Vector2d<double>(-31.8, 0.0), -18.98));
+        CHECK_FALSE(Vector2d<double>(26.8, 0.0).isNear(Vector2d<double>(22.94, 0.0), 1.48));
+        CHECK_FALSE(Vector2d<double>(26.8, 0.0).isNear(Vector2d<double>(22.94, 0.0), -1.48));
+        CHECK_FALSE(Vector2d<double>(-11.97, 0.0).isNear(Vector2d<double>(-31.8, 0.0), 18.98));
+        CHECK_FALSE(Vector2d<double>(-11.97, 0.0).isNear(Vector2d<double>(-31.8, 0.0), -18.98));
         // Out of range - constrained to Y axis
-        REQUIRE_FALSE(Vector2d<double>(0.0, -9.7).isNear(Vector2d<double>(0.0, -22.01), 7.6));
-        REQUIRE_FALSE(Vector2d<double>(0.0, -9.7).isNear(Vector2d<double>(0.0, -22.01), -7.6));
-        REQUIRE_FALSE(Vector2d<double>(0.0, 54.24).isNear(Vector2d<double>(0.0, 49.3), 4.67));
-        REQUIRE_FALSE(Vector2d<double>(0.0, 54.24).isNear(Vector2d<double>(0.0, 49.3), -4.67));
+        CHECK_FALSE(Vector2d<double>(0.0, -9.7).isNear(Vector2d<double>(0.0, -22.01), 7.6));
+        CHECK_FALSE(Vector2d<double>(0.0, -9.7).isNear(Vector2d<double>(0.0, -22.01), -7.6));
+        CHECK_FALSE(Vector2d<double>(0.0, 54.24).isNear(Vector2d<double>(0.0, 49.3), 4.67));
+        CHECK_FALSE(Vector2d<double>(0.0, 54.24).isNear(Vector2d<double>(0.0, 49.3), -4.67));
         // Out of range - no constraints
-        REQUIRE_FALSE(Vector2d<double>(112.44, -33.92).isNear(Vector2d<double>(107.66, -31.101), 1.901));
-        REQUIRE_FALSE(Vector2d<double>(112.44, -33.92).isNear(Vector2d<double>(107.66, -31.101), -1.901));
-        REQUIRE_FALSE(Vector2d<double>(-4.82, -411.13).isNear(Vector2d<double>(-5.04, -460.53), 46.112));
-        REQUIRE_FALSE(Vector2d<double>(-4.82, -411.13).isNear(Vector2d<double>(-5.04, -460.53), -46.112));
+        CHECK_FALSE(Vector2d<double>(112.44, -33.92).isNear(Vector2d<double>(107.66, -31.101), 1.901));
+        CHECK_FALSE(Vector2d<double>(112.44, -33.92).isNear(Vector2d<double>(107.66, -31.101), -1.901));
+        CHECK_FALSE(Vector2d<double>(-4.82, -411.13).isNear(Vector2d<double>(-5.04, -460.53), 46.112));
+        CHECK_FALSE(Vector2d<double>(-4.82, -411.13).isNear(Vector2d<double>(-5.04, -460.53), -46.112));
     }
 
     SECTION("Rectilinear proximity - integer")
@@ -873,58 +873,58 @@ TEST_CASE("Vector2d - proximity", "[math::Vector2d]")
         // Note: The sign of the margin value should make no difference (negative is OK).
 
         // Exact match
-        REQUIRE(Vector2d<int>(0, 0).isNearRectilinear(Vector2d<int>(0, 0), 0));
-        REQUIRE(Vector2d<int>(12, -4).isNearRectilinear(Vector2d<int>(12, -4), 0));
-        REQUIRE(Vector2d<int>(-9, 25).isNearRectilinear(Vector2d<int>(-9, 25), 2));
-        REQUIRE(Vector2d<int>(-9, 25).isNearRectilinear(Vector2d<int>(-9, 25), -2));
+        CHECK(Vector2d<int>(0, 0).isNearRectilinear(Vector2d<int>(0, 0), 0));
+        CHECK(Vector2d<int>(12, -4).isNearRectilinear(Vector2d<int>(12, -4), 0));
+        CHECK(Vector2d<int>(-9, 25).isNearRectilinear(Vector2d<int>(-9, 25), 2));
+        CHECK(Vector2d<int>(-9, 25).isNearRectilinear(Vector2d<int>(-9, 25), -2));
 
         // In range - constrained to X axis
-        REQUIRE(Vector2d<int>(20, 0).isNearRectilinear(Vector2d<int>(22, 0), 4));
-        REQUIRE(Vector2d<int>(20, 0).isNearRectilinear(Vector2d<int>(22, 0), -4));
-        REQUIRE(Vector2d<int>(3, 0).isNearRectilinear(Vector2d<int>(-6, 0), 14));
-        REQUIRE(Vector2d<int>(3, 0).isNearRectilinear(Vector2d<int>(-6, 0), -14));
+        CHECK(Vector2d<int>(20, 0).isNearRectilinear(Vector2d<int>(22, 0), 4));
+        CHECK(Vector2d<int>(20, 0).isNearRectilinear(Vector2d<int>(22, 0), -4));
+        CHECK(Vector2d<int>(3, 0).isNearRectilinear(Vector2d<int>(-6, 0), 14));
+        CHECK(Vector2d<int>(3, 0).isNearRectilinear(Vector2d<int>(-6, 0), -14));
         // In range - constrained to Y axis
-        REQUIRE(Vector2d<int>(0, 43).isNearRectilinear(Vector2d<int>(0, 38), 10));
-        REQUIRE(Vector2d<int>(0, 43).isNearRectilinear(Vector2d<int>(0, 38), -10));
-        REQUIRE(Vector2d<int>(0, -4).isNearRectilinear(Vector2d<int>(0, -12), 9));
-        REQUIRE(Vector2d<int>(0, -4).isNearRectilinear(Vector2d<int>(0, -12), -9));
+        CHECK(Vector2d<int>(0, 43).isNearRectilinear(Vector2d<int>(0, 38), 10));
+        CHECK(Vector2d<int>(0, 43).isNearRectilinear(Vector2d<int>(0, 38), -10));
+        CHECK(Vector2d<int>(0, -4).isNearRectilinear(Vector2d<int>(0, -12), 9));
+        CHECK(Vector2d<int>(0, -4).isNearRectilinear(Vector2d<int>(0, -12), -9));
         // In range - no constraints
-        REQUIRE(Vector2d<int>(12, -4).isNearRectilinear(Vector2d<int>(3, 5), 23));
-        REQUIRE(Vector2d<int>(12, -4).isNearRectilinear(Vector2d<int>(3, 5), -23));
-        REQUIRE(Vector2d<int>(-1, 22).isNearRectilinear(Vector2d<int>(-6, 19), 11));
-        REQUIRE(Vector2d<int>(-1, 22).isNearRectilinear(Vector2d<int>(-6, 19), -11));
+        CHECK(Vector2d<int>(12, -4).isNearRectilinear(Vector2d<int>(3, 5), 23));
+        CHECK(Vector2d<int>(12, -4).isNearRectilinear(Vector2d<int>(3, 5), -23));
+        CHECK(Vector2d<int>(-1, 22).isNearRectilinear(Vector2d<int>(-6, 19), 11));
+        CHECK(Vector2d<int>(-1, 22).isNearRectilinear(Vector2d<int>(-6, 19), -11));
 
         // Boundary - constrained to X axis
-        REQUIRE(Vector2d<int>(20, 0).isNearRectilinear(Vector2d<int>(22, 0), 2));
-        REQUIRE(Vector2d<int>(20, 0).isNearRectilinear(Vector2d<int>(22, 0), -2));
-        REQUIRE(Vector2d<int>(3, 0).isNearRectilinear(Vector2d<int>(-6, 0), 9));
-        REQUIRE(Vector2d<int>(3, 0).isNearRectilinear(Vector2d<int>(-6, 0), -9));
+        CHECK(Vector2d<int>(20, 0).isNearRectilinear(Vector2d<int>(22, 0), 2));
+        CHECK(Vector2d<int>(20, 0).isNearRectilinear(Vector2d<int>(22, 0), -2));
+        CHECK(Vector2d<int>(3, 0).isNearRectilinear(Vector2d<int>(-6, 0), 9));
+        CHECK(Vector2d<int>(3, 0).isNearRectilinear(Vector2d<int>(-6, 0), -9));
         // Boundary - constrained to Y axis
-        REQUIRE(Vector2d<int>(0, 43).isNearRectilinear(Vector2d<int>(0, 38), 5));
-        REQUIRE(Vector2d<int>(0, 43).isNearRectilinear(Vector2d<int>(0, 38), -5));
-        REQUIRE(Vector2d<int>(0, -4).isNearRectilinear(Vector2d<int>(0, -12), 8));
-        REQUIRE(Vector2d<int>(0, -4).isNearRectilinear(Vector2d<int>(0, -12), -8));
+        CHECK(Vector2d<int>(0, 43).isNearRectilinear(Vector2d<int>(0, 38), 5));
+        CHECK(Vector2d<int>(0, 43).isNearRectilinear(Vector2d<int>(0, 38), -5));
+        CHECK(Vector2d<int>(0, -4).isNearRectilinear(Vector2d<int>(0, -12), 8));
+        CHECK(Vector2d<int>(0, -4).isNearRectilinear(Vector2d<int>(0, -12), -8));
         // Boundary - no constraints
-        REQUIRE(Vector2d<int>(12, -4).isNearRectilinear(Vector2d<int>(3, 5), 18));
-        REQUIRE(Vector2d<int>(12, -4).isNearRectilinear(Vector2d<int>(3, 5), -18));
-        REQUIRE(Vector2d<int>(-1, 22).isNearRectilinear(Vector2d<int>(-6, 19), 8));
-        REQUIRE(Vector2d<int>(-1, 22).isNearRectilinear(Vector2d<int>(-6, 19), -8));
+        CHECK(Vector2d<int>(12, -4).isNearRectilinear(Vector2d<int>(3, 5), 18));
+        CHECK(Vector2d<int>(12, -4).isNearRectilinear(Vector2d<int>(3, 5), -18));
+        CHECK(Vector2d<int>(-1, 22).isNearRectilinear(Vector2d<int>(-6, 19), 8));
+        CHECK(Vector2d<int>(-1, 22).isNearRectilinear(Vector2d<int>(-6, 19), -8));
 
         // Out of range - constrained to X axis
-        REQUIRE_FALSE(Vector2d<int>(20, 0).isNearRectilinear(Vector2d<int>(22, 0), 1));
-        REQUIRE_FALSE(Vector2d<int>(20, 0).isNearRectilinear(Vector2d<int>(22, 0), -1));
-        REQUIRE_FALSE(Vector2d<int>(3, 0).isNearRectilinear(Vector2d<int>(-6, 0), 6));
-        REQUIRE_FALSE(Vector2d<int>(3, 0).isNearRectilinear(Vector2d<int>(-6, 0), -6));
+        CHECK_FALSE(Vector2d<int>(20, 0).isNearRectilinear(Vector2d<int>(22, 0), 1));
+        CHECK_FALSE(Vector2d<int>(20, 0).isNearRectilinear(Vector2d<int>(22, 0), -1));
+        CHECK_FALSE(Vector2d<int>(3, 0).isNearRectilinear(Vector2d<int>(-6, 0), 6));
+        CHECK_FALSE(Vector2d<int>(3, 0).isNearRectilinear(Vector2d<int>(-6, 0), -6));
         // Out of range - constrained to Y axis
-        REQUIRE_FALSE(Vector2d<int>(0, 43).isNearRectilinear(Vector2d<int>(0, 38), 2));
-        REQUIRE_FALSE(Vector2d<int>(0, 43).isNearRectilinear(Vector2d<int>(0, 38), -2));
-        REQUIRE_FALSE(Vector2d<int>(0, -4).isNearRectilinear(Vector2d<int>(0, -12), 5));
-        REQUIRE_FALSE(Vector2d<int>(0, -4).isNearRectilinear(Vector2d<int>(0, -12), -5));
+        CHECK_FALSE(Vector2d<int>(0, 43).isNearRectilinear(Vector2d<int>(0, 38), 2));
+        CHECK_FALSE(Vector2d<int>(0, 43).isNearRectilinear(Vector2d<int>(0, 38), -2));
+        CHECK_FALSE(Vector2d<int>(0, -4).isNearRectilinear(Vector2d<int>(0, -12), 5));
+        CHECK_FALSE(Vector2d<int>(0, -4).isNearRectilinear(Vector2d<int>(0, -12), -5));
         // Out of range - no constraints
-        REQUIRE_FALSE(Vector2d<int>(12, -4).isNearRectilinear(Vector2d<int>(3, 5), 15));
-        REQUIRE_FALSE(Vector2d<int>(12, -4).isNearRectilinear(Vector2d<int>(3, 5), -15));
-        REQUIRE_FALSE(Vector2d<int>(-1, 22).isNearRectilinear(Vector2d<int>(-6, 19), 3));
-        REQUIRE_FALSE(Vector2d<int>(-1, 22).isNearRectilinear(Vector2d<int>(-6, 19), -3));
+        CHECK_FALSE(Vector2d<int>(12, -4).isNearRectilinear(Vector2d<int>(3, 5), 15));
+        CHECK_FALSE(Vector2d<int>(12, -4).isNearRectilinear(Vector2d<int>(3, 5), -15));
+        CHECK_FALSE(Vector2d<int>(-1, 22).isNearRectilinear(Vector2d<int>(-6, 19), 3));
+        CHECK_FALSE(Vector2d<int>(-1, 22).isNearRectilinear(Vector2d<int>(-6, 19), -3));
     }
 
     SECTION("Rectilinear proximity - floating point")
@@ -932,58 +932,58 @@ TEST_CASE("Vector2d - proximity", "[math::Vector2d]")
         // Note: The sign of the margin value should make no difference (negative is OK).
 
         // Exact match
-        REQUIRE(Vector2d<double>(0.0, 0.0).isNearRectilinear(Vector2d<double>(0.0, 0.0), 0.0));
-        REQUIRE(Vector2d<double>(45.11, -20.9).isNearRectilinear(Vector2d<double>(45.11, -20.9), 0.0));
-        REQUIRE(Vector2d<double>(-2.23, 0.6).isNearRectilinear(Vector2d<double>(-2.23, 0.6), 3.4));
-        REQUIRE(Vector2d<double>(-2.23, 0.6).isNearRectilinear(Vector2d<double>(-2.23, 0.6), -3.4));
+        CHECK(Vector2d<double>(0.0, 0.0).isNearRectilinear(Vector2d<double>(0.0, 0.0), 0.0));
+        CHECK(Vector2d<double>(45.11, -20.9).isNearRectilinear(Vector2d<double>(45.11, -20.9), 0.0));
+        CHECK(Vector2d<double>(-2.23, 0.6).isNearRectilinear(Vector2d<double>(-2.23, 0.6), 3.4));
+        CHECK(Vector2d<double>(-2.23, 0.6).isNearRectilinear(Vector2d<double>(-2.23, 0.6), -3.4));
 
         // In range - constrained to X axis
-        REQUIRE(Vector2d<double>(4.46, 0.0).isNearRectilinear(Vector2d<double>(-0.2, 0.0), 8.2));
-        REQUIRE(Vector2d<double>(4.46, 0.0).isNearRectilinear(Vector2d<double>(-0.2, 0.0), -8.2));
-        REQUIRE(Vector2d<double>(19.8, 0.0).isNearRectilinear(Vector2d<double>(24.77, 0.0), 10.13));
-        REQUIRE(Vector2d<double>(19.8, 0.0).isNearRectilinear(Vector2d<double>(24.77, 0.0), -10.13));
+        CHECK(Vector2d<double>(4.46, 0.0).isNearRectilinear(Vector2d<double>(-0.2, 0.0), 8.2));
+        CHECK(Vector2d<double>(4.46, 0.0).isNearRectilinear(Vector2d<double>(-0.2, 0.0), -8.2));
+        CHECK(Vector2d<double>(19.8, 0.0).isNearRectilinear(Vector2d<double>(24.77, 0.0), 10.13));
+        CHECK(Vector2d<double>(19.8, 0.0).isNearRectilinear(Vector2d<double>(24.77, 0.0), -10.13));
         // In range - constrained to Y axis
-        REQUIRE(Vector2d<double>(0.0, 7.16).isNearRectilinear(Vector2d<double>(0.0, 10.22), 6.69));
-        REQUIRE(Vector2d<double>(0.0, 7.16).isNearRectilinear(Vector2d<double>(0.0, 10.22), -6.69));
-        REQUIRE(Vector2d<double>(0.0, -5.501).isNearRectilinear(Vector2d<double>(0.0, 2.7), 14.26));
-        REQUIRE(Vector2d<double>(0.0, -5.501).isNearRectilinear(Vector2d<double>(0.0, 2.7), -14.26));
+        CHECK(Vector2d<double>(0.0, 7.16).isNearRectilinear(Vector2d<double>(0.0, 10.22), 6.69));
+        CHECK(Vector2d<double>(0.0, 7.16).isNearRectilinear(Vector2d<double>(0.0, 10.22), -6.69));
+        CHECK(Vector2d<double>(0.0, -5.501).isNearRectilinear(Vector2d<double>(0.0, 2.7), 14.26));
+        CHECK(Vector2d<double>(0.0, -5.501).isNearRectilinear(Vector2d<double>(0.0, 2.7), -14.26));
         // In range - no constraints
-        REQUIRE(Vector2d<double>(0.1, 0.2).isNearRectilinear(Vector2d<double>(0.5, -0.6), 2.5));
-        REQUIRE(Vector2d<double>(0.1, 0.2).isNearRectilinear(Vector2d<double>(0.5, -0.6), -2.5));
-        REQUIRE(Vector2d<double>(-59.312, 33.36).isNearRectilinear(Vector2d<double>(41.11, -16.38), 167.76));
-        REQUIRE(Vector2d<double>(-59.312, 33.36).isNearRectilinear(Vector2d<double>(41.11, -16.38), -167.76));
+        CHECK(Vector2d<double>(0.1, 0.2).isNearRectilinear(Vector2d<double>(0.5, -0.6), 2.5));
+        CHECK(Vector2d<double>(0.1, 0.2).isNearRectilinear(Vector2d<double>(0.5, -0.6), -2.5));
+        CHECK(Vector2d<double>(-59.312, 33.36).isNearRectilinear(Vector2d<double>(41.11, -16.38), 167.76));
+        CHECK(Vector2d<double>(-59.312, 33.36).isNearRectilinear(Vector2d<double>(41.11, -16.38), -167.76));
 
         // Boundary - constrained to X axis
-        REQUIRE(Vector2d<double>(4.46, 0.0).isNearRectilinear(Vector2d<double>(-0.2, 0.0), 4.68));
-        REQUIRE(Vector2d<double>(4.46, 0.0).isNearRectilinear(Vector2d<double>(-0.2, 0.0), -4.68));
-        REQUIRE(Vector2d<double>(19.8, 0.0).isNearRectilinear(Vector2d<double>(24.77, 0.0), 4.99));
-        REQUIRE(Vector2d<double>(19.8, 0.0).isNearRectilinear(Vector2d<double>(24.77, 0.0), -4.99));
+        CHECK(Vector2d<double>(4.46, 0.0).isNearRectilinear(Vector2d<double>(-0.2, 0.0), 4.68));
+        CHECK(Vector2d<double>(4.46, 0.0).isNearRectilinear(Vector2d<double>(-0.2, 0.0), -4.68));
+        CHECK(Vector2d<double>(19.8, 0.0).isNearRectilinear(Vector2d<double>(24.77, 0.0), 4.99));
+        CHECK(Vector2d<double>(19.8, 0.0).isNearRectilinear(Vector2d<double>(24.77, 0.0), -4.99));
         // Boundary - constrained to Y axis
-        REQUIRE(Vector2d<double>(0.0, 7.16).isNearRectilinear(Vector2d<double>(0.0, 10.22), 3.08));
-        REQUIRE(Vector2d<double>(0.0, 7.16).isNearRectilinear(Vector2d<double>(0.0, 10.22), -3.08));
-        REQUIRE(Vector2d<double>(0.0, -5.501).isNearRectilinear(Vector2d<double>(0.0, 2.7), 8.221));
-        REQUIRE(Vector2d<double>(0.0, -5.501).isNearRectilinear(Vector2d<double>(0.0, 2.7), -8.221));
+        CHECK(Vector2d<double>(0.0, 7.16).isNearRectilinear(Vector2d<double>(0.0, 10.22), 3.08));
+        CHECK(Vector2d<double>(0.0, 7.16).isNearRectilinear(Vector2d<double>(0.0, 10.22), -3.08));
+        CHECK(Vector2d<double>(0.0, -5.501).isNearRectilinear(Vector2d<double>(0.0, 2.7), 8.221));
+        CHECK(Vector2d<double>(0.0, -5.501).isNearRectilinear(Vector2d<double>(0.0, 2.7), -8.221));
         // Boundary - no constraints
-        REQUIRE(Vector2d<double>(0.1, 0.2).isNearRectilinear(Vector2d<double>(0.5, -0.6), 1.22));
-        REQUIRE(Vector2d<double>(0.1, 0.2).isNearRectilinear(Vector2d<double>(0.5, -0.6), -1.22));
-        REQUIRE(Vector2d<double>(-59.312, 33.36).isNearRectilinear(Vector2d<double>(41.11, -16.38), 150.182));
-        REQUIRE(Vector2d<double>(-59.312, 33.36).isNearRectilinear(Vector2d<double>(41.11, -16.38), -150.182));
+        CHECK(Vector2d<double>(0.1, 0.2).isNearRectilinear(Vector2d<double>(0.5, -0.6), 1.22));
+        CHECK(Vector2d<double>(0.1, 0.2).isNearRectilinear(Vector2d<double>(0.5, -0.6), -1.22));
+        CHECK(Vector2d<double>(-59.312, 33.36).isNearRectilinear(Vector2d<double>(41.11, -16.38), 150.182));
+        CHECK(Vector2d<double>(-59.312, 33.36).isNearRectilinear(Vector2d<double>(41.11, -16.38), -150.182));
 
         // Out of range - constrained to X axis
-        REQUIRE_FALSE(Vector2d<double>(4.46, 0.0).isNearRectilinear(Vector2d<double>(-0.2, 0.0), 4.1));
-        REQUIRE_FALSE(Vector2d<double>(4.46, 0.0).isNearRectilinear(Vector2d<double>(-0.2, 0.0), -4.1));
-        REQUIRE_FALSE(Vector2d<double>(19.8, 0.0).isNearRectilinear(Vector2d<double>(24.77, 0.0), 3.08));
-        REQUIRE_FALSE(Vector2d<double>(19.8, 0.0).isNearRectilinear(Vector2d<double>(24.77, 0.0), -3.08));
+        CHECK_FALSE(Vector2d<double>(4.46, 0.0).isNearRectilinear(Vector2d<double>(-0.2, 0.0), 4.1));
+        CHECK_FALSE(Vector2d<double>(4.46, 0.0).isNearRectilinear(Vector2d<double>(-0.2, 0.0), -4.1));
+        CHECK_FALSE(Vector2d<double>(19.8, 0.0).isNearRectilinear(Vector2d<double>(24.77, 0.0), 3.08));
+        CHECK_FALSE(Vector2d<double>(19.8, 0.0).isNearRectilinear(Vector2d<double>(24.77, 0.0), -3.08));
         // Out of range - constrained to Y axis
-        REQUIRE_FALSE(Vector2d<double>(0.0, 7.16).isNearRectilinear(Vector2d<double>(0.0, 10.22), 2.4));
-        REQUIRE_FALSE(Vector2d<double>(0.0, 7.16).isNearRectilinear(Vector2d<double>(0.0, 10.22), -2.4));
-        REQUIRE_FALSE(Vector2d<double>(0.0, -5.501).isNearRectilinear(Vector2d<double>(0.0, 2.7), 7.93));
-        REQUIRE_FALSE(Vector2d<double>(0.0, -5.501).isNearRectilinear(Vector2d<double>(0.0, 2.7), -7.93));
+        CHECK_FALSE(Vector2d<double>(0.0, 7.16).isNearRectilinear(Vector2d<double>(0.0, 10.22), 2.4));
+        CHECK_FALSE(Vector2d<double>(0.0, 7.16).isNearRectilinear(Vector2d<double>(0.0, 10.22), -2.4));
+        CHECK_FALSE(Vector2d<double>(0.0, -5.501).isNearRectilinear(Vector2d<double>(0.0, 2.7), 7.93));
+        CHECK_FALSE(Vector2d<double>(0.0, -5.501).isNearRectilinear(Vector2d<double>(0.0, 2.7), -7.93));
         // Out of range - no constraints
-        REQUIRE_FALSE(Vector2d<double>(0.1, 0.2).isNearRectilinear(Vector2d<double>(0.5, -0.6), 0.44));
-        REQUIRE_FALSE(Vector2d<double>(0.1, 0.2).isNearRectilinear(Vector2d<double>(0.5, -0.6), -0.44));
-        REQUIRE_FALSE(Vector2d<double>(-59.312, 33.36).isNearRectilinear(Vector2d<double>(41.11, -16.38), 146.39));
-        REQUIRE_FALSE(Vector2d<double>(-59.312, 33.36).isNearRectilinear(Vector2d<double>(41.11, -16.38), -146.39));
+        CHECK_FALSE(Vector2d<double>(0.1, 0.2).isNearRectilinear(Vector2d<double>(0.5, -0.6), 0.44));
+        CHECK_FALSE(Vector2d<double>(0.1, 0.2).isNearRectilinear(Vector2d<double>(0.5, -0.6), -0.44));
+        CHECK_FALSE(Vector2d<double>(-59.312, 33.36).isNearRectilinear(Vector2d<double>(41.11, -16.38), 146.39));
+        CHECK_FALSE(Vector2d<double>(-59.312, 33.36).isNearRectilinear(Vector2d<double>(41.11, -16.38), -146.39));
     }
 
     SECTION("Approx equality - integer")
@@ -991,40 +991,40 @@ TEST_CASE("Vector2d - proximity", "[math::Vector2d]")
         // Note: The sign of the margin value should make no difference (negative is OK).
 
         // Exact match
-        REQUIRE(Vector2d<int>(0, 0).isApproxEqual(Vector2d<int>(0, 0), 0));
-        REQUIRE(Vector2d<int>(14, -3).isApproxEqual(Vector2d<int>(14, -3), 0));
-        REQUIRE(Vector2d<int>(-28, 11).isApproxEqual(Vector2d<int>(-28, 11), 5));
-        REQUIRE(Vector2d<int>(-28, 11).isApproxEqual(Vector2d<int>(-28, 11), -5));
+        CHECK(Vector2d<int>(0, 0).isApproxEqual(Vector2d<int>(0, 0), 0));
+        CHECK(Vector2d<int>(14, -3).isApproxEqual(Vector2d<int>(14, -3), 0));
+        CHECK(Vector2d<int>(-28, 11).isApproxEqual(Vector2d<int>(-28, 11), 5));
+        CHECK(Vector2d<int>(-28, 11).isApproxEqual(Vector2d<int>(-28, 11), -5));
 
         // Both components in range.
-        REQUIRE(Vector2d<int>(19, 11).isApproxEqual(Vector2d<int>(23, 10), 8));
-        REQUIRE(Vector2d<int>(19, 11).isApproxEqual(Vector2d<int>(23, 10), -8));
-        REQUIRE(Vector2d<int>(5, -63).isApproxEqual(Vector2d<int>(-28, -60), 41));
-        REQUIRE(Vector2d<int>(5, -63).isApproxEqual(Vector2d<int>(-28, -60), -41));
+        CHECK(Vector2d<int>(19, 11).isApproxEqual(Vector2d<int>(23, 10), 8));
+        CHECK(Vector2d<int>(19, 11).isApproxEqual(Vector2d<int>(23, 10), -8));
+        CHECK(Vector2d<int>(5, -63).isApproxEqual(Vector2d<int>(-28, -60), 41));
+        CHECK(Vector2d<int>(5, -63).isApproxEqual(Vector2d<int>(-28, -60), -41));
 
         // One in range, one at boundary.
-        REQUIRE(Vector2d<int>(-1, 2).isApproxEqual(Vector2d<int>(22, 10), 23));
-        REQUIRE(Vector2d<int>(-1, 2).isApproxEqual(Vector2d<int>(22, 10), -23));
-        REQUIRE(Vector2d<int>(67, 8).isApproxEqual(Vector2d<int>(61, -5), 13));
-        REQUIRE(Vector2d<int>(67, 8).isApproxEqual(Vector2d<int>(61, -5), -13));
+        CHECK(Vector2d<int>(-1, 2).isApproxEqual(Vector2d<int>(22, 10), 23));
+        CHECK(Vector2d<int>(-1, 2).isApproxEqual(Vector2d<int>(22, 10), -23));
+        CHECK(Vector2d<int>(67, 8).isApproxEqual(Vector2d<int>(61, -5), 13));
+        CHECK(Vector2d<int>(67, 8).isApproxEqual(Vector2d<int>(61, -5), -13));
 
         // Both at boundary.
-        REQUIRE(Vector2d<int>(51, 25).isApproxEqual(Vector2d<int>(58, 32), 7));
-        REQUIRE(Vector2d<int>(51, 25).isApproxEqual(Vector2d<int>(58, 32), -7));
-        REQUIRE(Vector2d<int>(-1, 9).isApproxEqual(Vector2d<int>(-5, 5), 4));
-        REQUIRE(Vector2d<int>(-1, 9).isApproxEqual(Vector2d<int>(-5, 5), -4));
+        CHECK(Vector2d<int>(51, 25).isApproxEqual(Vector2d<int>(58, 32), 7));
+        CHECK(Vector2d<int>(51, 25).isApproxEqual(Vector2d<int>(58, 32), -7));
+        CHECK(Vector2d<int>(-1, 9).isApproxEqual(Vector2d<int>(-5, 5), 4));
+        CHECK(Vector2d<int>(-1, 9).isApproxEqual(Vector2d<int>(-5, 5), -4));
 
         // One out of range.
-        REQUIRE_FALSE(Vector2d<int>(18, 55).isApproxEqual(Vector2d<int>(77, 48), 19));
-        REQUIRE_FALSE(Vector2d<int>(18, 55).isApproxEqual(Vector2d<int>(77, 48), -19));
-        REQUIRE_FALSE(Vector2d<int>(37, 21).isApproxEqual(Vector2d<int>(34, -8), 15));
-        REQUIRE_FALSE(Vector2d<int>(37, 21).isApproxEqual(Vector2d<int>(34, -8), -15));
+        CHECK_FALSE(Vector2d<int>(18, 55).isApproxEqual(Vector2d<int>(77, 48), 19));
+        CHECK_FALSE(Vector2d<int>(18, 55).isApproxEqual(Vector2d<int>(77, 48), -19));
+        CHECK_FALSE(Vector2d<int>(37, 21).isApproxEqual(Vector2d<int>(34, -8), 15));
+        CHECK_FALSE(Vector2d<int>(37, 21).isApproxEqual(Vector2d<int>(34, -8), -15));
 
         // Both out of range.
-        REQUIRE_FALSE(Vector2d<int>(-29, 15).isApproxEqual(Vector2d<int>(-4, 26), 8));
-        REQUIRE_FALSE(Vector2d<int>(-29, 15).isApproxEqual(Vector2d<int>(-4, 26), -8));
-        REQUIRE_FALSE(Vector2d<int>(76, 105).isApproxEqual(Vector2d<int>(2, -1), 51));
-        REQUIRE_FALSE(Vector2d<int>(76, 105).isApproxEqual(Vector2d<int>(2, -1), -51));
+        CHECK_FALSE(Vector2d<int>(-29, 15).isApproxEqual(Vector2d<int>(-4, 26), 8));
+        CHECK_FALSE(Vector2d<int>(-29, 15).isApproxEqual(Vector2d<int>(-4, 26), -8));
+        CHECK_FALSE(Vector2d<int>(76, 105).isApproxEqual(Vector2d<int>(2, -1), 51));
+        CHECK_FALSE(Vector2d<int>(76, 105).isApproxEqual(Vector2d<int>(2, -1), -51));
     }
 
     SECTION("Approx equality - floating point")
@@ -1032,40 +1032,40 @@ TEST_CASE("Vector2d - proximity", "[math::Vector2d]")
         // Note: The sign of the margin value should make no difference (negative is OK).
 
         // Exact match
-        REQUIRE(Vector2d<double>(0.0, 0.0).isApproxEqual(Vector2d<double>(0.0, 0.0), 0.0));
-        REQUIRE(Vector2d<double>(4.56, -1.98).isApproxEqual(Vector2d<double>(4.56, -1.98), 0.0));
-        REQUIRE(Vector2d<double>(19.5, -20.01).isApproxEqual(Vector2d<double>(19.5, -20.01), 9.896));
-        REQUIRE(Vector2d<double>(19.5, -20.01).isApproxEqual(Vector2d<double>(19.5, -20.01), -9.896));
+        CHECK(Vector2d<double>(0.0, 0.0).isApproxEqual(Vector2d<double>(0.0, 0.0), 0.0));
+        CHECK(Vector2d<double>(4.56, -1.98).isApproxEqual(Vector2d<double>(4.56, -1.98), 0.0));
+        CHECK(Vector2d<double>(19.5, -20.01).isApproxEqual(Vector2d<double>(19.5, -20.01), 9.896));
+        CHECK(Vector2d<double>(19.5, -20.01).isApproxEqual(Vector2d<double>(19.5, -20.01), -9.896));
 
         // Both components in range.
-        REQUIRE(Vector2d<double>(0.2, -0.9).isApproxEqual(Vector2d<double>(0.5, -0.6), 1.2));
-        REQUIRE(Vector2d<double>(0.2, -0.9).isApproxEqual(Vector2d<double>(0.5, -0.6), -1.2));
-        REQUIRE(Vector2d<double>(23.99, 12.23).isApproxEqual(Vector2d<double>(-1.44, 15.5), 30.3));
-        REQUIRE(Vector2d<double>(23.99, 12.23).isApproxEqual(Vector2d<double>(-1.44, 15.5), -30.3));
+        CHECK(Vector2d<double>(0.2, -0.9).isApproxEqual(Vector2d<double>(0.5, -0.6), 1.2));
+        CHECK(Vector2d<double>(0.2, -0.9).isApproxEqual(Vector2d<double>(0.5, -0.6), -1.2));
+        CHECK(Vector2d<double>(23.99, 12.23).isApproxEqual(Vector2d<double>(-1.44, 15.5), 30.3));
+        CHECK(Vector2d<double>(23.99, 12.23).isApproxEqual(Vector2d<double>(-1.44, 15.5), -30.3));
 
         // One in range, one at boundary.
-        REQUIRE(Vector2d<double>(15.9, 20.1).isApproxEqual(Vector2d<double>(21.4, 19.66), 5.52));
-        REQUIRE(Vector2d<double>(15.9, 20.1).isApproxEqual(Vector2d<double>(21.4, 19.66), -5.52));
-        REQUIRE(Vector2d<double>(-1.4, -5.6).isApproxEqual(Vector2d<double>(-4.4, 3.8), 9.42));
-        REQUIRE(Vector2d<double>(-1.4, -5.6).isApproxEqual(Vector2d<double>(-4.4, 3.8), -9.42));
+        CHECK(Vector2d<double>(15.9, 20.1).isApproxEqual(Vector2d<double>(21.4, 19.66), 5.52));
+        CHECK(Vector2d<double>(15.9, 20.1).isApproxEqual(Vector2d<double>(21.4, 19.66), -5.52));
+        CHECK(Vector2d<double>(-1.4, -5.6).isApproxEqual(Vector2d<double>(-4.4, 3.8), 9.42));
+        CHECK(Vector2d<double>(-1.4, -5.6).isApproxEqual(Vector2d<double>(-4.4, 3.8), -9.42));
 
         // Both at boundary.
-        REQUIRE(Vector2d<double>(99.22, 26.51).isApproxEqual(Vector2d<double>(110.5, 37.79), 11.3));
-        REQUIRE(Vector2d<double>(99.22, 26.51).isApproxEqual(Vector2d<double>(110.5, 37.79), -11.3));
-        REQUIRE(Vector2d<double>(4.6, -12.11).isApproxEqual(Vector2d<double>(-1.23, -6.28), 5.85));
-        REQUIRE(Vector2d<double>(4.6, -12.11).isApproxEqual(Vector2d<double>(-1.23, -6.28), -5.85));
+        CHECK(Vector2d<double>(99.22, 26.51).isApproxEqual(Vector2d<double>(110.5, 37.79), 11.3));
+        CHECK(Vector2d<double>(99.22, 26.51).isApproxEqual(Vector2d<double>(110.5, 37.79), -11.3));
+        CHECK(Vector2d<double>(4.6, -12.11).isApproxEqual(Vector2d<double>(-1.23, -6.28), 5.85));
+        CHECK(Vector2d<double>(4.6, -12.11).isApproxEqual(Vector2d<double>(-1.23, -6.28), -5.85));
 
         // One out of range.
-        REQUIRE_FALSE(Vector2d<double>(-0.2, 10.88).isApproxEqual(Vector2d<double>(27.5, 12.47), 6.36));
-        REQUIRE_FALSE(Vector2d<double>(-0.2, 10.88).isApproxEqual(Vector2d<double>(27.5, 12.47), -6.36));
-        REQUIRE_FALSE(Vector2d<double>(8.1, -19.29).isApproxEqual(Vector2d<double>(1.07, -2.6), 11.8));
-        REQUIRE_FALSE(Vector2d<double>(8.1, -19.29).isApproxEqual(Vector2d<double>(1.07, -2.6), -11.8));
+        CHECK_FALSE(Vector2d<double>(-0.2, 10.88).isApproxEqual(Vector2d<double>(27.5, 12.47), 6.36));
+        CHECK_FALSE(Vector2d<double>(-0.2, 10.88).isApproxEqual(Vector2d<double>(27.5, 12.47), -6.36));
+        CHECK_FALSE(Vector2d<double>(8.1, -19.29).isApproxEqual(Vector2d<double>(1.07, -2.6), 11.8));
+        CHECK_FALSE(Vector2d<double>(8.1, -19.29).isApproxEqual(Vector2d<double>(1.07, -2.6), -11.8));
 
         // Both out of range.
-        REQUIRE_FALSE(Vector2d<double>(11.65, 4.591).isApproxEqual(Vector2d<double>(-24.1, 17.08), 3.402));
-        REQUIRE_FALSE(Vector2d<double>(11.65, 4.591).isApproxEqual(Vector2d<double>(-24.1, 17.08), -3.402));
-        REQUIRE_FALSE(Vector2d<double>(38.52, -1.603).isApproxEqual(Vector2d<double>(23.5, -16.2), 12.06));
-        REQUIRE_FALSE(Vector2d<double>(38.52, -1.603).isApproxEqual(Vector2d<double>(23.5, -16.2), -12.06));
+        CHECK_FALSE(Vector2d<double>(11.65, 4.591).isApproxEqual(Vector2d<double>(-24.1, 17.08), 3.402));
+        CHECK_FALSE(Vector2d<double>(11.65, 4.591).isApproxEqual(Vector2d<double>(-24.1, 17.08), -3.402));
+        CHECK_FALSE(Vector2d<double>(38.52, -1.603).isApproxEqual(Vector2d<double>(23.5, -16.2), 12.06));
+        CHECK_FALSE(Vector2d<double>(38.52, -1.603).isApproxEqual(Vector2d<double>(23.5, -16.2), -12.06));
     }
 
 }
@@ -1090,63 +1090,63 @@ TEST_CASE("Vector2d - Polar conversions", "[math::Vector2d]")
 
         // Zero magnitude
         v = Vector2d<double>(p1);
-        REQUIRE(v.x == Approx(0.0));
-        REQUIRE(v.y == Approx(0.0));
+        CHECK(v.x == Approx(0.0));
+        CHECK(v.y == Approx(0.0));
 
         v = Vector2d<double>(p2);
-        REQUIRE(v.x == Approx(0.0));
-        REQUIRE(v.y == Approx(0.0));
+        CHECK(v.x == Approx(0.0));
+        CHECK(v.y == Approx(0.0));
 
         v = Vector2d<double>(p3);
-        REQUIRE(v.x == Approx(0.0));
-        REQUIRE(v.y == Approx(0.0));
+        CHECK(v.x == Approx(0.0));
+        CHECK(v.y == Approx(0.0));
 
         // X axis
         v = Vector2d<double>(p4);
-        REQUIRE(v.x == Approx(7.6));
-        REQUIRE(v.y == Approx(0.0));
+        CHECK(v.x == Approx(7.6));
+        CHECK(v.y == Approx(0.0));
 
         v = Vector2d<double>(p5);
-        REQUIRE(v.x == Approx(-19.2));
-        REQUIRE(v.y == Approx(0.0));
+        CHECK(v.x == Approx(-19.2));
+        CHECK(v.y == Approx(0.0));
 
         v = Vector2d<double>(p6);
-        REQUIRE(v.x == Approx(-12.6));
-        REQUIRE(v.y == Approx(0.0));
+        CHECK(v.x == Approx(-12.6));
+        CHECK(v.y == Approx(0.0));
 
         v = Vector2d<double>(p7);
-        REQUIRE(v.x == Approx(18.9));
-        REQUIRE(v.y == Approx(0.0));
+        CHECK(v.x == Approx(18.9));
+        CHECK(v.y == Approx(0.0));
 
         // Y axis
         v = Vector2d<double>(p8);
-        REQUIRE(v.x == Approx(0.0));
-        REQUIRE(v.y == Approx(5.1));
+        CHECK(v.x == Approx(0.0));
+        CHECK(v.y == Approx(5.1));
 
         v = Vector2d<double>(p9);
-        REQUIRE(v.x == Approx(0.0));
-        REQUIRE(v.y == Approx(-3.7));
+        CHECK(v.x == Approx(0.0));
+        CHECK(v.y == Approx(-3.7));
 
         v = Vector2d<double>(p10);
-        REQUIRE(v.x == Approx(0.0));
-        REQUIRE(v.y == Approx(-42.8));
+        CHECK(v.x == Approx(0.0));
+        CHECK(v.y == Approx(-42.8));
 
         v = Vector2d<double>(p11);
-        REQUIRE(v.x == Approx(0.0));
-        REQUIRE(v.y == Approx(55.01));
+        CHECK(v.x == Approx(0.0));
+        CHECK(v.y == Approx(55.01));
 
         // Arbitrary directions
         v = Vector2d<double>(p12);
-        REQUIRE(v.x == Approx(6.929646));
-        REQUIRE(v.y == Approx(-6.929646));
+        CHECK(v.x == Approx(6.929646));
+        CHECK(v.y == Approx(-6.929646));
 
         v = Vector2d<double>(p13);
-        REQUIRE(v.x == Approx(2.51142133));
-        REQUIRE(v.y == Approx(-3.49038149));
+        CHECK(v.x == Approx(2.51142133));
+        CHECK(v.y == Approx(-3.49038149));
 
         v = Vector2d<double>(p14);
-        REQUIRE(v.x == Approx(135.24970542));
-        REQUIRE(v.y == Approx(68.62569547));
+        CHECK(v.x == Approx(135.24970542));
+        CHECK(v.y == Approx(68.62569547));
     }
 
     SECTION("Conversion to Polar (modify by reference)")
@@ -1155,39 +1155,39 @@ TEST_CASE("Vector2d - Polar conversions", "[math::Vector2d]")
 
         // Zero magnitude
         v1.toPolar(p);
-        REQUIRE(p.angle == Approx(0.0));
-        REQUIRE(p.mag == Approx(0.0));
+        CHECK(p.angle == Approx(0.0));
+        CHECK(p.mag == Approx(0.0));
 
         // X axis
         v2.toPolar(p);
-        REQUIRE(p.angle == Approx(0.0));
-        REQUIRE(p.mag == Approx(146.0));
+        CHECK(p.angle == Approx(0.0));
+        CHECK(p.mag == Approx(146.0));
 
         v3.toPolar(p);
-        REQUIRE(p.angle == Approx(3.14159265));
-        REQUIRE(p.mag == Approx(1.39));
+        CHECK(p.angle == Approx(3.14159265));
+        CHECK(p.mag == Approx(1.39));
 
         // Y axis
         v4.toPolar(p);
-        REQUIRE(p.angle == Approx(1.57079633));
-        REQUIRE(p.mag == Approx(24.31));
+        CHECK(p.angle == Approx(1.57079633));
+        CHECK(p.mag == Approx(24.31));
 
         v5.toPolar(p);
-        REQUIRE(p.angle == Approx(4.71238898));
-        REQUIRE(p.mag == Approx(55.7));
+        CHECK(p.angle == Approx(4.71238898));
+        CHECK(p.mag == Approx(55.7));
 
         // Arbitrary directions
         v6.toPolar(p);
-        REQUIRE(p.angle == Approx(5.49778714));
-        REQUIRE(p.mag == Approx(7.58018469));
+        CHECK(p.angle == Approx(5.49778714));
+        CHECK(p.mag == Approx(7.58018469));
 
         v7.toPolar(p);
-        REQUIRE(p.angle == Approx(2.17954130));
-        REQUIRE(p.mag == Approx(22.33148674));
+        CHECK(p.angle == Approx(2.17954130));
+        CHECK(p.mag == Approx(22.33148674));
 
         v8.toPolar(p);
-        REQUIRE(p.angle == Approx(3.17497388));
-        REQUIRE(p.mag == Approx(71.91006119));
+        CHECK(p.angle == Approx(3.17497388));
+        CHECK(p.mag == Approx(71.91006119));
     }
 
     SECTION("Conversion to Polar (return by value)")
@@ -1196,38 +1196,38 @@ TEST_CASE("Vector2d - Polar conversions", "[math::Vector2d]")
 
         // Zero magnitude
         p = v1.toPolar();
-        REQUIRE(p.angle == Approx(0.0));
-        REQUIRE(p.mag == Approx(0.0));
+        CHECK(p.angle == Approx(0.0));
+        CHECK(p.mag == Approx(0.0));
 
         // X axis
         p = v2.toPolar();
-        REQUIRE(p.angle == Approx(0.0));
-        REQUIRE(p.mag == Approx(146.0));
+        CHECK(p.angle == Approx(0.0));
+        CHECK(p.mag == Approx(146.0));
 
         p = v3.toPolar();
-        REQUIRE(p.angle == Approx(3.14159265));
-        REQUIRE(p.mag == Approx(1.39));
+        CHECK(p.angle == Approx(3.14159265));
+        CHECK(p.mag == Approx(1.39));
 
         // Y axis
         p = v4.toPolar();
-        REQUIRE(p.angle == Approx(1.57079633));
-        REQUIRE(p.mag == Approx(24.31));
+        CHECK(p.angle == Approx(1.57079633));
+        CHECK(p.mag == Approx(24.31));
 
         p = v5.toPolar();
-        REQUIRE(p.angle == Approx(4.71238898));
-        REQUIRE(p.mag == Approx(55.7));
+        CHECK(p.angle == Approx(4.71238898));
+        CHECK(p.mag == Approx(55.7));
 
         // Arbitrary directions
         p = v6.toPolar();
-        REQUIRE(p.angle == Approx(5.49778714));
-        REQUIRE(p.mag == Approx(7.58018469));
+        CHECK(p.angle == Approx(5.49778714));
+        CHECK(p.mag == Approx(7.58018469));
 
         p = v7.toPolar();
-        REQUIRE(p.angle == Approx(2.17954130));
-        REQUIRE(p.mag == Approx(22.33148674));
+        CHECK(p.angle == Approx(2.17954130));
+        CHECK(p.mag == Approx(22.33148674));
 
         p = v8.toPolar();
-        REQUIRE(p.angle == Approx(3.17497388));
-        REQUIRE(p.mag == Approx(71.91006119));
+        CHECK(p.angle == Approx(3.17497388));
+        CHECK(p.mag == Approx(71.91006119));
     }
 }

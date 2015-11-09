@@ -6,8 +6,8 @@ TEST_CASE("Constants", "[Constants]")
 {
     SECTION("Value of pi")
     {
-        REQUIRE(pi<float>() == Approx(3.14159f));
-        REQUIRE(pi<double>() == Approx(3.14159));
+        CHECK(pi<float>() == Approx(3.14159f));
+        CHECK(pi<double>() == Approx(3.14159));
     }
 }
 
