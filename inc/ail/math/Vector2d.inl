@@ -39,7 +39,7 @@ Vector2d<T_ty>::Vector2d(std::initializer_list<T_ty> args) :
         return;
 
     if (args.size() != 2)
-        throw std::invalid_argument("Expected 2 arguments in initializer list.");
+        throw std::invalid_argument("Expected 0 or 2 arguments in initializer list.");
 
     x = *args.begin();
     y = *(args.begin() + 1);

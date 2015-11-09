@@ -49,7 +49,7 @@ Polar<T_ty>::Polar(std::initializer_list<T_ty> args) :
         return;
 
     if (args.size() != 2)
-        throw std::invalid_argument("Expected 2 arguments in initializer list.");
+        throw std::invalid_argument("Expected 0 or 2 arguments in initializer list.");
 
     angle = *args.begin();
     mag = *(args.begin() + 1);

@@ -28,20 +28,34 @@ BoundingBox2d<T_ty>::BoundingBox2d()
 }
 
 template <typename T_ty>
-BoundingBox2d<T_ty>::BoundingBox2d(const Vector2d<T_ty> & pos, const Vector2d<T_ty> & size) :
-    pos(pos), size(size)
+BoundingBox2d<T_ty>::BoundingBox2d(const Vector2d<T_ty> & pos, const Vector2d<T_ty> & radius) :
+    pos(pos), radius(radius)
 {
 }
 
 template <typename T_ty>
-BoundingBox2d<T_ty>::BoundingBox2d(const T_ty x, const T_ty y, const T_ty w, const T_ty h) :
-    pos(x, y), size(w, h)
+BoundingBox2d<T_ty>::BoundingBox2d(std::initializer_list<Vector2d<T_ty>> args) :
+    BoundBox2d()
+{
+    if (args.size() == 0)
+        return;
+
+    if (args.size() != 2)
+        throw std::invalid_argument("Expected 0 or 2 arguments in initializer list.");
+
+    pos = *args.begin();
+    radius = *(args.begin() + 1);
+}
+
+template <typename T_ty>
+BoundingBox2d<T_ty>::BoundingBox2d(const T_ty posX, const T_ty posY, const T_ty radiusX, const T_ty radiusY) :
+    pos(posX, posY), radius(radiusX, radiusY)
 {
 }
 
 template <typename T_ty>
 BoundingBox2d<T_ty>::BoundingBox2d(const BoundingBox2d<T_ty> & rhs) :
-    pos(rhs.pos), size(rhs.size)
+    pos(rhs.pos), radius(rhs.size)
 {
 }
 
@@ -57,14 +71,14 @@ template <typename T_ty>
 BoundingBox2d<T_ty> & BoundingBox2d<T_ty>::operator = (const BoundingBox2d<T_ty> & rhs)
 {
     pos = rhs.pos;
-    size = rhs.size;
+    radius = rhs.radius;
     return *this;
 }
 
 template <typename T_ty>
 bool BoundingBox2d<T_ty>::operator == (const BoundingBox2d<T_ty> & rhs) const
 {
-    return pos == rhs.pos && size == rhs.size;
+    return pos == rhs.pos && radius == rhs.radius;
 }
 
 template <typename T_ty>
@@ -80,38 +94,38 @@ template <typename T_ty>
 void BoundingBox2d<T_ty>::set(const Vector2d<T_ty> & pos, const Vector2d<T_ty> & size)
 {
     this->pos = pos;
-    this->size = size;
+    this->radius = radius;
 }
 
 template <typename T_ty>
-void BoundingBox2d<T_ty>::set(const T_ty x, const T_ty y, const T_ty w, const T_ty h)
+void BoundingBox2d<T_ty>::set(const T_ty posX, const T_ty posY, const T_ty radiusX, const T_ty radiusY)
 {
-    pos.set(x, y);
-    size.set(w, h);
+    pos.set(posX, posY);
+    radius.set(radiusX, radiusY);
 }
 
 template <typename T_ty>
 Vector2d<T_ty> BoundingBox2d<T_ty>::getCornerX1Y1() const
 {
-    return pos - size;
+    return pos - radius;
 }
 
 template <typename T_ty>
 Vector2d<T_ty> BoundingBox2d<T_ty>::getCornerX2Y2() const
 {
-    return pos + size;
+    return pos + radius;
 }
 
 template <typename T_ty>
 Vector2d<T_ty> BoundingBox2d<T_ty>::getCornerX1Y2() const
 {
-    return Vector2d<T_ty>(pos.x - size.x, pos.y + size.y);
+    return Vector2d<T_ty>(pos.x - radius.x, pos.y + radius.y);
 }
 
 template <typename T_ty>
 Vector2d<T_ty> BoundingBox2d<T_ty>::getCornerX2Y1() const
 {
-    return Vector2d<T_ty>(pos.x + size.x, pos.y - size.y);
+    return Vector2d<T_ty>(pos.x + radius.x, pos.y - radius.y);
 }
 
 //------------------------------------------------------------------------------
@@ -121,18 +135,18 @@ template <typename T_ty>
 bool BoundingBox2d<T_ty>::contains(const Vector2d<T_ty> &point) const
 {
     return
-        point.x >= (pos.x - size.x) &&
-        point.y >= (pos.y - size.y) &&
-        point.x <= (pos.x + size.x) &&
-        point.y <= (pos.y + size.y);
+        point.x >= (pos.x - radius.x) &&
+        point.y >= (pos.y - radius.y) &&
+        point.x <= (pos.x + radius.x) &&
+        point.y <= (pos.y + radius.y);
 }
 
 template <typename T_ty>
 bool BoundingBox2d<T_ty>::intersects(const BoundingBox2d<T_ty> &rhs) const
 {
     return
-        std::fabs(pos.x - rhs.pos.x) <= (size.x + rhs.size.x) &&
-        std::fabs(pos.y - rhs.pos.y) <= (size.y + rhs.size.y);
+        std::fabs(pos.x - rhs.pos.x) <= (radius.x + rhs.radius.x) &&
+        std::fabs(pos.y - rhs.pos.y) <= (radius.y + rhs.radius.y);
 }
 
 //--------------
