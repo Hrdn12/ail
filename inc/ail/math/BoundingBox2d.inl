@@ -35,7 +35,7 @@ BoundingBox2d<T_ty>::BoundingBox2d(const Vector2d<T_ty> & pos, const Vector2d<T_
 
 template <typename T_ty>
 BoundingBox2d<T_ty>::BoundingBox2d(std::initializer_list<Vector2d<T_ty>> args) :
-    BoundBox2d()
+    BoundingBox2d()
 {
     if (args.size() == 0)
         return;

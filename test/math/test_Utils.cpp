@@ -618,7 +618,13 @@ TEST_CASE("Utils - Comparisons", "[Utils]")
         CHECK_FALSE(isApproxEqual(-41, -63, 21));
         CHECK_FALSE(isApproxEqual(-85, -63, 21));
 
-        // TODO: Test negative margin
+        // Negative margins
+        CHECK(isApproxEqual(774, 774, -1));
+        CHECK(isApproxEqual(-138, -136, -3));
+        CHECK_FALSE(isApproxEqual(-198, 198, -4));
+        CHECK_FALSE(isApproxEqual(-2765, 2108, -247));
+        CHECK(isApproxEqual(42, 63, -21));
+        CHECK_FALSE(isApproxEqual(-8, -10, -1));
     }
 
     SECTION("isApproxEqual - floating point")
@@ -677,7 +683,15 @@ TEST_CASE("Utils - Comparisons", "[Utils]")
         CHECK_FALSE(isApproxEqual(-64.9202, -58.67, 6.2501));
         CHECK_FALSE(isApproxEqual(-52.4198, -58.67, 6.2501));
 
-        // TODO: Test negative margin
+        // Negative margins
+        CHECK(isApproxEqual(-194.56, -194.56, -3.6));
+        CHECK(isApproxEqual(24.54, 27.0, -3.0));
+        CHECK(isApproxEqual(-5.49, 2.48, -11.88));
+        CHECK_FALSE(isApproxEqual(5.901, -4.446, -7.27));
+        CHECK_FALSE(isApproxEqual(136.36, 549.36, -27.041));
+        CHECK(isApproxEqual(-74.33, -74.32, -0.0101));
+        CHECK_FALSE(isApproxEqual(64.9202, 58.67, -6.2501));
+
     }
 
     SECTION("isApproxZero - integers")
@@ -708,7 +722,12 @@ TEST_CASE("Utils - Comparisons", "[Utils]")
         CHECK_FALSE(isApproxZero(-47, 23));
         CHECK_FALSE(isApproxZero(93, 38));
 
-        // TODO: Test negative margin
+        // Negative margins
+        CHECK(isApproxZero(0, -1));
+        CHECK(isApproxZero(-5, -10));
+        CHECK(isApproxZero(1, -1));
+        CHECK_FALSE(isApproxZero(-41, -40));
+        CHECK_FALSE(isApproxZero(-47, -23));
     }
 
     SECTION("isApproxZero - floating point")
@@ -741,7 +760,12 @@ TEST_CASE("Utils - Comparisons", "[Utils]")
         CHECK_FALSE(isApproxZero(-63.281, 14.107));
         CHECK_FALSE(isApproxZero(947.682, 37.869));
 
-        // TODO: Test negative margin
+        // Negative margins
+        CHECK(isApproxZero(0.0, -1.0));
+        CHECK(isApproxZero(-2.2, -3.1));
+        CHECK(isApproxZero(-37.16, -37.16));
+        CHECK_FALSE(isApproxZero(2.6, -2.58));
+        CHECK_FALSE(isApproxZero(-63.281, -14.107));
     }
 
     SECTION("Range checking - integer")

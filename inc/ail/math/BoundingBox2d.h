@@ -39,6 +39,8 @@ public:
     /// Initializer list constructor - expects a pair of vectors.
     /// Order of elements is: position, radius.
     /// If list if empty, values are initialised to 0.
+    /// Note that vectors can be constructed as initialiser lists too, so you could
+    ///  initialise a bounding box like this: {{x,y}, {w,h}}
     BoundingBox2d(std::initializer_list<Vector2d<T_ty>> args);
 
     /// Constructor - explicitly initialises the position and size of the box.
@@ -115,6 +117,7 @@ public:
 
     /// The size of the bounding box (distance from the centre to the edge).
     /// Note that this is half the total width/height.
+    /// Negative values here aren't recommended, but they should work anyway.
     Vector2d<T_ty> radius;
 };
 

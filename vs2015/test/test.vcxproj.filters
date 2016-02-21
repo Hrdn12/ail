@@ -33,7 +33,10 @@
     <ClCompile Include="..\..\test\math\test_Utils.cpp">
       <Filter>Source Files\math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\test\math\test_Vector2.cpp">
+    <ClCompile Include="..\..\test\math\test_BoundingBox2d.cpp">
+      <Filter>Source Files\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\math\test_Vector2d.cpp">
       <Filter>Source Files\math</Filter>
     </ClCompile>
   </ItemGroup>

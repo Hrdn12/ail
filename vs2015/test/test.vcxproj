@@ -12,11 +12,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\test\main.cpp" />
+    <ClCompile Include="..\..\test\math\test_BoundingBox2d.cpp" />
     <ClCompile Include="..\..\test\math\test_Constants.cpp" />
     <ClCompile Include="..\..\test\math\test_Polar.cpp" />
     <ClCompile Include="..\..\test\math\test_tmod.cpp" />
     <ClCompile Include="..\..\test\math\test_Utils.cpp" />
-    <ClCompile Include="..\..\test\math\test_Vector2.cpp" />
+    <ClCompile Include="..\..\test\math\test_Vector2d.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\test\common.h" />
