@@ -1,3 +1,13 @@
+/** \file test_Utils.cpp
+    \brief Unit testing for the utility functions.
+
+    Depends on the Catch framework: https://github.com/philsquared/Catch
+
+    Part of the Avid Insight Library (avidinsight.uk/ail).
+    Copyright (C) 2015-16 Peter R. Bloomfield.
+    Released open source under the MIT licence.
+*/
+
 #include "../common.h"
 
 using namespace ail::math;

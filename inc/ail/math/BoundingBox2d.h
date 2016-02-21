@@ -4,8 +4,8 @@
 /** \file BoundingBox2d.h
     \brief Declares a class representing a 2d rectangle which is axis-aligned.
 
-    Part of ail, the Avid Insight Library (avidinsight.uk).
-    Copyright (C) 2015 Peter R. Bloomfield.
+    Part of ail, the Avid Insight Library (avidinsight.uk/ail).
+    Copyright (C) 2015-16 Peter R. Bloomfield.
     Released open source under the MIT licence.
 */
 

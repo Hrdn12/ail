@@ -1,7 +1,7 @@
 # Avid Insight Library (ail) for C++
 
- * Author:  Peter R. Bloomfield
- * Web:     avidinsight.uk
+ * Author:  [Peter R. Bloomfield][3]
+ * Web:     avidinsight.uk/ail
  * License: MIT
 
 ## WARNING
@@ -52,3 +52,4 @@ The code in this library is distributed freely under the MIT License. This means
 
 [1]: https://github.com/doxygen/doxygen
 [2]: https://github.com/philsquared/Catch
+[3]: http://peter.avidinsight.uk

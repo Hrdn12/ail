@@ -4,8 +4,8 @@
 /** \file tmod.h
     \brief Provides a template for calling a suitable integer or floating point modulus operation. (Intended for internal use by the library.)
 
-    Part of ail, the Avid Insight Library (avidinsight.uk).
-    Copyright (C) 2015 Peter R. Bloomfield.
+    Part of ail, the Avid Insight Library (avidinsight.uk/ail).
+    Copyright (C) 2015-16 Peter R. Bloomfield.
     Released open source under the MIT licence.
 */
 

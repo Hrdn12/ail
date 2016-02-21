@@ -4,8 +4,8 @@
 /** \file Polar.inl
     \brief Implementation for 2d polar vector (angle / magnitude).
 
-    Part of ail, the Avid Insight Library (avidinsight.uk).
-    Copyright (C) 2015 Peter R. Bloomfield.
+    Part of ail, the Avid Insight Library (avidinsight.uk/ail).
+    Copyright (C) 2015-16 Peter R. Bloomfield.
     Released open source under the MIT licence.
 */
 

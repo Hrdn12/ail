@@ -4,8 +4,8 @@
 /** \file Polar.h
     \brief Declares a 2d polar vector (angle / magnitude). See Polar.inl for implementation.
 
-    Part of ail, the Avid Insight Library (avidinsight.uk).
-    Copyright (C) 2015 Peter R. Bloomfield.
+    Part of ail, the Avid Insight Library (avidinsight.uk/ail).
+    Copyright (C) 2015-16 Peter R. Bloomfield.
     Released open source under the MIT licence.
 */
 
